@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "sahira-hotels",
+  "private_key_id": "22cc474f98eb863b886b5cd563d5be56c28c3ff7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCs+YkzHULQog6D\npiKiOf/HF6cqkpevtsT+O6GZ/MRGbteQpMXzciMhxfIAVQYUNYGm43HcmzxNwkZu\nsbxgNntqP2rDAo+kLkN9PZPIFL//JjiYCNPJnHfun6iijPLWur5Ufvnbktn5Kmli\nd9nPRFhaHgDJTAKen1QETYKT5dCunCZlBWquOL3yef25NzCV/essFP611YkAh061\nc0//VuOIAWTOO1Pk4/5T/3Vpmp26aTF88JYGHjTj6QKpUKzZh0acbeF2NyI7hMRt\nUvD3qgj6YmO2Qv8p6UZMwwrQeahYZjtJOTuRn/j/tT6Yw1QMxlfp12hFYaGebRsL\n6H9IKsH1AgMBAAECggEAIZXuGtuinono0Y0PinpCfLDOB4khJMATLd38Ob8HiTl6\nZ55mxSczRRp/K6tWm9Pr0bC16gTGR77iGBownmnVusKHg0fbBiDpf8bWC/JjeTI9\nqN+F586WxuF/R9igSitGS3fAIe84nZWrkq/8va7ijNToiC1XEN+U26UFJpxn0Y80\neSgLd7AGgq91G/YYYOiCiOkSF3OrBc+AtA8P918b3Lmk1I8XUbsZ8dFLtkdm4nFQ\nF5ExstfTjGVCpaPRU01zHf+utPCH6lwKMMC7HigF+cEqKcGyCqaUSDhXkbJ4QbbB\n50DIFtTBR+/kh0YQj5guTuS6F0XVXjHLkau9jNjnAQKBgQDTcm+miDGKDRAO14zT\noZ84lw1DDPO3DJzRiYLovUj72861UYWxHbzmHK2ZNv/qwexp0kFaBJD+K3pMlrF8\nZPRr/fm2RrP/mqaIYW+n3/cW/oqYPWLbJmZx2xE7mpYkivzPHTfiSu/Lm+tsLZlR\nKBroVAxEXPMRHhutVIQW87+1wQKBgQDRa+KqD6CEX5xFroWPh+WEyRAfRd3jOXPx\nrt717N+rXNKhrqTHjpfIByHy5jG9qAg0ydyI1eKgWt45SJa4aNl1k/TO7r9958jW\nk3a7Z5WSC8splc7SwCn9m/1qqRpgkoGhzlKZE+TIhmM7RQdfI/xfP3eNAPUE+7Kf\ncDqjbJxhNQKBgQCz12hJLxtbfKLEzOa1dYjT+/3GorSDY1HaEmhqhdwWgyz8IPth\n2pY47fllEFd4lzn6A1+cLbgYxmf9zknlMISHeXuzYc1kwGeWJbFvClnBj/vXYpa7\nKJ0Hh7jPhjrfl+tQSVyntu7fsZz55Iq7cS35nsrUNm5yh7YopXK3htfuwQKBgCUC\nifY/+MAsHXP7GcN54sgKuHyuXj5P4vutSd3wVL72EotcT+asfoptKETDBbtcvMaH\nfh/4nKp2JJu/BlPkw7mRwkvnyZO4qLezK+KGtdovl2HsBbcdGs6lCK4W4IB8o8gy\nrEo9R8tgZJ0O3/SiaXFzx+71YlfVG4Yt0U8cXK6ZAoGBAL0be1IGWFKUdzaRCDKv\nW7BZP78TUoMdMFvVOJNkcr8FqUaxbUWOvMVF0muvgXh5qTa9xi6jFvIxvlQ4AMjr\ni9fbdSrpH/4F3SiPVAE0JjgYVSVwPoyQYGjkhu1eSbYRHRf3xwu3gnGyYcLPxE6o\nJuIo3JWzcMH5LfVr4DwpErkT\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-6q1wi@sahira-hotels.iam.gserviceaccount.com",
+  "client_id": "114428586912689411146",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-6q1wi%40sahira-hotels.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
