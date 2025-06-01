@@ -1,0 +1,136 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+// This can be removed if you use __autoload() in config.php OR use Modular Extensions
+/** @noinspection PhpIncludeInspection */
+require APPPATH . '/libraries/REST_Controller.php';
+require_once APPPATH . '/libraries/JWT.php';
+// use namespace
+use Restserver\Libraries\REST_Controller;
+use \Firebase\JWT\JWT;
+/**
+ * This is an example of a few basic user interaction methods you could use
+ * all done with a hardcoded array
+ *
+ * @package         CodeIgniter
+ * @subpackage      Rest Server
+ * @category        Controller
+ * @author          Phil Sturgeon, Chris Kacerguis
+ * @license         MIT
+ * @link            https://github.com/chriskacerguis/codeigniter-restserver
+ */
+class Api extends REST_Controller {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('Api_m');
+        $this->load->database();
+    }
+
+    public function index_get() {
+        $this->response(array('status' => 'success get api', 'http_status' => REST_Controller::HTTP_OK));
+    }
+
+    public function index_post() {
+        $this->response(array('status' => 'success post api', 'http_status' => REST_Controller::HTTP_UNAUTHORIZED));
+    }
+
+    public function index_put() {
+        $this->response(array('status' => 'success put api', 'http_status' => REST_Controller::HTTP_FORBIDDEN));
+    }
+
+    public function index_delete() {
+        $this->response(array('status' => 'success delete api', 'http_status' => REST_Controller::HTTP_UNAUTHORIZED));
+    }
+
+    // ------- POST INFO -------
+    public function postinfo_get() {
+        $data = $this->Api_m->get_all('postInfo');
+        $this->response($data, 200);
+    }
+
+    public function postinfo_post() {
+        $data = $this->post();
+        $id = $this->Api_m->insert('postInfo', $data);
+        $this->response(['id' => $id], 201);
+    }
+
+    public function postinfo_put($id) {
+        $data = $this->put();
+        $updated = $this->Api_m->update('postInfo', $data, $id, 'id');
+        $this->response(['updated' => $updated], 200);
+    }
+
+    public function postinfo_delete($id) {
+        $deleted = $this->Api_m->delete('postInfo', $id, 'id');
+        $this->response(['deleted' => $deleted], 200);
+    }
+
+    // ------- LATEST POSTS -------
+    public function latestposts_get() {
+        $data = $this->Api_m->get_all('latestPosts');
+        $this->response($data, 200);
+    }
+
+    public function latestposts_post() {
+        $data = $this->post();
+        $id = $this->Api_m->insert('latestPosts', $data);
+        $this->response(['id' => $id], 201);
+    }
+
+    public function latestposts_put($id) {
+        $data = $this->put();
+        $updated = $this->Api_m->update('latestPosts', $data, $id, 'id');
+        $this->response(['updated' => $updated], 200);
+    }
+
+    public function latestposts_delete($id) {
+        $deleted = $this->Api_m->delete('latestPosts', $id, 'id');
+        $this->response(['deleted' => $deleted], 200);
+    }
+
+    // ------- TOP POSTS -------
+    public function topposts_get() {
+        $data = $this->Api_m->get_all('topPosts');
+        $this->response($data, 200);
+    }
+
+    public function topposts_post() {
+        $data = $this->post();
+        $id = $this->Api_m->insert('topPosts', $data);
+        $this->response(['id' => $id], 201);
+    }
+
+    public function topposts_put($id) {
+        $data = $this->put();
+        $updated = $this->Api_m->update('topPosts', $data, $id, 'id');
+        $this->response(['updated' => $updated], 200);
+    }
+
+    public function topposts_delete($id) {
+        $deleted = $this->Api_m->delete('topPosts', $id, 'id');
+        $this->response(['deleted' => $deleted], 200);
+    }
+
+    // ------- COMMENTS -------
+    public function comments_get() {
+        $data = $this->Api_m->get_all('comments');
+        $this->response($data, 200);
+    }
+
+    public function comments_post() {
+        $data = $this->post();
+        $id = $this->Api_m->insert('comments', $data);
+        $this->response(['id' => $id], 201);
+    }
+
+    public function comments_put($id) {
+        $data = $this->put();
+        $updated = $this->Api_m->update('comments', $data, $id, 'id');
+        $this->response(['updated' => $updated], 200);
+    }
+
+    public function comments_delete($id) {
+        $deleted = $this->Api_m->delete('comments', $id, 'id');
+        $this->response(['deleted' => $deleted], 200);
+    }
+}
