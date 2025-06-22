@@ -29,7 +29,7 @@
         <!-- SweetAlert2 -->
         <script src="<?php echo base_url(); ?>assets/newstyle/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1061) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061) { ?>
             <!-- Select2 -->
             <script src="<?php echo base_url(); ?>assets/newstyle/plugins/select2/js/select2.full.min.js"></script>
             <!-- date-range-picker -->
@@ -108,13 +108,13 @@
                             { targets: [5], orderable: false}
                         ]
                     })
-                    .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
+                    .buttons().container().appendTo('#tbl_atim_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemensupir").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
                         "buttons": ["excel", "pdf", "print", "colvis"],
                         "columnDefs": [
-                            { targets: [4], orderable: false}
+                            { targets: [5], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
@@ -189,6 +189,7 @@
                         window.location.href = url;
                     });
                 });
+
                 /**
                  * Ambil kendaraan berdasarkan tim_id lalu isi <select> mobil.
                  * @param {Number|String} timId        – ID tim.
@@ -256,12 +257,6 @@
                         format: 'YYYY-MM-DD'
                     });
                 });
-
-                <?php foreach ($kendaraans as $value): ?>
-                    $('#jam-picker<?php echo $value->vehicle_id ?>').datetimepicker({
-                        format: 'HH:mm'
-                    });
-                <?php endforeach; ?>
             </script>
         <?php } ?>
 
@@ -301,6 +296,42 @@
                         }
                     });
                 });
+            </script>
+        <?php } ?>
+
+        <?php if ($nopage==1041) { ?>
+            <script>
+                <?php foreach ($supirs as $row) { ?>
+                    $('#tglEditSupir<?php echo $row->id ?>').datetimepicker({
+                        format: 'YYYY-MM-DD'
+                    });
+                    $('#tglEditLahir<?php echo $row->id ?>').datetimepicker({
+                        format: 'YYYY-MM-DD'
+                    });
+                    $('#tglEditExpSim<?php echo $row->id ?>').datetimepicker({
+                        format: 'YYYY-MM-DD'
+                    });
+                <?php } ?>
+
+                $('#tglAddLahir').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+                $('#tglAddJoin').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+                $('#tglAddExpSim').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+            </script>
+        <?php } ?>
+
+        <?php if ($nopage==1051) { ?>
+            <script>
+                <?php foreach ($kendaraans as $value): ?>
+                    $('#jam-picker<?php echo $value->vehicle_id ?>').datetimepicker({
+                        format: 'HH:mm'
+                    });
+                <?php endforeach; ?>
             </script>
         <?php } ?>
 

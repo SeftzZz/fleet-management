@@ -289,6 +289,14 @@
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-sm-12">
+                                                                                         <div class="form-group">
+                                                                                            <label>Keterangan</label>
+                                                                                            <textarea rows="3" name="ket" value="<?php echo set_value('ket')?>" class="form-control <?php if (form_error('ket')) {echo "is-invalid";} ?>" placeholder="Resign/Bermasalah"><?php echo $row->keterangan ?></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-12">
                                                                                         <div>
                                                                                             <input type="hidden" name="fileFotoLama" value="<?php echo $row->img_profile; ?>">
                                                                                             <input type="hidden" name="fileSimLama" value="<?php echo $row->img_sim; ?>">
