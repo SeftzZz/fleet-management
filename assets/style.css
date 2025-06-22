@@ -1,0 +1,12 @@
+/* Modal full-screen */
+.modal-fullscreen {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 10px;
+}
+
+.modal-content {
+    height: auto;
+    border-radius: 10px;
+}
