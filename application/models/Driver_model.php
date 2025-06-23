@@ -94,4 +94,24 @@ class Driver_model extends CI_Model {
         $query->free_result();  
         return $data;    
     }
+
+    public function getAllSupirByFilterID($driver_id) {
+        $data = array();
+        $this->db->from('drivers'); 
+        $this->db->where('is_delete', 0);
+        if ($driver_id) {
+            $this->db->like('id', $driver_id);
+        }
+        $this->db->order_by('id', 'ASC');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $data[] = $row;
+            }
+        }
+        $query->free_result();  
+        return $data;    
+    }
 }

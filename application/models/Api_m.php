@@ -23,4 +23,18 @@ class Api_m extends CI_Model {
         $this->db->where($key, $id);
         return $this->db->delete($table);
     }
+
+    public function cek_user($email, $password_hash){
+        $data = array();
+        $this->db->from('users');
+        $this->db->where('email', $email);
+        $this->db->where('password_hash', $password_hash);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+        {
+            $data = $query->row();
+        }
+        $query->free_result();  
+        return $data;
+    }
 }

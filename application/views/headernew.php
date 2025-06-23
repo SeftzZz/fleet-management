@@ -11,7 +11,7 @@
         <!-- iCheck -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
         
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071) { ?>
         <!-- Select2 -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/select2/css/select2.min.css">
         
@@ -88,12 +88,12 @@
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a href="<?php echo site_url() ?>" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>Dashboard Utama</p>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a href="<?php echo site_url('vehicles') ?>" class="nav-link <?php if ($nopage==1051) echo ('active') ?>" />
                                     <i class="nav-icon fas fa-truck"></i>
@@ -124,12 +124,12 @@
                                     <p>Pemeliharaan & BBM</p>
                                 </a>
                             </li>
-                            <?php if ($nopage==1001||$nopage==1011||$nopage==1021) { ?>
+                            <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071) { ?>
                             <li class="nav-item menu-open">
                             <?php } else { ?>
                             <li class="nav-item">
                             <?php } ?>
-                                <a href="#" class="nav-link <?php if ($nopage==1001||$nopage==1011||$nopage==1021) echo ('active') ?>">
+                                <a href="#" class="nav-link <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071) echo ('active') ?>">
                                     <i class="nav-icon fas fa-database"></i>
                                     <p>Manajemen Data<i class="fas fa-angle-left right"></i></p>
                                 </a>
@@ -156,6 +156,12 @@
                                         <a href="<?php echo site_url('reimbursement') ?>" class="nav-link <?php if ($nopage==1061) echo('active') ?>" />
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Reimbursement</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?php echo site_url('wallet') ?>" class="nav-link <?php if ($nopage==1071) echo('active') ?>" />
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Klaim Wallet</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">

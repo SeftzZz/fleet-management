@@ -84,6 +84,7 @@ class Reimbursement extends CI_Controller {
         ->from('wallet_transactions')
         ->join('ritasi', 'ritasi.id = wallet_transactions.id_ritasi')
         ->join('vehicles', 'vehicles.id = ritasi.vehicle_id')
+        ->where('wallet_transactions.transaction_type', 'debit')
         ->where('wallet_transactions.status', 'sudah')
         ->order_by('wallet_transactions.updated_at', 'DESC')
         ->get()

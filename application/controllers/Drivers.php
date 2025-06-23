@@ -62,7 +62,7 @@ class Drivers extends CI_Controller {
             $data['wallets'] = $this->Wallet_model->getAllWallet();
 
             foreach ($data['wallets'] as $wallet) {
-                $data['wallet_transactions'][$wallet->wallet_id] = $this->Wallet_model->getWalletTransactionsByWalletId($wallet->wallet_id);
+                $data['wallet_transactions'][$wallet->wallet_id] = $this->Wallet_model->getWalletTransactionsAll($wallet->wallet_id);
             }
 
             $this->load->view('headernew', $data);

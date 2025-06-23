@@ -37,12 +37,40 @@ class Wallet_model extends CI_Model {
         return $query->result();
     }
 
-    public function getWalletTransactionsByWalletId($wallet_id) {
+    public function getWalletTransactionsByWalletId($wallet_id)
+    {
         return $this->db
-                    ->where('wallet_id', $wallet_id)
-                    ->where('is_delete', 0)
-                    ->order_by('id', 'ASC')
-                    ->get('wallet_transactions')
-                    ->result();
+            ->where('wallet_id', $wallet_id)
+            ->where('is_delete', 0)
+            ->where('transaction_type', 'credit')
+            ->where('status', 'belum')
+            ->order_by('id', 'DESC')
+            ->get('wallet_transactions')
+            ->result();
     }
+
+    public function getWalletTransactionsAll($wallet_id)
+    {
+        return $this->db
+            ->where('wallet_id', $wallet_id)
+            ->where('is_delete', 0)
+            ->where('transaction_type', 'credit')
+            ->order_by('id', 'DESC')
+            ->get('wallet_transactions')
+            ->result();
+    }
+
+    public function getWalletByDriverId($driver_id)
+    {
+        return $this->db
+            ->select('wallets.*, wallets.id AS wallet_id, drivers.name AS driver_name') // alias id jadi wallet_id
+            ->from('wallets')
+            ->join('drivers', 'wallets.driver_id = drivers.id')
+            ->where('wallets.is_delete', 0)
+            ->where('wallets.driver_id', $driver_id)
+            ->order_by('wallets.id', 'DESC')
+            ->get()
+            ->result();
+    }
+
 }

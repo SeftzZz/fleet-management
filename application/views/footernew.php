@@ -331,6 +331,42 @@
             </script>
         <?php } ?>
 
+        <?php if ($nopage==1041) { ?>
+            <script>
+                <?php foreach ($supirs as $row) { ?>
+                    $('#tglEditSupir<?php echo $row->id ?>').datetimepicker({
+                        format: 'YYYY-MM-DD'
+                    });
+                    $('#tglEditLahir<?php echo $row->id ?>').datetimepicker({
+                        format: 'YYYY-MM-DD'
+                    });
+                    $('#tglEditExpSim<?php echo $row->id ?>').datetimepicker({
+                        format: 'YYYY-MM-DD'
+                    });
+                <?php } ?>
+
+                $('#tglAddLahir').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+                $('#tglAddJoin').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+                $('#tglAddExpSim').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+            </script>
+        <?php } ?>
+
+        <?php if ($nopage==1051) { ?>
+            <script>
+                <?php foreach ($kendaraans as $value): ?>
+                    $('#jam-picker<?php echo $value->vehicle_id ?>').datetimepicker({
+                        format: 'HH:mm'
+                    });
+                <?php endforeach; ?>
+            </script>
+        <?php } ?>
+
         <?php if ($nopage == 1061) { ?>
             <script>
                 function loadRitasiData() {
@@ -390,6 +426,8 @@
                         var tableId = "#tbl_manajemenwallet_transactions<?php echo $row->wallet_id ?>";
                         var wrapperSelector = tableId + "_wrapper .col-md-6:eq(0)";
 
+                        var jumlahTransaksi = <?php echo count($wallet_transactions[$row->wallet_id] ?? []); ?>;
+
                         $(tableId).DataTable({
                             responsive: true,
                             paging: false,
@@ -401,7 +439,8 @@
                                 "pdf",
                                 {
                                     extend: "print",
-                                    footer: true
+                                    footer: true,
+                                    title: '<?php echo "[Wallet] " . $row->name . "<br>Jumlah transaksi: " . count($wallet_transactions[$row->wallet_id] ?? []); ?>'
                                 },
                                 "colvis"
                             ],
