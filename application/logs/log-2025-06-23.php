@@ -1797,3 +1797,323 @@ ERROR - 2025-06-23 03:58:07 --> 404 Page Not Found: Assets/newstyle
 INFO - 2025-06-23 03:58:07 --> Input Class Initialized
 INFO - 2025-06-23 03:58:07 --> Language Class Initialized
 ERROR - 2025-06-23 03:58:07 --> 404 Page Not Found: Assets/newstyle
+INFO - 2025-06-23 04:02:28 --> Config Class Initialized
+INFO - 2025-06-23 04:02:28 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:02:28 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:02:28 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:02:28 --> URI Class Initialized
+INFO - 2025-06-23 04:02:28 --> Router Class Initialized
+INFO - 2025-06-23 04:02:28 --> Output Class Initialized
+INFO - 2025-06-23 04:02:28 --> Security Class Initialized
+DEBUG - 2025-06-23 04:02:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:02:28 --> Input Class Initialized
+INFO - 2025-06-23 04:02:28 --> Language Class Initialized
+INFO - 2025-06-23 04:02:28 --> Loader Class Initialized
+INFO - 2025-06-23 04:02:28 --> Helper loaded: url_helper
+INFO - 2025-06-23 04:02:28 --> Helper loaded: slug_helper
+INFO - 2025-06-23 04:02:28 --> Helper loaded: form_helper
+INFO - 2025-06-23 04:02:28 --> Database Driver Class Initialized
+INFO - 2025-06-23 04:02:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-23 04:02:28 --> Controller Class Initialized
+DEBUG - 2025-06-23 04:02:28 --> cURL Class Initialized
+INFO - 2025-06-23 04:02:28 --> Upload Class Initialized
+DEBUG - 2025-06-23 04:02:28 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:02:28 --> User Agent Class Initialized
+INFO - 2025-06-23 04:02:28 --> Form Validation Class Initialized
+DEBUG - 2025-06-23 04:02:28 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-23 04:02:28 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:02:28 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-23 04:02:28 --> Pagination Class Initialized
+INFO - 2025-06-23 09:02:28 --> File loaded: D:\website\fleetmanagement_php81\application\views\headerlogin.php
+INFO - 2025-06-23 09:02:28 --> File loaded: D:\website\fleetmanagement_php81\application\views\login.php
+INFO - 2025-06-23 09:02:28 --> File loaded: D:\website\fleetmanagement_php81\application\views\footerlogin.php
+INFO - 2025-06-23 09:02:28 --> Final output sent to browser
+DEBUG - 2025-06-23 09:02:28 --> Total execution time: 0.1036
+INFO - 2025-06-23 04:02:29 --> Config Class Initialized
+INFO - 2025-06-23 04:02:29 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:02:29 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:02:29 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:02:29 --> URI Class Initialized
+INFO - 2025-06-23 04:02:29 --> Router Class Initialized
+INFO - 2025-06-23 04:02:29 --> Output Class Initialized
+INFO - 2025-06-23 04:02:29 --> Security Class Initialized
+DEBUG - 2025-06-23 04:02:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:02:29 --> Input Class Initialized
+INFO - 2025-06-23 04:02:29 --> Language Class Initialized
+INFO - 2025-06-23 04:02:29 --> Loader Class Initialized
+INFO - 2025-06-23 04:02:29 --> Helper loaded: url_helper
+INFO - 2025-06-23 04:02:29 --> Helper loaded: slug_helper
+INFO - 2025-06-23 04:02:29 --> Helper loaded: form_helper
+INFO - 2025-06-23 04:02:29 --> Database Driver Class Initialized
+INFO - 2025-06-23 04:02:29 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-23 04:02:29 --> Controller Class Initialized
+DEBUG - 2025-06-23 04:02:29 --> cURL Class Initialized
+INFO - 2025-06-23 04:02:29 --> Upload Class Initialized
+DEBUG - 2025-06-23 04:02:29 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:02:29 --> User Agent Class Initialized
+INFO - 2025-06-23 04:02:29 --> Form Validation Class Initialized
+DEBUG - 2025-06-23 04:02:29 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-23 04:02:29 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:02:29 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-23 04:02:29 --> Pagination Class Initialized
+INFO - 2025-06-23 09:02:29 --> File loaded: D:\website\fleetmanagement_php81\application\views\headerlogin.php
+INFO - 2025-06-23 09:02:29 --> File loaded: D:\website\fleetmanagement_php81\application\views\login.php
+INFO - 2025-06-23 09:02:29 --> File loaded: D:\website\fleetmanagement_php81\application\views\footerlogin.php
+INFO - 2025-06-23 09:02:29 --> Final output sent to browser
+DEBUG - 2025-06-23 09:02:29 --> Total execution time: 0.0953
+INFO - 2025-06-23 04:02:30 --> Config Class Initialized
+INFO - 2025-06-23 04:02:30 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:02:30 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:02:30 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:02:30 --> URI Class Initialized
+INFO - 2025-06-23 04:02:30 --> Router Class Initialized
+INFO - 2025-06-23 04:02:30 --> Output Class Initialized
+INFO - 2025-06-23 04:02:30 --> Security Class Initialized
+DEBUG - 2025-06-23 04:02:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:02:30 --> Input Class Initialized
+INFO - 2025-06-23 04:02:30 --> Language Class Initialized
+INFO - 2025-06-23 04:02:30 --> Loader Class Initialized
+INFO - 2025-06-23 04:02:30 --> Helper loaded: url_helper
+INFO - 2025-06-23 04:02:30 --> Helper loaded: slug_helper
+INFO - 2025-06-23 04:02:30 --> Helper loaded: form_helper
+INFO - 2025-06-23 04:02:30 --> Database Driver Class Initialized
+INFO - 2025-06-23 04:02:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-23 04:02:30 --> Controller Class Initialized
+DEBUG - 2025-06-23 04:02:30 --> cURL Class Initialized
+INFO - 2025-06-23 04:02:30 --> Upload Class Initialized
+DEBUG - 2025-06-23 04:02:30 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:02:30 --> User Agent Class Initialized
+INFO - 2025-06-23 04:02:30 --> Form Validation Class Initialized
+DEBUG - 2025-06-23 04:02:30 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-23 04:02:30 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:02:30 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-23 04:02:30 --> Pagination Class Initialized
+INFO - 2025-06-23 09:02:30 --> File loaded: D:\website\fleetmanagement_php81\application\views\headerlogin.php
+INFO - 2025-06-23 09:02:30 --> File loaded: D:\website\fleetmanagement_php81\application\views\login.php
+INFO - 2025-06-23 09:02:30 --> File loaded: D:\website\fleetmanagement_php81\application\views\footerlogin.php
+INFO - 2025-06-23 09:02:30 --> Final output sent to browser
+DEBUG - 2025-06-23 09:02:30 --> Total execution time: 0.1337
+INFO - 2025-06-23 04:26:36 --> Config Class Initialized
+INFO - 2025-06-23 04:26:36 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:26:36 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:26:36 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:26:36 --> URI Class Initialized
+INFO - 2025-06-23 04:26:36 --> Router Class Initialized
+INFO - 2025-06-23 04:26:36 --> Output Class Initialized
+INFO - 2025-06-23 04:26:36 --> Security Class Initialized
+DEBUG - 2025-06-23 04:26:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:36 --> Input Class Initialized
+INFO - 2025-06-23 04:26:36 --> Language Class Initialized
+INFO - 2025-06-23 04:26:36 --> Loader Class Initialized
+INFO - 2025-06-23 04:26:36 --> Helper loaded: url_helper
+INFO - 2025-06-23 04:26:36 --> Helper loaded: slug_helper
+INFO - 2025-06-23 04:26:36 --> Helper loaded: form_helper
+INFO - 2025-06-23 04:26:36 --> Database Driver Class Initialized
+INFO - 2025-06-23 04:26:36 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-23 04:26:36 --> Controller Class Initialized
+DEBUG - 2025-06-23 04:26:36 --> cURL Class Initialized
+INFO - 2025-06-23 04:26:36 --> Upload Class Initialized
+DEBUG - 2025-06-23 04:26:36 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:26:36 --> User Agent Class Initialized
+INFO - 2025-06-23 04:26:36 --> Form Validation Class Initialized
+DEBUG - 2025-06-23 04:26:36 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-23 04:26:36 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:26:36 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-23 04:26:36 --> Pagination Class Initialized
+INFO - 2025-06-23 09:26:36 --> File loaded: D:\website\fleetmanagement_php81\application\views\headerlogin.php
+INFO - 2025-06-23 09:26:36 --> File loaded: D:\website\fleetmanagement_php81\application\views\login.php
+INFO - 2025-06-23 09:26:36 --> File loaded: D:\website\fleetmanagement_php81\application\views\footerlogin.php
+INFO - 2025-06-23 09:26:36 --> Final output sent to browser
+DEBUG - 2025-06-23 09:26:36 --> Total execution time: 0.0887
+INFO - 2025-06-23 04:26:37 --> Config Class Initialized
+INFO - 2025-06-23 04:26:37 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:26:37 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:26:37 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:26:37 --> URI Class Initialized
+INFO - 2025-06-23 04:26:37 --> Router Class Initialized
+INFO - 2025-06-23 04:26:37 --> Output Class Initialized
+INFO - 2025-06-23 04:26:37 --> Security Class Initialized
+DEBUG - 2025-06-23 04:26:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:37 --> Input Class Initialized
+INFO - 2025-06-23 04:26:37 --> Language Class Initialized
+INFO - 2025-06-23 04:26:37 --> Loader Class Initialized
+INFO - 2025-06-23 04:26:37 --> Helper loaded: url_helper
+INFO - 2025-06-23 04:26:37 --> Helper loaded: slug_helper
+INFO - 2025-06-23 04:26:37 --> Helper loaded: form_helper
+INFO - 2025-06-23 04:26:37 --> Database Driver Class Initialized
+INFO - 2025-06-23 04:26:37 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-23 04:26:37 --> Controller Class Initialized
+DEBUG - 2025-06-23 04:26:37 --> cURL Class Initialized
+INFO - 2025-06-23 04:26:37 --> Upload Class Initialized
+DEBUG - 2025-06-23 04:26:37 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:26:37 --> User Agent Class Initialized
+INFO - 2025-06-23 04:26:37 --> Form Validation Class Initialized
+DEBUG - 2025-06-23 04:26:37 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-23 04:26:37 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:26:37 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-23 04:26:37 --> Pagination Class Initialized
+INFO - 2025-06-23 09:26:37 --> File loaded: D:\website\fleetmanagement_php81\application\views\headerlogin.php
+INFO - 2025-06-23 09:26:37 --> File loaded: D:\website\fleetmanagement_php81\application\views\login.php
+INFO - 2025-06-23 09:26:37 --> File loaded: D:\website\fleetmanagement_php81\application\views\footerlogin.php
+INFO - 2025-06-23 09:26:37 --> Final output sent to browser
+DEBUG - 2025-06-23 09:26:37 --> Total execution time: 0.1145
+INFO - 2025-06-23 04:26:38 --> Config Class Initialized
+INFO - 2025-06-23 04:26:38 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:26:38 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:26:38 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:26:38 --> URI Class Initialized
+INFO - 2025-06-23 04:26:38 --> Router Class Initialized
+INFO - 2025-06-23 04:26:38 --> Output Class Initialized
+INFO - 2025-06-23 04:26:38 --> Security Class Initialized
+DEBUG - 2025-06-23 04:26:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:38 --> Input Class Initialized
+INFO - 2025-06-23 04:26:38 --> Language Class Initialized
+INFO - 2025-06-23 04:26:38 --> Loader Class Initialized
+INFO - 2025-06-23 04:26:38 --> Helper loaded: url_helper
+INFO - 2025-06-23 04:26:38 --> Helper loaded: slug_helper
+INFO - 2025-06-23 04:26:38 --> Helper loaded: form_helper
+INFO - 2025-06-23 04:26:38 --> Database Driver Class Initialized
+INFO - 2025-06-23 04:26:38 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-23 04:26:38 --> Controller Class Initialized
+DEBUG - 2025-06-23 04:26:38 --> cURL Class Initialized
+INFO - 2025-06-23 04:26:38 --> Upload Class Initialized
+DEBUG - 2025-06-23 04:26:38 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:26:38 --> User Agent Class Initialized
+INFO - 2025-06-23 04:26:38 --> Form Validation Class Initialized
+DEBUG - 2025-06-23 04:26:38 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-23 04:26:38 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:26:38 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-23 04:26:38 --> Pagination Class Initialized
+INFO - 2025-06-23 09:26:38 --> File loaded: D:\website\fleetmanagement_php81\application\views\headerlogin.php
+INFO - 2025-06-23 09:26:38 --> File loaded: D:\website\fleetmanagement_php81\application\views\login.php
+INFO - 2025-06-23 09:26:38 --> File loaded: D:\website\fleetmanagement_php81\application\views\footerlogin.php
+INFO - 2025-06-23 09:26:38 --> Final output sent to browser
+DEBUG - 2025-06-23 09:26:38 --> Total execution time: 0.0686
+INFO - 2025-06-23 04:26:41 --> Config Class Initialized
+INFO - 2025-06-23 04:26:41 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:26:41 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:26:41 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:26:41 --> URI Class Initialized
+INFO - 2025-06-23 04:26:41 --> Router Class Initialized
+INFO - 2025-06-23 04:26:41 --> Output Class Initialized
+INFO - 2025-06-23 04:26:41 --> Security Class Initialized
+DEBUG - 2025-06-23 04:26:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:41 --> Input Class Initialized
+INFO - 2025-06-23 04:26:41 --> Language Class Initialized
+INFO - 2025-06-23 04:26:41 --> Loader Class Initialized
+INFO - 2025-06-23 04:26:41 --> Helper loaded: url_helper
+INFO - 2025-06-23 04:26:41 --> Helper loaded: slug_helper
+INFO - 2025-06-23 04:26:41 --> Helper loaded: form_helper
+INFO - 2025-06-23 04:26:41 --> Database Driver Class Initialized
+INFO - 2025-06-23 04:26:41 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-23 04:26:41 --> Controller Class Initialized
+DEBUG - 2025-06-23 04:26:41 --> cURL Class Initialized
+INFO - 2025-06-23 04:26:41 --> Upload Class Initialized
+DEBUG - 2025-06-23 04:26:41 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:26:41 --> User Agent Class Initialized
+INFO - 2025-06-23 04:26:41 --> Form Validation Class Initialized
+DEBUG - 2025-06-23 04:26:41 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-23 04:26:41 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:26:41 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-23 04:26:41 --> Pagination Class Initialized
+INFO - 2025-06-23 09:26:41 --> Model "Driver_model" initialized
+INFO - 2025-06-23 09:26:41 --> Model "Wallet_model" initialized
+INFO - 2025-06-23 09:26:41 --> File loaded: D:\website\fleetmanagement_php81\application\views\headernew.php
+ERROR - 2025-06-23 09:26:41 --> Severity: Warning --> Undefined variable $drivers D:\website\fleetmanagement_php81\application\views\drivers.php 82
+ERROR - 2025-06-23 09:26:41 --> Severity: Warning --> foreach() argument must be of type array|object, null given D:\website\fleetmanagement_php81\application\views\drivers.php 82
+INFO - 2025-06-23 09:26:41 --> File loaded: D:\website\fleetmanagement_php81\application\views\drivers.php
+INFO - 2025-06-23 09:26:41 --> File loaded: D:\website\fleetmanagement_php81\application\views\footernew.php
+INFO - 2025-06-23 09:26:41 --> Final output sent to browser
+DEBUG - 2025-06-23 09:26:41 --> Total execution time: 0.0902
+INFO - 2025-06-23 04:26:42 --> Config Class Initialized
+INFO - 2025-06-23 04:26:42 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:26:42 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:26:42 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:26:42 --> URI Class Initialized
+INFO - 2025-06-23 04:26:42 --> Router Class Initialized
+INFO - 2025-06-23 04:26:42 --> Output Class Initialized
+INFO - 2025-06-23 04:26:42 --> Security Class Initialized
+INFO - 2025-06-23 04:26:42 --> Config Class Initialized
+INFO - 2025-06-23 04:26:42 --> Hooks Class Initialized
+INFO - 2025-06-23 04:26:42 --> Config Class Initialized
+INFO - 2025-06-23 04:26:42 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:26:42 --> UTF-8 Support Enabled
+DEBUG - 2025-06-23 04:26:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:42 --> Input Class Initialized
+INFO - 2025-06-23 04:26:42 --> Language Class Initialized
+INFO - 2025-06-23 04:26:42 --> Utf8 Class Initialized
+DEBUG - 2025-06-23 04:26:42 --> UTF-8 Support Enabled
+ERROR - 2025-06-23 04:26:42 --> 404 Page Not Found: Assets/newstyle
+INFO - 2025-06-23 04:26:42 --> URI Class Initialized
+INFO - 2025-06-23 04:26:42 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:26:42 --> Router Class Initialized
+INFO - 2025-06-23 04:26:42 --> URI Class Initialized
+INFO - 2025-06-23 04:26:42 --> Output Class Initialized
+INFO - 2025-06-23 04:26:42 --> Router Class Initialized
+INFO - 2025-06-23 04:26:42 --> Output Class Initialized
+INFO - 2025-06-23 04:26:42 --> Security Class Initialized
+DEBUG - 2025-06-23 04:26:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:42 --> Input Class Initialized
+INFO - 2025-06-23 04:26:42 --> Language Class Initialized
+ERROR - 2025-06-23 04:26:42 --> 404 Page Not Found: Assets/newstyle
+INFO - 2025-06-23 04:26:42 --> Security Class Initialized
+DEBUG - 2025-06-23 04:26:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:42 --> Input Class Initialized
+INFO - 2025-06-23 04:26:42 --> Language Class Initialized
+ERROR - 2025-06-23 04:26:42 --> 404 Page Not Found: Assets/newstyle
+INFO - 2025-06-23 04:26:43 --> Config Class Initialized
+INFO - 2025-06-23 04:26:43 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:26:43 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:26:43 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:26:43 --> URI Class Initialized
+INFO - 2025-06-23 04:26:43 --> Router Class Initialized
+INFO - 2025-06-23 04:26:43 --> Config Class Initialized
+INFO - 2025-06-23 04:26:43 --> Hooks Class Initialized
+INFO - 2025-06-23 04:26:43 --> Output Class Initialized
+DEBUG - 2025-06-23 04:26:43 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:26:43 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:26:43 --> Security Class Initialized
+INFO - 2025-06-23 04:26:43 --> URI Class Initialized
+DEBUG - 2025-06-23 04:26:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:43 --> Input Class Initialized
+INFO - 2025-06-23 04:26:43 --> Router Class Initialized
+INFO - 2025-06-23 04:26:43 --> Language Class Initialized
+INFO - 2025-06-23 04:26:43 --> Output Class Initialized
+INFO - 2025-06-23 04:26:43 --> Security Class Initialized
+ERROR - 2025-06-23 04:26:43 --> 404 Page Not Found: Assets/newstyle
+DEBUG - 2025-06-23 04:26:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:26:43 --> Input Class Initialized
+INFO - 2025-06-23 04:26:43 --> Language Class Initialized
+ERROR - 2025-06-23 04:26:43 --> 404 Page Not Found: Assets/newstyle
+INFO - 2025-06-23 04:29:15 --> Config Class Initialized
+INFO - 2025-06-23 04:29:15 --> Hooks Class Initialized
+DEBUG - 2025-06-23 04:29:15 --> UTF-8 Support Enabled
+INFO - 2025-06-23 04:29:15 --> Utf8 Class Initialized
+INFO - 2025-06-23 04:29:15 --> URI Class Initialized
+INFO - 2025-06-23 04:29:15 --> Router Class Initialized
+INFO - 2025-06-23 04:29:15 --> Output Class Initialized
+INFO - 2025-06-23 04:29:15 --> Security Class Initialized
+DEBUG - 2025-06-23 04:29:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-23 04:29:15 --> Input Class Initialized
+INFO - 2025-06-23 04:29:15 --> Language Class Initialized
+INFO - 2025-06-23 04:29:15 --> Loader Class Initialized
+INFO - 2025-06-23 04:29:15 --> Helper loaded: url_helper
+INFO - 2025-06-23 04:29:15 --> Helper loaded: slug_helper
+INFO - 2025-06-23 04:29:15 --> Helper loaded: form_helper
+INFO - 2025-06-23 04:29:15 --> Database Driver Class Initialized
+INFO - 2025-06-23 04:29:15 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-23 04:29:15 --> Controller Class Initialized
+DEBUG - 2025-06-23 04:29:15 --> cURL Class Initialized
+INFO - 2025-06-23 04:29:15 --> Upload Class Initialized
+DEBUG - 2025-06-23 04:29:15 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:29:15 --> User Agent Class Initialized
+INFO - 2025-06-23 04:29:15 --> Form Validation Class Initialized
+DEBUG - 2025-06-23 04:29:15 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-23 04:29:15 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-23 04:29:15 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-23 04:29:15 --> Pagination Class Initialized
+INFO - 2025-06-23 09:29:15 --> File loaded: D:\website\fleetmanagement_php81\application\views\headerlogin.php
+INFO - 2025-06-23 09:29:15 --> File loaded: D:\website\fleetmanagement_php81\application\views\login.php
+INFO - 2025-06-23 09:29:15 --> File loaded: D:\website\fleetmanagement_php81\application\views\footerlogin.php
+INFO - 2025-06-23 09:29:15 --> Final output sent to browser
+DEBUG - 2025-06-23 09:29:15 --> Total execution time: 0.1120
