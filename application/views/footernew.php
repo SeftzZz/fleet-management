@@ -355,6 +355,29 @@
                     format: 'YYYY-MM-DD'
                 });
             </script>
+            <script>
+                $(document).ready(function() {
+                    <?php foreach ($supirs as $row) { ?>
+                        (function() {
+                            var id = <?php echo $row->id ?>;
+                            var statusSelector = '#statusSupir' + id;
+                            var keteranganWrapper = '#keteranganWrapper' + id;
+
+                            function toggleKeterangan() {
+                                var status = $(statusSelector).val();
+                                if (status === 'Non Aktif') {
+                                    $(keteranganWrapper).show();
+                                } else {
+                                    $(keteranganWrapper).hide();
+                                }
+                            }
+
+                            toggleKeterangan(); // Saat load
+                            $(statusSelector).change(toggleKeterangan); // Saat berubah
+                        })();
+                    <?php } ?>
+                });
+            </script>
         <?php } ?>
 
         <?php if ($nopage==1051) { ?>
