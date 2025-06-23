@@ -108,7 +108,7 @@
                                         <a class="nav-link active" id="log_ritasi_tab" data-toggle="pill" href="#log_ritasi" role="tab" aria-controls="log_ritasi" aria-selected="false">Manajemen Supir</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="statistik_tab" data-toggle="pill" href="#statistik" role="tab" aria-controls="statistik" aria-selected="false">Statistik Ritasi</a>
+                                        <a class="nav-link" id="statistik_tab" data-toggle="pill" href="#statistik" role="tab" aria-controls="statistik" aria-selected="false">Manajemen Wallet Supir</a>
                                     </li>
                                 </ul>
                                 <div class="tab-custom-content2">
@@ -289,14 +289,6 @@
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-sm-12">
-                                                                                         <div class="form-group">
-                                                                                            <label>Keterangan</label>
-                                                                                            <textarea rows="3" name="ket" value="<?php echo set_value('ket')?>" class="form-control <?php if (form_error('ket')) {echo "is-invalid";} ?>" placeholder="Resign/Bermasalah"><?php echo $row->keterangan ?></textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-12">
                                                                                         <div>
                                                                                             <input type="hidden" name="fileFotoLama" value="<?php echo $row->img_profile; ?>">
                                                                                             <input type="hidden" name="fileSimLama" value="<?php echo $row->img_sim; ?>">
@@ -365,7 +357,100 @@
                                         </table>
                                     </div>
                                     <div class="tab-pane fade" id="statistik" role="tabpanel" aria-labelledby="statistik_tab">
-                                        Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                                        <p class="lead2 mb-3">
+                                            Manajemen Wallet Supir
+                                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#mdl_tmbhLog">
+                                                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Tambah Wallet Supir
+                                            </button>
+                                        </p>
+                                        <table id="tbl_manajemenwallet" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama</th>
+                                                    <th>Balance</th>
+                                                    <th>Update At</th>
+                                                    <th width="8%">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($wallets as $row) { ?>
+                                                    <tr>
+                                                        <td><?php echo $row->name ?></td>
+                                                        <td><?php echo $this->fppfunction->rupiah_ind($row->balance) ?></td>
+                                                        <td><?php echo $this->fppfunction->tglangkajam_ind($row->updated_at) ?></td>
+                                                        <td width="11%">
+                                                            <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#mdl_wallet<?php echo $row->wallet_id ?>"><i class="fas fa-eye"></i></button>
+
+                                                            <div class="modal fade" id="mdl_wallet<?php echo $row->wallet_id ?>">
+                                                                <div class="modal-dialog modal-fullscreen">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Wallet detail <?php echo $row->name ?></h4>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <p>Wallet ID: <?php echo $row->wallet_id ?></p>
+                                                                            <p>Jumlah transaksi: <?php echo count($wallet_transactions[$row->wallet_id] ?? []) ?></p>
+
+                                                                            <table id="tbl_manajemenwallet_transactions<?php echo $row->wallet_id ?>" class="table table-bordered table-striped">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>No.</th>
+                                                                                        <th>Tipe transaksi</th>
+                                                                                        <th>Balance</th>
+                                                                                        <th>Keterangan</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Create At</th>
+                                                                                        <th>Update At</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <?php 
+                                                                                        $no = 1;
+                                                                                        foreach ($wallet_transactions[$row->wallet_id] ?? [] as $trans) { 
+                                                                                    ?>
+                                                                                        <tr>
+                                                                                            <td><?php echo $no++ ?></td>
+                                                                                            <td><?php echo $trans->transaction_type ?></td>
+                                                                                            <td><?php echo $this->fppfunction->rupiah_ind($trans->amount) ?></td>
+                                                                                            <td><?php echo $trans->description ?></td>
+                                                                                            <td><?php echo $trans->status ?></td>
+                                                                                            <td><?php echo $this->fppfunction->tglangkajam_ind($trans->created_at) ?></td>
+                                                                                            <td><?php echo $this->fppfunction->tglangkajam_ind($trans->updated_at) ?></td>
+                                                                                        </tr>
+                                                                                    <?php } ?>
+                                                                                </tbody>
+                                                                                <tfoot>
+                                                                                    <tr>
+                                                                                        <th>No.</th>
+                                                                                        <th>Tipe transaksi</th>
+                                                                                        <th>Balance</th>
+                                                                                        <th>Keterangan</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Create</th>
+                                                                                        <th>Last update</th>
+                                                                                    </tr>
+                                                                                </tfoot>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Nama</th>
+                                                    <th>Balance</th>
+                                                    <th>Update At</th>
+                                                    <th width="8%">Aksi</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

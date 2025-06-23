@@ -11,7 +11,7 @@
         <!-- iCheck -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
         
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031) { ?>
         <!-- Select2 -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/select2/css/select2.min.css">
         
@@ -27,6 +27,7 @@
 
         <!-- style -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/dist/css/newtheme.css?v=3.2.0">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/style.css">
         <!-- overlayScrollbars -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 

@@ -146,10 +146,11 @@
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-sm-12">
-                                                                                        <div>
-                                                                                            <a href="<?php echo site_url('vehicles') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                                            <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                                                        </div>
+                                                                                        <center>
+                                                                                            <a href="<?php echo site_url('vehicles') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                            <input type="submit" name="submit" class="btn btn-primary" value="&nbsp;&nbsp;&nbsp;&nbsp;Submit&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                                                        </center>
                                                                                     </div>
                                                                                 </div>
                                                                             </form>
@@ -181,10 +182,11 @@
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-sm-12">
-                                                                                        <div>
-                                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                                                                                            <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                                                        </div>
+                                                                                        <center>
+                                                                                            <a href="<?php echo site_url('vehicles') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                            <input type="submit" name="submit" class="btn btn-primary" value="&nbsp;&nbsp;&nbsp;&nbsp;Submit&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                                                        </center>
                                                                                     </div>
                                                                                 </div>
                                                                             </form>
@@ -224,9 +226,14 @@
                                                     <label class="form-label">Jenis Dokumen</label>
                                                     <select class="form-select form-control" name="doc_type">
                                                         <option selected>Pilih jenis...</option>
-                                                        <?php foreach ($v_doc_detail as $value) { ?>
+                                                        <!-- <?php foreach ($v_doc_detail as $value) { ?>
                                                             <option value='<?php echo $value->name; ?>' <?php echo set_select('doc_type', $value->id );?> ><?php echo $value->name; ?></option>
-                                                        <?php } ?>
+                                                        <?php } ?> -->
+                                                        <option>STNK</option>
+                                                        <option>KIR</option>
+                                                        <option>Asuransi</option>
+                                                        <option>BPKB</option>
+                                                        <option>Lainnya</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -244,10 +251,11 @@
                                                     <input class="form-control" type="file">
                                                 </div> -->
                                                 <div class="col-md-4 d-flex align-items-end">
-                                                    <div>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                    </div>
+                                                    <center>
+                                                        <a href="<?php echo site_url('vehicles') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="submit" name="submit" class="btn btn-primary" value="&nbsp;&nbsp;&nbsp;&nbsp;Submit&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                    </center>
                                                 </div>
                                             </div>
                                         </form>

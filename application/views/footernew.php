@@ -108,19 +108,45 @@
                             { targets: [5], orderable: false}
                         ]
                     })
-                    .buttons().container().appendTo('#tbl_atim_wrapper .col-md-6:eq(0)');
+                    .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemensupir").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
                         "buttons": ["excel", "pdf", "print", "colvis"],
                         "columnDefs": [
-                            { targets: [5], orderable: false}
+                            { targets: [4], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
 
+                    $("#tbl_manajemenwallet").DataTable({
+                        responsive: true,
+                        lengthChange: false,
+                        autoWidth: false,
+                        searching: false,
+                        buttons: [
+                            "excel", 
+                            "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // Hanya kolom Nama, Balance, Update At
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        columnDefs: [
+                            { targets: [2], orderable: false }
+                        ]
+                    })
+                    .buttons()
+                    .container()
+                    .appendTo('#tbl_manajemenwallet_wrapper .col-md-6:eq(0)');
+
                     $("#tbl_reimburse_done").DataTable({
                         responsive: true,
+                        paging: false,
                         lengthChange: false,
                         autoWidth: false,
                         searching: false,
@@ -189,6 +215,20 @@
                         window.location.href = url;
                     });
                 });
+            </script>
+        <?php } ?>
+
+        <?php if ($nopage == 4) { ?>
+            <script>
+                <?php foreach ($ritasis as $row) { ?>
+                    $('#tgl_edit<?php echo $row->id ?>').datetimepicker({
+                        format: 'YYYY-MM-DD'
+                    });
+
+                    $('#waktu_angkut<?php echo $row->id ?>').datetimepicker({
+                        format: 'HH:mm'
+                    });
+                <?php } ?>
 
                 /**
                  * Ambil kendaraan berdasarkan tim_id lalu isi <select> mobil.
@@ -257,20 +297,12 @@
                         format: 'YYYY-MM-DD'
                     });
                 });
-            </script>
-        <?php } ?>
 
-        <?php if ($nopage==4) { ?>
-            <script>
-                <?php foreach ($ritasis as $row) { ?>
-                    $('#tgl_edit<?php echo $row->id ?>').datetimepicker({
-                        format: 'YYYY-MM-DD'
-                    });
-
-                    $('#waktu_angkut<?php echo $row->id ?>').datetimepicker({
+                <?php foreach ($kendaraans as $value): ?>
+                    $('#jam-picker<?php echo $value->vehicle_id ?>').datetimepicker({
                         format: 'HH:mm'
                     });
-                <?php } ?>
+                <?php endforeach; ?>
             </script>
             <script>
                 $(document).ready(function() {
@@ -296,42 +328,6 @@
                         }
                     });
                 });
-            </script>
-        <?php } ?>
-
-        <?php if ($nopage==1041) { ?>
-            <script>
-                <?php foreach ($supirs as $row) { ?>
-                    $('#tglEditSupir<?php echo $row->id ?>').datetimepicker({
-                        format: 'YYYY-MM-DD'
-                    });
-                    $('#tglEditLahir<?php echo $row->id ?>').datetimepicker({
-                        format: 'YYYY-MM-DD'
-                    });
-                    $('#tglEditExpSim<?php echo $row->id ?>').datetimepicker({
-                        format: 'YYYY-MM-DD'
-                    });
-                <?php } ?>
-
-                $('#tglAddLahir').datetimepicker({
-                    format: 'YYYY-MM-DD'
-                });
-                $('#tglAddJoin').datetimepicker({
-                    format: 'YYYY-MM-DD'
-                });
-                $('#tglAddExpSim').datetimepicker({
-                    format: 'YYYY-MM-DD'
-                });
-            </script>
-        <?php } ?>
-
-        <?php if ($nopage==1051) { ?>
-            <script>
-                <?php foreach ($kendaraans as $value): ?>
-                    $('#jam-picker<?php echo $value->vehicle_id ?>').datetimepicker({
-                        format: 'HH:mm'
-                    });
-                <?php endforeach; ?>
             </script>
         <?php } ?>
 
@@ -384,6 +380,37 @@
                 // Inisialisasi datepicker dan select2 jika diperlukan
                 $('.datepicker').datetimepicker({ format: 'YYYY-MM-DD' });
                 $('.select2').select2();
+            </script>
+        <?php } ?>
+
+        <?php if ($nopage == 1041) { ?>
+            <script>
+                <?php foreach ($wallets as $row): ?>
+                    $(document).ready(function () {
+                        var tableId = "#tbl_manajemenwallet_transactions<?php echo $row->wallet_id ?>";
+                        var wrapperSelector = tableId + "_wrapper .col-md-6:eq(0)";
+
+                        $(tableId).DataTable({
+                            responsive: true,
+                            paging: false,
+                            lengthChange: false,
+                            autoWidth: false,
+                            searching: false,
+                            buttons: [
+                                "excel",
+                                "pdf",
+                                {
+                                    extend: "print",
+                                    footer: true
+                                },
+                                "colvis"
+                            ],
+                            columnDefs: [
+                                { targets: [2], orderable: false }
+                            ]
+                        }).buttons().container().appendTo(wrapperSelector);
+                    });
+                <?php endforeach; ?>
             </script>
         <?php } ?>
 

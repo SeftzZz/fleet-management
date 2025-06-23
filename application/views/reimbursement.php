@@ -99,7 +99,7 @@
                                         <a class="nav-link active" id="log_ritasi_tab" data-toggle="pill" href="#log_ritasi" role="tab" aria-controls="log_ritasi" aria-selected="false">Manajemen Reimbursement</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="statistik_tab" data-toggle="pill" href="#statistik" role="tab" aria-controls="statistik" aria-selected="false">Statistik Ritasi</a>
+                                        <a class="nav-link" id="statistik_tab" data-toggle="pill" href="#statistik" role="tab" aria-controls="statistik" aria-selected="false">Histori Reimbursement</a>
                                     </li>
                                 </ul>
                                 <div class="tab-custom-content2">

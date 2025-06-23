@@ -127,6 +127,7 @@ class Vehicles extends CI_Controller {
                     'doc_type'      => $this->input->post('doc_type'),
                     'doc_number'    => $this->input->post('doc_number'),
                     'expiry_date'	=> $this->input->post('expiry_date'),
+                    'status'        => 'Aktif',
                     'created_at'    => date('Y-m-d H:i:s'),
                     'updated_at'    => date('Y-m-d H:i:s')
                 );
