@@ -1,14 +1,23 @@
-application/config/database.php
-application/config/config.php
-<<<<<<< HEAD
-system
-Key103_191_63_18.ppk
-.htaccess
-Key103_191_63_18.ppk
+*/config/development
+*/logs/log-*.php
+!*/logs/index.html
+*/cache/*
+!system/cache/*
+!*/cache/index.html
+!*/cache/.htaccess
+
+user_guide_src/build/*
+user_guide_src/cilexer/build/*
+user_guide_src/cilexer/dist/*
+user_guide_src/cilexer/pycilexer.egg-info/*
+
+#codeigniter 3
+application/logs/*
+!application/logs/index.html
+!application/logs/.htaccess
+/vendor/
+system/
+
 vps sahirahotelsgroup.com.txt
-=======
 Key103_191_63_18.ppk
-.htaccess
-vps sahirahotelsgroup.com.txt
-*.Zone.Identifier
->>>>>>> 73efc7e9b82e023a3212b22621cfe8b8eff37ad0
+/backup-230625

@@ -66,11 +66,7 @@
 switch (ENVIRONMENT)
 {
 	case 'development':
-<<<<<<< HEAD
 		error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
-=======
-		error_reporting(-1);
->>>>>>> 73efc7e9b82e023a3212b22621cfe8b8eff37ad0
 		ini_set('display_errors', 1);
 	break;
 

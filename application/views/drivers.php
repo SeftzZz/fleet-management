@@ -131,6 +131,7 @@
                                                     <th>No. Darurat</th>
                                                     <th>No. SIM</th>
                                                     <th>Status</th>
+                                                    <th>Keterangan</th>
                                                     <th width="8%">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -142,7 +143,20 @@
                                                         <td><?php echo $row->phone ?></td>
                                                         <td><?php echo $row->nomor_darurat ?></td>
                                                         <td><?php echo $row->license_number ?></td>
-                                                        <td><?php echo $row->status ?></td>
+                                                        <td
+                                                            <?php if ($row->status == 'Non Aktif'): ?>
+                                                                data-toggle="tooltip"
+                                                                data-placement="top"
+                                                                title="<?php echo htmlspecialchars($row->keterangan) ?>"
+                                                            <?php endif; ?>
+                                                        >
+                                                            <?php echo $row->status ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php if ($row->status == 'Non Aktif'): ?>
+                                                                <?php echo $row->keterangan ?>
+                                                            <?php endif; ?>
+                                                        </td>
                                                         <td width="11%">
                                                             <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#mdl_imgSupir<?php echo $row->id ?>"><i class="fas fa-file-image"></i></button>
 
@@ -265,25 +279,33 @@
                                                                                             <input type="file" name="fotoKtp" />
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-sm-4">
+                                                                                    <div class="col-sm-8">
                                                                                          <div class="form-group">
                                                                                             <label>Alamat</label>
                                                                                             <textarea rows="3" name="alamat" value="<?php echo set_value('alamat')?>" class="form-control <?php if (form_error('alamat')) {echo "is-invalid";} ?>"><?php echo $row->alamat ?></textarea>
                                                                                         </div>
                                                                                     </div>
+                                                                                </div>
+                                                                                <div class="row">
                                                                                     <div class="col-sm-4">
                                                                                         <div class="form-group">
                                                                                             <label>Status Supir</label>
-                                                                                            <select name="statusSupir" class="form-control <?php if (form_error('statusSupir')) {echo "is-invalid";} ?>" style="width:100%;"/>
-                                                                                                <option value=""/>--- Pilih Status ---</option>
+                                                                                            <select id="statusSupir<?php echo $row->id ?>" name="statusSupir" class="form-control <?php if (form_error('statusSupir')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                                                                <option value="">--- Pilih Status ---</option>
                                                                                                 <?php
-                                                                                                    $pilihanstatus=array("Aktif","Non Aktif");
+                                                                                                    $pilihanstatus = array("Aktif","Non Aktif");
                                                                                                     foreach ($pilihanstatus as $value) {
-                                                                                                        $selected=($value == $row->status) ? "selected" : "";
+                                                                                                        $selected = ($value == $row->status) ? "selected" : "";
                                                                                                         echo "<option value='$value' $selected>$value</option>";
                                                                                                     }
                                                                                                 ?>
                                                                                             </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-8" id="keteranganWrapper<?php echo $row->id ?>">
+                                                                                        <div class="form-group">
+                                                                                            <label>Keterangan</label>
+                                                                                            <textarea rows="3" name="keterangan" class="form-control <?php if (form_error('keterangan')) {echo "is-invalid";} ?>" placeholder="Resign/Bermasalah"><?php echo $row->keterangan ?></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -351,6 +373,7 @@
                                                     <th>No. Darurat</th>
                                                     <th>No. SIM</th>
                                                     <th>Status</th>
+                                                    <th>Keterangan</th>
                                                     <th width="8%">Aksi</th>
                                                 </tr>
                                             </tfoot>
