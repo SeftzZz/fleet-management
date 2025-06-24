@@ -27,23 +27,28 @@
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="<?php echo base_url() ?>">
-                                <i class="bi bi-speedometer2"></i> Dashboard Utama
+                            <a class="nav-link active" href="<?php echo site_url() ?>">
+                                <i class="bi bi-speedometer2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo base_url('vehicles') ?>">
+                            <a class="nav-link" href="<?php echo site_url('vehicles') ?>">
                                 <i class="bi bi-truck"></i> Manajemen Kendaraan
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo base_url('drivers') ?>">
+                            <a class="nav-link" href="<?php echo site_url('drivers') ?>">
                                 <i class="bi bi-people-fill"></i> Manajemen Supir
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo base_url('routes') ?>">
-                                <i class="bi bi-signpost-split"></i> Rute & Ritasi
+                            <a class="nav-link" href="<?php echo site_url('timmgmt') ?>">
+                                <i class="bi bi-diagram-3-fill"></i> Manajemen Anggota Tim
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo site_url('routes') ?>">
+                                <i class="bi bi-signpost-split"></i> Rekapitulasi Ritasi
                             </a>
                         </li>
                         <li class="nav-item">
@@ -74,6 +79,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="bi bi-person-gear"></i> Pengguna
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo site_url('auth/logout') ?>">
+                                <i class="bi bi-power"></i> Logout
                             </a>
                         </li>
                     </ul>
