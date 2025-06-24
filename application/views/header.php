@@ -27,7 +27,7 @@
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="<?php echo site_url() ?>">
+                            <a class="nav-link active" href="<?php echo site_url('dashboard') ?>">
                                 <i class="bi bi-speedometer2"></i> Dashboard
                             </a>
                         </li>
@@ -56,7 +56,7 @@
                                 <i class="bi bi-tools"></i> Pemeliharaan & BBM
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="bi bi-exclamation-triangle"></i> Insiden & Alert
                             </a>
@@ -80,7 +80,7 @@
                             <a class="nav-link" href="#">
                                 <i class="bi bi-person-gear"></i> Pengguna
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo site_url('auth/logout') ?>">
                                 <i class="bi bi-power"></i> Logout

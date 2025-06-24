@@ -354,6 +354,9 @@
                 $('#tglAddExpSim').datetimepicker({
                     format: 'YYYY-MM-DD'
                 });
+                $('#tglCariJoin').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
             </script>
             <script>
                 $(function () {

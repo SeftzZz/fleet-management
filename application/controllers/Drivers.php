@@ -19,6 +19,10 @@ class Drivers extends CI_Controller {
         $this->load->model('Driver_model');
         $this->load->model('Wallet_model');
         $this->load->database();
+
+        // if(!$this->ion_auth->logged_in()) {
+        //     redirect('auth/login', 'refresh');
+        // }
     }
 
     /**
@@ -44,20 +48,21 @@ class Drivers extends CI_Controller {
         ];
 
         if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('tgl_join','Tanggal Bergabung','required');
-            $this->form_validation->set_rules('status','Status','required');
+            $this->form_validation->set_rules('nmSupir','Nama Supir','');
+            $this->form_validation->set_rules('tglJoin','Tanggal Bergabung','');
+            $this->form_validation->set_rules('statusSupir','Status','');
 
-            $caritanggal = $this->input->post('tgl_join');
-            $caristatus = $this->input->post('status');
+            $carisupir = $this->input->post('nmSupir');
+            $caritanggal = $this->input->post('tglJoin');
+            $caristatus = $this->input->post('statusSupir');
 
-            $data['supirs'] = $this->Driver_model->getAllSupirByFilter($caritanggal,$caristatus);
+            $data['supirs'] = $this->Driver_model->getAllSupirByFilter($carisupir,$caritanggal,$caristatus);
             $data['wallets'] = $this->Wallet_model->getAllWallet();
             
             $this->load->view('headernew', $data);
             $this->load->view('drivers', $data);
             $this->load->view('footernew');
         } else {
-
             $data['supirs'] = $this->Driver_model->getAllSupir();
             $data['wallets'] = $this->Wallet_model->getAllWallet();
 

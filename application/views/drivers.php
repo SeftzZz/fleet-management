@@ -63,25 +63,34 @@
                             <div class="card-body">
                                 <form id="form1" name="form1" action="<?php echo site_url('drivers')?>" method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Nama Supir</label>
+                                                <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Tanggal Bergabung</label>
-                                                <div class="input-group date" id="tglan_bergabung" data-target-input="nearest">
-                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control datetimepicker-input" data-target="#tglan_bergabung" data-toggle="datetimepicker" />
+                                                <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
+                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control datetimepicker-input" data-target="#tglCariJoin" data-toggle="datetimepicker" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Status Supir</label>
-                                                <select name="status" class="form-control" style="width:100%;">
-                                                        <option value="">Semua Supir</option>
-                                                        <?php foreach ($drivers as $value) { ?>
-                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('status', $value->id );?> ><?php echo $value->status; ?></option>
-                                                        <?php } ?>
+                                                <label>Status</label>
+                                                <select name="statusSupir" class="custom-select" style="width:100%;">
+                                                    <option value=""/>--- Pilih Status ---</option>
+                                                    <?php 
+                                                        $pilihanstatus=array("Aktif","Non Aktif");
+                                                        foreach ($pilihanstatus as $value) { 
+                                                    ?>
+                                                        <option value='<?php echo $value; ?>' <?php echo set_select('statusSupir', $value);?> /><?php echo $value; ?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
