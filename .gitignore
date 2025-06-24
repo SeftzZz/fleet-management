@@ -1,7 +1,14 @@
 application/config/database.php
 application/config/config.php
+<<<<<<< HEAD
 system
 Key103_191_63_18.ppk
 .htaccess
 Key103_191_63_18.ppk
 vps sahirahotelsgroup.com.txt
+=======
+Key103_191_63_18.ppk
+.htaccess
+vps sahirahotelsgroup.com.txt
+*.Zone.Identifier
+>>>>>>> 73efc7e9b82e023a3212b22621cfe8b8eff37ad0
