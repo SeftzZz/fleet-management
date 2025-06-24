@@ -16,17 +16,22 @@ class Dashboard extends CI_Controller {
         $this->load->library("user_agent");
         date_default_timezone_set("Asia/Jakarta");
         $this->load->database();
+
+        if(!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
     }
 
 	public function index()
 	{
-		$data = [
-            "title" => "Dashboard | Fleet Management",
-            "nopage" => 1,
-        ];
+        redirect('routes', 'refresh');
+		// $data = [
+        //     "title" => "Dashboard | Fleet Management",
+        //     "nopage" => 1,
+        // ];
 
-		$this->load->view('header', $data);
-		$this->load->view('dashboard');
-		$this->load->view('footer');
+		// $this->load->view('header', $data);
+		// $this->load->view('dashboard');
+		// $this->load->view('footer');
 	}
 }

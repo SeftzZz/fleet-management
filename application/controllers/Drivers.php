@@ -20,9 +20,9 @@ class Drivers extends CI_Controller {
         $this->load->model('Wallet_model');
         $this->load->database();
 
-        // if(!$this->ion_auth->logged_in()) {
-        //     redirect('auth/login', 'refresh');
-        // }
+        if(!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
     }
 
     /**

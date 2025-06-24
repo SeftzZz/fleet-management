@@ -24,10 +24,7 @@
 						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 mx-auto">
 							<form action="<?php echo site_url('auth/login')?>" id="form1" name="form1" data-parsley-validate method="post" accept-charset="utf-8">
 								<div class="particles-form">
-									<center>
-										<img src="<?php echo base_url(); ?>assets/newstyle/login/images/KMPLogo.png" width="75%">
-										<p class="text-light h4">Fleet Management System</p>
-									</center>
+									<p class="text-light h3">Fleet Management Login</p>
 									<div class="input-box m-30">
 										<span class="text-white">Email</span>
 										<input type="text" name="identity" id="identity" class="form-control" value="" placeholder="user01@gmail.com" required>

@@ -184,11 +184,11 @@ class Routes extends CI_Controller {
                     "title" => "Manajemen Rute / Ritasi | Fleet Management",
                     "nopage" => 4,
                     "routes" => $this->Route_model->getAllRoutes(),
-                    "kendaraans" => $this->Vehicle_model->getAllKendaraan(),
+                    "kendaraans" => $this->Vehicle_model->getAllVehicles(),
                     "supirs" => $this->Driver_model->getAllSupir(),
                     "ritasis" => $this->Route_model->getAllRitasi(),
                     "proyeks" => $this->Proyek_model->getAllProyekAktif(),
-                    "galians" => $this->Lokasigalian_model->getAllGalian(),
+                    "galians" => $this->Lokasigalian_model->getAllGalianByLokasi(),
                     "tims" => $this->Tim_model->getAllTim()
                 ];
 

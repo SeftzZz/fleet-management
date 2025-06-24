@@ -20,6 +20,10 @@ class Lokasigalian extends CI_Controller {
         $this->load->model('Proyek_model');
         $this->load->model('Uangjalan_model');
         $this->load->database();
+
+        if(!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
     }
 
 	public function index()
