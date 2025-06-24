@@ -1,23 +1,7 @@
-*/config/development
-*/logs/log-*.php
-!*/logs/index.html
-*/cache/*
-!system/cache/*
-!*/cache/index.html
-!*/cache/.htaccess
-
-user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
-
-#codeigniter 3
-application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
-/vendor/
 system/
-
+application/config/database.php
+application/config/config.php
 vps sahirahotelsgroup.com.txt
 Key103_191_63_18.ppk
-/backup-230625
+.htaccess
+vps sahirahotelsgroup.com.txt
