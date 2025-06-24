@@ -78,9 +78,9 @@
 
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <a href="index3.html" class="brand-link">
-                    <img src="<?php echo base_url(); ?>assets/newstyle/dist/img/LogoTruck.png" class="brand-image">
-                    <span class="brand-text font-weight-light">FLEETX</span>
+                <a href="#" class="brand-link">
+                    <img src="<?php echo base_url(); ?>assets/newstyle/dist/img/KMPLogoSinga.png" class="brand-image">
+                    <span class="brand-text font-weight-light" style="color:#000000;">Karya Majujaya Perkasa</span>
                 </a>
 
                 <!-- Sidebar -->
