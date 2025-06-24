@@ -111,7 +111,7 @@ class Route_model extends CI_Model {
 
     public function getLastInsertedRitasiSummary()
     {
-        $this->db->select('ANY_VALUE(nama_proyek) AS nama_proyek, ANY_VALUE(lokasi) AS lokasi, ANY_VALUE(nama_tim) AS nama_tim, COUNT(vehicle_id) AS jumlah_kendaraan');
+        $this->db->select('MAX(nama_proyek) AS nama_proyek, MAX(lokasi) AS lokasi, MAX(nama_tim) AS nama_tim, COUNT(vehicle_id) AS jumlah_kendaraan');
         $this->db->from('ritasi');
         $this->db->where('is_delete', 0);
         $this->db->group_by(['tgl_ritasi', 'tim_id', 'proyek_id', 'galian_id']);
