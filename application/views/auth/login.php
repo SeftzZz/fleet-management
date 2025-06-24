@@ -22,16 +22,16 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 mx-auto">
-							<form action="#" method="post">
+							<form action="<?php echo site_url('auth/login')?>" id="form1" name="form1" data-parsley-validate method="post" accept-charset="utf-8">
 								<div class="particles-form">
 									<p class="text-light h3">Fleet Management Login</p>
 									<div class="input-box m-30">
 										<span class="text-white">Email</span>
-										<input type="email" class="form-control" value="" placeholder="user01@gmail.com" name="email" required>
+										<input type="text" name="identity" id="identity" class="form-control" value="" placeholder="user01@gmail.com" required>
 									</div>
 									<div class="input-box m-10">
 										<span class="text-white">Password</span>
-										<input type="password" class="form-control" value="" placeholder="***********" name="password" required>
+										<input type="password" name="password" id="password" class="form-control" value="" placeholder="***********" required>
 									</div>
 									<div class="submit-button m-20">
 										<input type="submit" class="form-control fw-bold submit-button" value="Login">
@@ -40,9 +40,32 @@
 							</form>
 						</div>
 					</div>
+
+					
 				</div>
 			</div>
 		</div>
+
+		<!-- SweetAlert2 -->
+		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+		<script src="<?php echo base_url(); ?>assets/newstyle/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+		
+		<?php if ($this->session->flashdata('pesanerror')) { ?>
+            <script language="javascript" type="text/javascript">
+                window.onload = function() {
+                    Swal.fire({
+                        title: "Error",
+                        text: "<?php echo $this->session->flashdata('pesanerror');?>",
+                        icon: "error",
+                        confirmButtonText: "Tutup"
+                    });
+                }
+            </script>
+            <?php $this->session->unset_userdata('pesanerror') ?>
+        <?php } else { ?>
+            <!-- sengaja dikosongkan -->
+        <?php } ?>
+
 		<script src="<?php echo base_url(); ?>assets/newstyle/login/js/bootstrap.bundle.min.js"></script>
 		<script src="<?php echo base_url(); ?>assets/newstyle/login/js/particle.js"></script>
 		<script src="<?php echo base_url(); ?>assets/newstyle/login/js/app.js"></script>
