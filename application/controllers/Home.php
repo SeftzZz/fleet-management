@@ -21,13 +21,15 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$data = [
-            "title" => "Dashboard Utama | Fleet Management",
-            "nopage" => 1,
-        ];
+		redirect('auth/login', 'refresh');
+        
+        // $data = [
+        //     "title" => "Dashboard Utama | Fleet Management",
+        //     "nopage" => 1,
+        // ];
 
 		// $this->load->view('header', $data);
-		$this->load->view('login');
+		// $this->load->view('login');
 		// $this->load->view('footer');
 	}
 
