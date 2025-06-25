@@ -7,7 +7,7 @@
                             <div class="col-sm-6"><h1 class="m-0">Manajemen Supir</h1></div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="<?php echo site_url() ?>">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="<?php echo site_url('dashboard') ?>">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Manajemen Supir</li>
                                 </ol>
                             </div>
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="container-fluid">
-                        <div class="card">
+                        <div class="card" style="z-index:2;">
                             <div class="card-header">
                                 <h3 class="card-title">Filter Manajemen Supir</h3>
                                 <div class="card-tools">

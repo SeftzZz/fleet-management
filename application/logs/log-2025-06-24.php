@@ -33146,3 +33146,275 @@ DEBUG - 2025-06-24 16:40:22 --> Global POST, GET and COOKIE data sanitized
 INFO - 2025-06-24 16:40:22 --> Input Class Initialized
 INFO - 2025-06-24 16:40:22 --> Language Class Initialized
 ERROR - 2025-06-24 16:40:22 --> 404 Page Not Found: Assets/newstyle
+INFO - 2025-06-24 16:43:42 --> Config Class Initialized
+INFO - 2025-06-24 16:43:42 --> Hooks Class Initialized
+DEBUG - 2025-06-24 16:43:42 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:43:42 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:43:42 --> URI Class Initialized
+INFO - 2025-06-24 16:43:42 --> Router Class Initialized
+INFO - 2025-06-24 16:43:42 --> Output Class Initialized
+INFO - 2025-06-24 16:43:42 --> Security Class Initialized
+DEBUG - 2025-06-24 16:43:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:43:42 --> Input Class Initialized
+INFO - 2025-06-24 16:43:42 --> Language Class Initialized
+INFO - 2025-06-24 16:43:42 --> Loader Class Initialized
+INFO - 2025-06-24 16:43:42 --> Helper loaded: url_helper
+INFO - 2025-06-24 16:43:42 --> Helper loaded: slug_helper
+INFO - 2025-06-24 16:43:42 --> Helper loaded: form_helper
+INFO - 2025-06-24 16:43:42 --> Database Driver Class Initialized
+INFO - 2025-06-24 16:43:42 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-24 16:43:42 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/ion_auth.php
+INFO - 2025-06-24 16:43:42 --> Email Class Initialized
+INFO - 2025-06-24 16:43:42 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-06-24 16:43:42 --> Helper loaded: cookie_helper
+INFO - 2025-06-24 16:43:42 --> Helper loaded: language_helper
+DEBUG - 2025-06-24 16:43:42 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:43:42 --> Model "Ion_auth_model" initialized
+INFO - 2025-06-24 16:43:42 --> Controller Class Initialized
+DEBUG - 2025-06-24 16:43:42 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:43:42 --> Form Validation Class Initialized
+INFO - 2025-06-24 16:43:42 --> Language file loaded: language/english/auth_lang.php
+INFO - 2025-06-24 16:43:42 --> Config Class Initialized
+INFO - 2025-06-24 16:43:42 --> Hooks Class Initialized
+DEBUG - 2025-06-24 16:43:42 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:43:42 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:43:42 --> URI Class Initialized
+INFO - 2025-06-24 16:43:42 --> Config Class Initialized
+INFO - 2025-06-24 16:43:42 --> Hooks Class Initialized
+INFO - 2025-06-24 16:43:42 --> Router Class Initialized
+DEBUG - 2025-06-24 16:43:42 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:43:42 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:43:42 --> Output Class Initialized
+INFO - 2025-06-24 16:43:42 --> URI Class Initialized
+INFO - 2025-06-24 16:43:42 --> Router Class Initialized
+INFO - 2025-06-24 16:43:42 --> Security Class Initialized
+DEBUG - 2025-06-24 16:43:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:43:42 --> Output Class Initialized
+INFO - 2025-06-24 16:43:42 --> Input Class Initialized
+INFO - 2025-06-24 16:43:42 --> Language Class Initialized
+INFO - 2025-06-24 16:43:42 --> Security Class Initialized
+DEBUG - 2025-06-24 16:43:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:43:42 --> Loader Class Initialized
+INFO - 2025-06-24 16:43:42 --> Input Class Initialized
+INFO - 2025-06-24 16:43:42 --> Language Class Initialized
+INFO - 2025-06-24 16:43:42 --> Helper loaded: url_helper
+INFO - 2025-06-24 16:43:42 --> Helper loaded: slug_helper
+ERROR - 2025-06-24 16:43:42 --> 404 Page Not Found: Faviconico/index
+INFO - 2025-06-24 16:43:42 --> Helper loaded: form_helper
+INFO - 2025-06-24 16:43:42 --> Database Driver Class Initialized
+INFO - 2025-06-24 16:43:42 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-24 16:43:42 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/ion_auth.php
+INFO - 2025-06-24 16:43:42 --> Email Class Initialized
+INFO - 2025-06-24 16:43:42 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-06-24 16:43:42 --> Helper loaded: cookie_helper
+INFO - 2025-06-24 16:43:42 --> Helper loaded: language_helper
+DEBUG - 2025-06-24 16:43:42 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:43:42 --> Model "Ion_auth_model" initialized
+INFO - 2025-06-24 16:43:42 --> Controller Class Initialized
+DEBUG - 2025-06-24 16:43:42 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:43:42 --> Form Validation Class Initialized
+INFO - 2025-06-24 16:43:42 --> Language file loaded: language/english/auth_lang.php
+INFO - 2025-06-24 16:43:42 --> File loaded: D:\website\fleetmanagement_php81\application\views\auth\login.php
+INFO - 2025-06-24 16:43:42 --> Final output sent to browser
+DEBUG - 2025-06-24 16:43:42 --> Total execution time: 0.1087
+INFO - 2025-06-24 16:43:44 --> Config Class Initialized
+INFO - 2025-06-24 16:43:44 --> Hooks Class Initialized
+DEBUG - 2025-06-24 16:43:44 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:43:44 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:43:44 --> URI Class Initialized
+INFO - 2025-06-24 16:43:44 --> Router Class Initialized
+INFO - 2025-06-24 16:43:44 --> Output Class Initialized
+INFO - 2025-06-24 16:43:44 --> Security Class Initialized
+DEBUG - 2025-06-24 16:43:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:43:44 --> Input Class Initialized
+INFO - 2025-06-24 16:43:44 --> Language Class Initialized
+INFO - 2025-06-24 16:43:44 --> Loader Class Initialized
+INFO - 2025-06-24 16:43:44 --> Helper loaded: url_helper
+INFO - 2025-06-24 16:43:44 --> Helper loaded: slug_helper
+INFO - 2025-06-24 16:43:44 --> Helper loaded: form_helper
+INFO - 2025-06-24 16:43:44 --> Database Driver Class Initialized
+INFO - 2025-06-24 16:43:44 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-24 16:43:44 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/ion_auth.php
+INFO - 2025-06-24 16:43:44 --> Email Class Initialized
+INFO - 2025-06-24 16:43:44 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-06-24 16:43:44 --> Helper loaded: cookie_helper
+INFO - 2025-06-24 16:43:44 --> Helper loaded: language_helper
+DEBUG - 2025-06-24 16:43:44 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:43:44 --> Model "Ion_auth_model" initialized
+INFO - 2025-06-24 16:43:44 --> Controller Class Initialized
+DEBUG - 2025-06-24 16:43:44 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:43:44 --> Form Validation Class Initialized
+INFO - 2025-06-24 16:43:44 --> Language file loaded: language/english/auth_lang.php
+INFO - 2025-06-24 16:43:44 --> File loaded: D:\website\fleetmanagement_php81\application\views\auth\login.php
+INFO - 2025-06-24 16:43:44 --> Final output sent to browser
+DEBUG - 2025-06-24 16:43:44 --> Total execution time: 0.0985
+INFO - 2025-06-24 16:44:17 --> Config Class Initialized
+INFO - 2025-06-24 16:44:17 --> Hooks Class Initialized
+DEBUG - 2025-06-24 16:44:17 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:44:17 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:44:17 --> URI Class Initialized
+INFO - 2025-06-24 16:44:17 --> Router Class Initialized
+INFO - 2025-06-24 16:44:17 --> Output Class Initialized
+INFO - 2025-06-24 16:44:17 --> Security Class Initialized
+DEBUG - 2025-06-24 16:44:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:44:17 --> Input Class Initialized
+INFO - 2025-06-24 16:44:17 --> Language Class Initialized
+INFO - 2025-06-24 16:44:17 --> Loader Class Initialized
+INFO - 2025-06-24 16:44:17 --> Helper loaded: url_helper
+INFO - 2025-06-24 16:44:17 --> Helper loaded: slug_helper
+INFO - 2025-06-24 16:44:17 --> Helper loaded: form_helper
+INFO - 2025-06-24 16:44:17 --> Database Driver Class Initialized
+INFO - 2025-06-24 16:44:17 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-24 16:44:17 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/ion_auth.php
+INFO - 2025-06-24 16:44:17 --> Email Class Initialized
+INFO - 2025-06-24 16:44:17 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-06-24 16:44:17 --> Helper loaded: cookie_helper
+INFO - 2025-06-24 16:44:17 --> Helper loaded: language_helper
+DEBUG - 2025-06-24 16:44:17 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:17 --> Model "Ion_auth_model" initialized
+INFO - 2025-06-24 16:44:17 --> Controller Class Initialized
+DEBUG - 2025-06-24 16:44:17 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:17 --> Form Validation Class Initialized
+INFO - 2025-06-24 16:44:17 --> Language file loaded: language/english/auth_lang.php
+INFO - 2025-06-24 16:44:17 --> Language file loaded: language/english/form_validation_lang.php
+INFO - 2025-06-24 16:44:18 --> Helper loaded: date_helper
+INFO - 2025-06-24 16:44:18 --> Config Class Initialized
+INFO - 2025-06-24 16:44:18 --> Hooks Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:44:18 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:44:18 --> URI Class Initialized
+INFO - 2025-06-24 16:44:18 --> Router Class Initialized
+INFO - 2025-06-24 16:44:18 --> Output Class Initialized
+INFO - 2025-06-24 16:44:18 --> Security Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:44:18 --> Input Class Initialized
+INFO - 2025-06-24 16:44:18 --> Language Class Initialized
+INFO - 2025-06-24 16:44:18 --> Loader Class Initialized
+INFO - 2025-06-24 16:44:18 --> Helper loaded: url_helper
+INFO - 2025-06-24 16:44:18 --> Helper loaded: slug_helper
+INFO - 2025-06-24 16:44:18 --> Helper loaded: form_helper
+INFO - 2025-06-24 16:44:18 --> Database Driver Class Initialized
+INFO - 2025-06-24 16:44:18 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-24 16:44:18 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/ion_auth.php
+INFO - 2025-06-24 16:44:18 --> Email Class Initialized
+INFO - 2025-06-24 16:44:18 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-06-24 16:44:18 --> Helper loaded: cookie_helper
+INFO - 2025-06-24 16:44:18 --> Helper loaded: language_helper
+DEBUG - 2025-06-24 16:44:18 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:18 --> Model "Ion_auth_model" initialized
+INFO - 2025-06-24 16:44:18 --> Controller Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> cURL Class Initialized
+INFO - 2025-06-24 16:44:18 --> Upload Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:18 --> User Agent Class Initialized
+INFO - 2025-06-24 16:44:18 --> Form Validation Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-24 16:44:18 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:18 --> Config Class Initialized
+INFO - 2025-06-24 16:44:18 --> Hooks Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:44:18 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:44:18 --> URI Class Initialized
+INFO - 2025-06-24 16:44:18 --> Router Class Initialized
+INFO - 2025-06-24 16:44:18 --> Output Class Initialized
+INFO - 2025-06-24 16:44:18 --> Security Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:44:18 --> Input Class Initialized
+INFO - 2025-06-24 16:44:18 --> Language Class Initialized
+INFO - 2025-06-24 16:44:18 --> Loader Class Initialized
+INFO - 2025-06-24 16:44:18 --> Helper loaded: url_helper
+INFO - 2025-06-24 16:44:18 --> Helper loaded: slug_helper
+INFO - 2025-06-24 16:44:18 --> Helper loaded: form_helper
+INFO - 2025-06-24 16:44:18 --> Database Driver Class Initialized
+INFO - 2025-06-24 16:44:18 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-24 16:44:18 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/ion_auth.php
+INFO - 2025-06-24 16:44:18 --> Email Class Initialized
+INFO - 2025-06-24 16:44:18 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-06-24 16:44:18 --> Helper loaded: cookie_helper
+INFO - 2025-06-24 16:44:18 --> Helper loaded: language_helper
+DEBUG - 2025-06-24 16:44:18 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:18 --> Model "Ion_auth_model" initialized
+INFO - 2025-06-24 16:44:18 --> Controller Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> cURL Class Initialized
+INFO - 2025-06-24 16:44:18 --> Upload Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:18 --> User Agent Class Initialized
+INFO - 2025-06-24 16:44:18 --> Form Validation Class Initialized
+DEBUG - 2025-06-24 16:44:18 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/recaptcha.php
+DEBUG - 2025-06-24 16:44:18 --> User_agent class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:18 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2025-06-24 16:44:18 --> Pagination Class Initialized
+INFO - 2025-06-24 21:44:18 --> Model "Route_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Driver_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Tim_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Proyek_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Ritasi_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Lokasigalian_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Timmgmt_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Vehicle_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Uangjalan_model" initialized
+INFO - 2025-06-24 21:44:18 --> Model "Wallet_model" initialized
+INFO - 2025-06-24 21:44:18 --> File loaded: D:\website\fleetmanagement_php81\application\views\headernew.php
+INFO - 2025-06-24 21:44:18 --> File loaded: D:\website\fleetmanagement_php81\application\views\routes.php
+INFO - 2025-06-24 21:44:18 --> File loaded: D:\website\fleetmanagement_php81\application\views\footernew.php
+INFO - 2025-06-24 21:44:18 --> Final output sent to browser
+DEBUG - 2025-06-24 21:44:18 --> Total execution time: 0.1689
+INFO - 2025-06-24 16:44:31 --> Config Class Initialized
+INFO - 2025-06-24 16:44:31 --> Hooks Class Initialized
+DEBUG - 2025-06-24 16:44:31 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:44:31 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:44:31 --> URI Class Initialized
+INFO - 2025-06-24 16:44:31 --> Router Class Initialized
+INFO - 2025-06-24 16:44:31 --> Output Class Initialized
+INFO - 2025-06-24 16:44:31 --> Security Class Initialized
+DEBUG - 2025-06-24 16:44:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:44:31 --> Input Class Initialized
+INFO - 2025-06-24 16:44:31 --> Language Class Initialized
+INFO - 2025-06-24 16:44:31 --> Loader Class Initialized
+INFO - 2025-06-24 16:44:31 --> Helper loaded: url_helper
+INFO - 2025-06-24 16:44:31 --> Helper loaded: slug_helper
+INFO - 2025-06-24 16:44:31 --> Helper loaded: form_helper
+INFO - 2025-06-24 16:44:31 --> Database Driver Class Initialized
+INFO - 2025-06-24 16:44:31 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-24 16:44:31 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/ion_auth.php
+INFO - 2025-06-24 16:44:31 --> Email Class Initialized
+INFO - 2025-06-24 16:44:31 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-06-24 16:44:31 --> Helper loaded: cookie_helper
+INFO - 2025-06-24 16:44:31 --> Helper loaded: language_helper
+DEBUG - 2025-06-24 16:44:31 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:31 --> Model "Ion_auth_model" initialized
+INFO - 2025-06-24 16:44:31 --> Controller Class Initialized
+DEBUG - 2025-06-24 16:44:31 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:31 --> Form Validation Class Initialized
+INFO - 2025-06-24 16:44:31 --> Language file loaded: language/english/auth_lang.php
+INFO - 2025-06-24 16:44:31 --> Config Class Initialized
+INFO - 2025-06-24 16:44:31 --> Hooks Class Initialized
+DEBUG - 2025-06-24 16:44:31 --> UTF-8 Support Enabled
+INFO - 2025-06-24 16:44:31 --> Utf8 Class Initialized
+INFO - 2025-06-24 16:44:31 --> URI Class Initialized
+INFO - 2025-06-24 16:44:31 --> Router Class Initialized
+INFO - 2025-06-24 16:44:31 --> Output Class Initialized
+INFO - 2025-06-24 16:44:31 --> Security Class Initialized
+DEBUG - 2025-06-24 16:44:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-24 16:44:31 --> Input Class Initialized
+INFO - 2025-06-24 16:44:31 --> Language Class Initialized
+INFO - 2025-06-24 16:44:31 --> Loader Class Initialized
+INFO - 2025-06-24 16:44:31 --> Helper loaded: url_helper
+INFO - 2025-06-24 16:44:31 --> Helper loaded: slug_helper
+INFO - 2025-06-24 16:44:31 --> Helper loaded: form_helper
+INFO - 2025-06-24 16:44:31 --> Database Driver Class Initialized
+INFO - 2025-06-24 16:44:31 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-24 16:44:31 --> Config file loaded: D:\website\fleetmanagement_php81\application\config/ion_auth.php
+INFO - 2025-06-24 16:44:31 --> Email Class Initialized
+INFO - 2025-06-24 16:44:31 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-06-24 16:44:31 --> Helper loaded: cookie_helper
+INFO - 2025-06-24 16:44:31 --> Helper loaded: language_helper
+DEBUG - 2025-06-24 16:44:31 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:31 --> Model "Ion_auth_model" initialized
+INFO - 2025-06-24 16:44:31 --> Controller Class Initialized
+DEBUG - 2025-06-24 16:44:31 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-06-24 16:44:31 --> Form Validation Class Initialized
+INFO - 2025-06-24 16:44:31 --> Language file loaded: language/english/auth_lang.php
+INFO - 2025-06-24 16:44:31 --> File loaded: D:\website\fleetmanagement_php81\application\views\auth\login.php
+INFO - 2025-06-24 16:44:31 --> Final output sent to browser
+DEBUG - 2025-06-24 16:44:31 --> Total execution time: 0.0874

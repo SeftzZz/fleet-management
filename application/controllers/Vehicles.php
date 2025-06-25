@@ -49,17 +49,20 @@ class Vehicles extends CI_Controller {
         ];
 
         if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('status','Status','required');
+            $this->form_validation->set_rules('noPol','No. Polisi','');
+            $this->form_validation->set_rules('noPintu','No. Pintu','');
+            $this->form_validation->set_rules('statusCariMobil','Status','');
 
-            $caristatus = $this->input->post('status');
+            $carinopol = $this->input->post('noPol');
+            $carinopintu = $this->input->post('noPintu');
+            $caristatus = $this->input->post('statusCariMobil');
 
-            $data['vehicles'] = $this->Vehicle_model->getAllVehiclesByFilter($caristatus);
+            $data['vehicles'] = $this->Vehicle_model->getAllVehiclesByFilter($carinopol,$carinopintu,$caristatus);
             
             $this->load->view('headernew', $data);
             $this->load->view('vehicles', $data);
             $this->load->view('footernew');
         } else {
-
             $data['vehicles'] = $this->Vehicle_model->getAllVehicles();
             $data['v_doc_detail'] = $this->Vehicle_model->getAllVDocDetail();
             
@@ -87,7 +90,7 @@ class Vehicles extends CI_Controller {
                 $data['vehicles'] = $this->Vehicle_model->getAllVehicles();
                 
                 $this->load->view('headernew', $data);
-                $this->load->view('drivers', $data);
+                $this->load->view('vehicles', $data);
                 $this->load->view('footernew');
             } else {
                 $dataVehicles = array(
@@ -103,6 +106,56 @@ class Vehicles extends CI_Controller {
                 $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                 redirect('/vehicles');
             }
+        } 
+    }
+
+    public function vehiclesedit($id)
+    {
+        if ($post = $this->input->post('submit')) {
+            $this->form_validation->set_rules('no_pol','No. Polisi','required');
+            $this->form_validation->set_rules('no_pintu','Nama','required');
+            $this->form_validation->set_rules('type','No. SIM','required');
+            $this->form_validation->set_rules('warna','No. HP','required');
+            $this->form_validation->set_rules('status','Status','required');
+
+            if ($this->form_validation->run()==FALSE) {     
+                $data = [
+                    "title" => "Manajemen Kendaraan | Fleet Management",
+                    "nopage" => 1051,
+                ];
+
+                $data['vehicles'] = $this->Vehicle_model->getAllVehicles();
+                
+                $this->load->view('headernew', $data);
+                $this->load->view('vehicles', $data);
+                $this->load->view('footernew');
+            } else {
+                $dataVehicles = array(
+                    'no_pol'        => $this->input->post('no_pol'),
+                    'no_pintu'      => $this->input->post('no_pintu'),
+                    'type'          => $this->input->post('type'),
+                    'warna'         => $this->input->post('warna'),
+                    'status'        => $this->input->post('status'),
+                    'updated_at'    => date('Y-m-d H:i:s')
+                );
+                $this->Vehicle_model->update($id, $dataVehicles);
+                $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+                redirect('/vehicles');
+            }
+        }
+    }
+
+    public function vehiclesdel($id)
+    {
+        if ($post = $this->input->post('submit')) {
+            // update tabel vehicles  
+            $dataVehicles = array(
+                'is_delete'     => $this->input->post('del'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Vehicle_model->update($id,$dataVehicles);
+            $this->session->set_flashdata('pesansukses','Data berhasil dihapus');
+            redirect('/vehicles');
         } 
     }
 

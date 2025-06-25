@@ -7,7 +7,7 @@
                             <div class="col-sm-6"><h1 class="m-0">Manajemen Klaim saldo wallet</h1></div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="<?php echo site_url() ?>">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="<?php echo site_url('dashboard') ?>">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Manajemen Klaim saldo wallet</li>
                                 </ol>
                             </div>

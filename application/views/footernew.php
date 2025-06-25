@@ -101,14 +101,24 @@
                     })
                     .buttons().container().appendTo('#tbl_galian_wrapper .col-md-6:eq(0)');
 
-                    $("#tbl_atim").DataTable({
+                    $("#tbl_manajemenvehicles").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
                             { targets: [5], orderable: false}
                         ]
                     })
-                    .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
+                    .buttons().container().appendTo('#tbl_manajemenvehicles_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemensupir").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
@@ -118,7 +128,7 @@
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] // Hanya kolom Nama, Balance, Update At
+                                    columns: [0, 1, 2, 3, 4, 5, 6] // kolom tertentu yang ikut di print
                                 }
                             }, 
                             "colvis"
@@ -128,6 +138,25 @@
                         ]
                     })
                     .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_atim").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [5], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_atim_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemenwallet").DataTable({
                         responsive: true,
@@ -393,16 +422,6 @@
                         })();
                     <?php } ?>
                 });
-            </script>
-        <?php } ?>
-
-        <?php if ($nopage==1051) { ?>
-            <script>
-                <?php foreach ($kendaraans as $value): ?>
-                    $('#jam-picker<?php echo $value->vehicle_id ?>').datetimepicker({
-                        format: 'HH:mm'
-                    });
-                <?php endforeach; ?>
             </script>
         <?php } ?>
 

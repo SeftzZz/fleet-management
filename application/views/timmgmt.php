@@ -7,7 +7,7 @@
                             <div class="col-sm-6"><h1 class="m-0">Manajemen Anggota Tim</h1></div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="<?php echo site_url() ?>">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="<?php echo site_url('dashboard') ?>">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Anggota Tim</li>
                                 </ol>
                             </div>
@@ -60,7 +60,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Status</label>
-                                                <select name="statusAtim" class="custom-select <?php if (form_error('statusAtim')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                <select name="statusAtim" class="custom-select" style="width:100%;">
                                                     <option value=""/>--- Pilih Status ---</option>
                                                     <?php 
                                                         $pilihanstatus=array("Aktif","Non Aktif");
@@ -101,7 +101,7 @@
                                             <th>Nama Tim</th>
                                             <th>Supir</th>
                                             <th>No. Polisi</th>
-                                            <th>No.Unit/No. Bak</th>
+                                            <th>No. Pintu/Bak/Unit</th>
                                             <th>Status</th>
                                             <th width="8%">Aksi</th>
                                         </tr>
@@ -153,133 +153,9 @@
                                                 <td width="8%">
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editAtim<?php echo $row->id ?>" data-timid="<?php echo $row->tim_id ?>"><i class="fas fa-pencil-alt"></i></button>
 
-                                                    <div class="modal fade" id="mdl_editAtim<?php echo $row->id ?>" data-timid="<?php echo $row->tim_id ?>">
-                                                        <div class="modal-dialog">
-                                                          <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title">Edit Anggota Tim</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form id="form2" name="form2" action="<?php echo site_url('timmgmt/edit/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="form-group">
-                                                                                    <label>Nama Tim</label>
-                                                                                    <select name="nmTim" class="form-control select_rute <?php if (form_error('nmTim')) {echo "is-invalid";} ?>" style="width:100%;" disabled="disabled" />
-                                                                                        <option value="">--- Pilih Tim ---</option>
-                                                                                        <?php
-                                                                                            foreach ($tims as $value) {
-                                                                                              $selected=($value->id == $row->tim_id) ? "selected" : "";
-                                                                                              echo " <option value='$value->id' $selected>$value->nama_tim</option>";
-                                                                                            }
-                                                                                        ?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="form-group">
-                                                                                    <label>Nama Supir</label>
-                                                                                    <select name="nmSupir" class="form-control select_rute <?php if (form_error('nmSupir')) {echo "is-invalid";} ?>" style="width:100%;" />
-                                                                                        <option value="">--- Pilih Supir ---</option>
-                                                                                        <?php
-                                                                                            foreach ($supirs as $value) {
-                                                                                              $selected=($value->id == $row->driver_id) ? "selected" : "";
-                                                                                              echo " <option value='$value->id' $selected>$value->name</option>";
-                                                                                            }
-                                                                                        ?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="form-group">
-                                                                                    <label>Kendaraan</label>
-                                                                                    <select name="mobil" class="form-control select_rute" data-selected="<?php echo $row->vehicle_id ?>" style="width:100%;" />
-                                                                                        <option value="">--- Pilih Kendaraan ---</option>
-                                                                                        <?php
-                                                                                            foreach ($mobils as $value) {
-                                                                                              $selected=($value->id == $row->vehicle_id) ? "selected" : "";
-                                                                                              echo " <option value='$value->id' $selected>$value->no_pol</option>";
-                                                                                            }
-                                                                                        ?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="form-group">
-                                                                                    <label>Status</label>
-                                                                                    <select name="statusAtim" class="form-control <?php if (form_error('statusAtim')) {echo "is-invalid";} ?>" style="width:100%;"/>
-                                                                                        <option value=""/>--- Pilih Status ---</option>
-                                                                                        <?php
-                                                                                            $pilihanstatus=array("Aktif","Non Aktif");
-                                                                                            foreach ($pilihanstatus as $value) {
-                                                                                                $selected=($value == $row->status_tim_mgmt) ? "selected" : "";
-                                                                                                echo "<option value='$value' $selected>$value</option>";
-                                                                                            }
-                                                                                        ?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div>
-                                                                                    <a href="<?php echo site_url('timmgmt') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-
-                                                                                    <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                     <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delAtim<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
-
-                                                    <div class="modal fade" id="mdl_delAtim<?php echo $row->id ?>">
-                                                        <div class="modal-dialog">
-                                                          <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title">Hapus Anggota Tim</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form id="form3" name="form3" action="<?php echo site_url('timmgmt/del/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div class="form-group">
-                                                                                    <label>Yakin menghapus data ini!</label>
-                                                                                    <input type="hidden" name="del" value="1">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div>
-                                                                                    <a href="<?php echo site_url('timmgmt') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-
-                                                                                    <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </td>
                                             </tr>
-                                            <script>
-                                                
-                                            </script>
                                         <?php } ?>
                                     </tbody>
                                     <tfoot>
@@ -374,6 +250,129 @@
                             </div>
                         </div>
                     </div>
+
+                    <?php foreach ($atims as $row) { ?>
+                        <div class="modal fade" id="mdl_editAtim<?php echo $row->id ?>" data-timid="<?php echo $row->tim_id ?>">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit Anggota Tim</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form2" name="form2" action="<?php echo site_url('timmgmt/edit/'.$row->id)?>" method="post" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Nama Tim</label>
+                                                        <select name="nmTim" class="form-control select_rute <?php if (form_error('nmTim')) {echo "is-invalid";} ?>" style="width:100%;" disabled="disabled" />
+                                                            <option value="">--- Pilih Tim ---</option>
+                                                            <?php
+                                                                foreach ($tims as $value) {
+                                                                  $selected=($value->id == $row->tim_id) ? "selected" : "";
+                                                                  echo " <option value='$value->id' $selected>$value->nama_tim</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Nama Supir</label>
+                                                        <select name="nmSupir" class="form-control select_rute <?php if (form_error('nmSupir')) {echo "is-invalid";} ?>" style="width:100%;" />
+                                                            <option value="">--- Pilih Supir ---</option>
+                                                            <?php
+                                                                foreach ($supirs as $value) {
+                                                                  $selected=($value->id == $row->driver_id) ? "selected" : "";
+                                                                  echo " <option value='$value->id' $selected>$value->name</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Kendaraan</label>
+                                                        <select name="mobil" class="form-control select_rute" data-selected="<?php echo $row->vehicle_id ?>" style="width:100%;" />
+                                                            <option value="">--- Pilih Kendaraan ---</option>
+                                                            <?php
+                                                                foreach ($mobils as $value) {
+                                                                  $selected=($value->id == $row->vehicle_id) ? "selected" : "";
+                                                                  echo " <option value='$value->id' $selected>$value->no_pol</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Status</label>
+                                                        <select name="statusAtim" class="form-control <?php if (form_error('statusAtim')) {echo "is-invalid";} ?>" style="width:100%;"/>
+                                                            <option value=""/>--- Pilih Status ---</option>
+                                                            <?php
+                                                                $pilihanstatus=array("Aktif","Non Aktif");
+                                                                foreach ($pilihanstatus as $value) {
+                                                                    $selected=($value == $row->status_tim_mgmt) ? "selected" : "";
+                                                                    echo "<option value='$value' $selected>$value</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div>
+                                                        <a href="<?php echo site_url('timmgmt') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="mdl_delAtim<?php echo $row->id ?>">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Hapus Anggota Tim</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form3" name="form3" action="<?php echo site_url('timmgmt/del/'.$row->id)?>" method="post" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Yakin menghapus data ini!</label>
+                                                        <input type="hidden" name="del" value="1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div>
+                                                        <a href="<?php echo site_url('timmgmt') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
                 </section>
                 <!-- /.Main content -->
             </div>

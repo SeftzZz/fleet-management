@@ -22,8 +22,8 @@ class Vehicle_model extends CI_Model {
         return $this->db->insert($this->tableDocument, $data);
     }
 
-    public function update($id, $data) {
-        return $this->db->where('id', $id)->update($this->table, $data);
+    public function update($id, $dataVehicles) {
+        return $this->db->where('id', $id)->update($this->table, $dataVehicles);
     }
 
     public function delete($id) {
@@ -77,14 +77,20 @@ class Vehicle_model extends CI_Model {
         return $data;
     }
 
-    public function getAllVehiclesByFilter($caristatus) {
+    public function getAllVehiclesByFilter($carinopol,$carinopintu,$caristatus) {
         $data = array();
         $this->db->from('vehicles'); 
         $this->db->where('is_delete', 0);
+        if ($carinopol) {
+            $this->db->like('no_pol', $carinopol);
+        }
+        if ($carinopintu) {
+            $this->db->where('no_pintu', $carinopintu);
+        }
         if ($caristatus) {
             $this->db->where('status', $caristatus);
         }
-        $this->db->order_by('name', 'ASC');
+        $this->db->order_by('id', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0)
         {
