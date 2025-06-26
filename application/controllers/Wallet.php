@@ -90,11 +90,33 @@ class Wallet extends CI_Controller {
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 
-            $this->session->set_flashdata('pesansukses', 'Klaim wallet berhasil diproses.');
+            $this->session->set_flashdata('pesansukses', 'Form wallet berhasil diproses.');
         } else {
             $this->session->set_flashdata('pesanerror', 'Wallet tidak ditemukan.');
         }
 
+        redirect('wallet');
+    }
+
+    public function submit_walletadd()
+    {
+        $this->db->insert('wallet_transactions', [
+            'wallet_id'         => $this->input->post('wallet_id'),
+            'transaction_type'  => $this->input->post('transaksiTipe'),
+            'amount'            => $this->input->post('jmlnya'),
+            'description'       => $this->input->post('utk'),
+            'status'            => '',
+            'created_at'        => date('Y-m-d H:i:s'),
+            'updated_at'        => date('Y-m-d H:i:s')
+        ]);
+
+        $this->db->where('driver_id', $this->input->post('driver_id'));
+        $this->db->update('wallets', [
+            'balance'    => $this->input->post('balance')-$this->input->post('jmlnya'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]); 
+
+        $this->session->set_flashdata('pesansukses', 'Form wallet berhasil diproses.');
         redirect('wallet');
     }
 

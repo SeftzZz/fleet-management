@@ -62,7 +62,7 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="log_ritasi_tab" data-toggle="pill" href="#log_ritasi" role="tab" aria-controls="log_ritasi" aria-selected="false">Form saldo wallet</a>
+                                        <a class="nav-link active" id="log_ritasi_tab" data-toggle="pill" href="#log_ritasi" role="tab" aria-controls="log_ritasi" aria-selected="false">Manajemen Klaim saldo wallet</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="statistik_tab" data-toggle="pill" href="#statistik" role="tab" aria-controls="statistik" aria-selected="false">Histori Klaim saldo wallet</a>
@@ -74,24 +74,55 @@
                                 <div class="tab-content" id="custom-content-below-tabContent">
                                     <div class="tab-pane fade show active" id="log_ritasi" role="tabpanel" aria-labelledby="log_ritasi_tab">
                                         <?php if (!empty($wallets)): ?>
-                                            <h5>Form Wallet</h5>
-                                            <!-- Submit Form -->
-                                            <form method="post" action="<?= site_url('wallet/submit_walletadd') ?>">
-                                                <div class="row">
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <label>Keperluan</label>
-                                                            <textarea rows="3" name="utk" value="<?php echo set_value('utk')?>" class="form-control <?php if (form_error('utk')) {echo "is-invalid";} ?>"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <label>Jumlah </label>
-                                                            <input type="text" name="jmlnya" value="<?php echo set_value('jmlnya')?>" class="form-control <?php if (form_error('jmlnya')) {echo "is-invalid";} ?>" />
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <h5>List Transaction</h5>
+                                            <table id="tbl_manajemenwallet_transactions" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Tipe Transaksi</th>
+                                                        <th>Balance</th>
+                                                        <th>Keterangan</th>
+                                                        <th>Status</th>
+                                                        <th>Create At</th>
+                                                        <th>Update At</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                        $no = 1;
+                                                        foreach ($wallets as $row):
+                                                            $transactions = $wallet_transactions[$row->wallet_id] ?? [];
+                                                            foreach ($transactions as $trans):
+                                                    ?>
+                                                            <tr>
+                                                                <td><?= $no++ ?></td>
+                                                                <td><?= $trans->transaction_type ?></td>
+                                                                <td><?= $this->fppfunction->rupiah_ind($trans->amount) ?></td>
+                                                                <td><?= $trans->description ?></td>
+                                                                <td><?= $trans->status ?></td>
+                                                                <td><?= $this->fppfunction->tglangkajam_ind($trans->created_at) ?></td>
+                                                                <td><?= $this->fppfunction->tglangkajam_ind($trans->updated_at) ?></td>
+                                                            </tr>
+                                                    <?php 
+                                                            endforeach;
+                                                        endforeach;
+                                                    ?>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Tipe Transaksi</th>
+                                                        <th>Balance</th>
+                                                        <th>Keterangan</th>
+                                                        <th>Status</th>
+                                                        <th>Create</th>
+                                                        <th>Last Update</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
 
+                                            <!-- Submit Form -->
+                                            <form method="post" action="<?= site_url('wallet/submit_wallet') ?>">
                                                 <?php foreach ($wallets as $row): ?>
                                                     <?php 
                                                         $transactions = $wallet_transactions[$row->wallet_id] ?? [];
@@ -103,12 +134,9 @@
                                                             }
                                                         }
                                                     ?>
-                                                    <input type="hidden" name="transaksiTipe" value="debit">
                                                     <input type="hidden" name="wallet_id" value="<?= $row->wallet_id ?>">
-                                                    <input type="hidden" name="driver_id" value="<?= $row->driver_id ?>">
-                                                    <input type="hidden" name="balance" value="<?= $row->balance ?>">
                                                 <?php endforeach; ?>
-                                                <button type="submit" class="btn btn-success mt-3">Submit Form Wallet</button>
+                                                <button type="submit" class="btn btn-success mt-3">Submit Klaim Wallet</button>
                                             </form>
                                         <?php else: ?>
                                             <p class="text-muted">Silakan filter supir terlebih dahulu untuk melihat transaksi wallet.</p>

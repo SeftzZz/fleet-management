@@ -124,12 +124,18 @@
                                     <p>Pemeliharaan & BBM</p>
                                 </a>
                             </li>
-                            <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1061||$nopage==1071) { ?>
+                            <li class="nav-item">
+                                <a href="<?php echo site_url('wallet') ?>" class="nav-link <?php if ($nopage==1071) echo('active') ?>" />
+                                    <i class="nav-icon fas fa-wallet"></i>
+                                    <p>Form Wallet</p>
+                                </a>
+                            </li>
+                            <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1061) { ?>
                             <li class="nav-item menu-open">
                             <?php } else { ?>
                             <li class="nav-item">
                             <?php } ?>
-                                <a href="#" class="nav-link <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1061||$nopage==1071) echo ('active') ?>">
+                                <a href="#" class="nav-link <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1061) echo ('active') ?>">
                                     <i class="nav-icon fas fa-database"></i>
                                     <p>Manajemen Data<i class="fas fa-angle-left right"></i></p>
                                 </a>
@@ -156,12 +162,6 @@
                                         <a href="<?php echo site_url('reimbursement') ?>" class="nav-link <?php if ($nopage==1061) echo('active') ?>" />
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Reimbursement</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="<?php echo site_url('wallet') ?>" class="nav-link <?php if ($nopage==1071) echo('active') ?>" />
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Klaim Wallet</p>
                                         </a>
                                     </li>
                                 </ul>

@@ -42,8 +42,6 @@ class Wallet_model extends CI_Model {
         return $this->db
             ->where('wallet_id', $wallet_id)
             ->where('is_delete', 0)
-            ->where('transaction_type', 'credit')
-            ->where('status', 'belum')
             ->order_by('id', 'DESC')
             ->get('wallet_transactions')
             ->result();
@@ -54,7 +52,6 @@ class Wallet_model extends CI_Model {
         return $this->db
             ->where('wallet_id', $wallet_id)
             ->where('is_delete', 0)
-            ->where('transaction_type', 'credit')
             ->order_by('id', 'DESC')
             ->get('wallet_transactions')
             ->result();
