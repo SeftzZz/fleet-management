@@ -103,6 +103,7 @@
                                             <th>No. Polisi</th>
                                             <th>No. Pintu/Bak/Unit</th>
                                             <th>Status</th>
+                                            <th>Tgl. Update</th>
                                             <th width="8%">Aksi</th>
                                         </tr>
                                     </thead>
@@ -150,6 +151,7 @@
                                                 </td>
                                                 <td><?php echo $mobil->no_pintu; ?></td>
                                                 <td><?php echo $row->status_tim_mgmt; ?></td>
+                                                <td><?php echo $this->fppfunction->tglangkajam_ind($row->updated_at); ?></td>
                                                 <td width="8%">
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editAtim<?php echo $row->id ?>" data-timid="<?php echo $row->tim_id ?>"><i class="fas fa-pencil-alt"></i></button>
 
@@ -165,6 +167,7 @@
                                             <th>No. Polisi</th>
                                             <th>No.Unit/No. Bak</th>
                                             <th>Status</th>
+                                            <th>Tgl. Update</th>
                                             <th width="8%">Aksi</th>
                                         </tr>
                                     </tfoot>

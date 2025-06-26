@@ -20,11 +20,33 @@
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-lg-3 col-6">
-                                <div class="small-box callout callout-info">
+                            <div class="col-lg-4 col-4">
+                                <div class="small-box callout callout-info h-100">
                                     <div class="inner">
                                         <span>Ritasi Hari Ini</span>
-                                        <h3>150</h3>
+                                        <a href="#collapseExample" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" style="text-decoration:none;">
+                                           <h3><?php echo $jmlritasiHari; ?><i class="fas fa-caret-right fa-fw"></i></h3>
+                                        </a>
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tim G</th>
+                                                            <th>Tim K</th>
+                                                            <th>Tim M</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><?php echo $jmlritasiGHari; ?></td>
+                                                            <td><?php echo $jmlritasiKHari; ?></td>
+                                                            <td><?php echo $jmlritasiMHari; ?></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-shuffle"></i>
@@ -32,11 +54,11 @@
                                     <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> <span class="text-success">14%</span> dari kemarin </p>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="small-box callout callout-success">
+                            <div class="col-lg-4 col-4">
+                                <div class="small-box callout callout-success h-100">
                                     <div class="inner">
                                         <span>Ritasi Bulan Ini</span>
-                                        <h3>1248</h3>
+                                        <h3><?php echo $jmlritasiBln; ?></h3>
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-loop"></i>
@@ -44,33 +66,20 @@
                                     <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> <span class="text-success">12.7%</span> dari bulan lalu </p>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="small-box callout callout-warning">
-                                    <div class="inner">
-                                        <span>Rata-Rata KM/Hari</span>
-                                        <h3>187</h3>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-speedometer"></i>
-                                    </div>
-                                    <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-down text-danger"></i> <span class="text-danger">5.3%</span> dari bulan lalu </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="small-box callout callout-danger">
+                            <div class="col-lg-4 col-4">
+                                <div class="small-box callout callout-danger h-100">
                                     <div class="inner">
                                         <span>Ritasi Tertunda</span>
-                                        <h3>3</h3>
+                                        <h3><?php echo $jmlritasiTanpaNodo; ?></h3>
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-alert-circled"></i>
                                     </div>
-                                    <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-down text-danger"></i> <span class="text-danger">25%</span> dari minggu lalu </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="container-fluid">&nbsp;</div>
                     <div class="container-fluid">
                         <div class="card">
                             <div class="card-header">
@@ -180,7 +189,7 @@
                                                     <th>Proyek</th>
                                                     <th>Lokasi Galian</th>
                                                     <th>No. Polisi</th>
-                                                    <th>No. Bak</th>
+                                                    <th>No. Pintu/Bak/Unit</th>
                                                     <th>Jam Angkut</th>
                                                     <th>Nomer DO</th>
                                                     <th>Uang Jalan</th>
@@ -247,161 +256,11 @@
                                                         <td><?php echo $mobil->no_pintu; ?></td>
                                                         <td><?php echo $row->jam_angkut; ?></td>
                                                         <td><?php echo $row->nomerdo; ?></td>
-                                                        <td><?php echo $row->uang_jalan; ?></td>
+                                                        <td><?php echo $this->fppfunction->rupiah_ind2($row->uang_jalan); ?></td>
                                                         <td width="8%">
                                                             <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editRitasi<?php echo $row->id ?>"><i class="fas fa-pencil-alt"></i></button>
 
-                                                            <div class="modal fade" id="mdl_editRitasi<?php echo $row->id ?>">
-                                                                <div class="modal-dialog">
-                                                                  <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title">Edit Log Ritasi</h4>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <form id="form1" name="form1" action="<?php echo site_url('routes/ritasiedit/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-6">
-                                                                                        <div class="form-group">
-                                                                                            <label>Tanggal</label>
-                                                                                            <div class="input-group date" id="tgl_edit<?php echo $row->id ?>" data-target-input="nearest">
-                                                                                                <input type="text" name="tgl" value="<?php echo set_value('tgl',$row->tgl_ritasi)?>" class="form-control datetimepicker-input" data-target="#tgl_edit<?php echo $row->id ?>" data-toggle="datetimepicker" />
-                                                                                                <div class="input-group-append">
-                                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-sm-6">
-                                                                                        <div class="form-group">
-                                                                                            <label>Tim</label>
-                                                                                            <select name="tim" class="form-control select_rute <?php if (form_error('tim')) {echo "is-invalid";} ?>" style="width:100%;">
-                                                                                                <option value="">--- Pilih Tim ---</option>
-                                                                                                <?php
-                                                                                                    foreach ($tims as $value) {
-                                                                                                      $selected=($value->id == $row->tim_id) ? "selected" : "";
-                                                                                                      echo " <option value='$value->id' $selected>$value->nama_tim</option>";
-                                                                                                    }
-                                                                                                ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-6">
-                                                                                        <div class="form-group">
-                                                                                            <label>Nama Proyek</label>
-                                                                                            <select name="proyek" class="form-control select_rute <?php if (form_error('proyek')) {echo "is-invalid";} ?>" style="width:100%;">
-                                                                                                <option value="">--- Pilih Proyek ---</option>
-                                                                                                <?php
-                                                                                                    foreach ($proyeks as $value) {
-                                                                                                      $selected=($value->id == $row->proyek_id) ? "selected" : "";
-                                                                                                      echo " <option value='$value->id' $selected>$value->nama_proyek</option>";
-                                                                                                    }
-                                                                                                ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-sm-6">
-                                                                                        <div class="form-group">
-                                                                                            <label>Lokasi Galian</label>
-                                                                                            <select name="galian" class="form-control <?php if (form_error('galian')) {echo "is-invalid";} ?>">
-                                                                                                <option value="">--- Pilih Lokasi Galian ---</option>
-                                                                                                <?php
-                                                                                                    foreach ($galians as $value) {
-                                                                                                      $selected=($value->id == $row->galian_id) ? "selected" : "";
-                                                                                                      echo " <option value='$value->id' $selected>$value->lokasi</option>";
-                                                                                                    }
-                                                                                                ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-6">
-                                                                                        <div class="form-group">
-                                                                                            <label>Kendaraan</label>
-                                                                                            <select name="kendaraan" class="form-control select_rute <?php if (form_error('kendaraan')) {echo "is-invalid";} ?>" style="width:100%;" />
-                                                                                                <option value="">--- Pilih Kendaraan ---</option>
-                                                                                                <?php
-                                                                                                    foreach ($kendaraans as $value) {
-                                                                                                      $selected=($value->id == $row->vehicle_id) ? "selected" : "";
-                                                                                                      echo " <option value='$value->id' $selected>$value->no_pol</option>";
-                                                                                                    }
-                                                                                                ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-sm-6">
-                                                                                        <div class="form-group">
-                                                                                            <label>Jam Angkut</label>
-                                                                                            <div class="input-group date" id="waktu_angkut<?php echo $row->id ?>" data-target-input="nearest">
-                                                                                                <input type="text" name="jam" value="<?php echo set_value('jam',$row->jam_angkut)?>" class="form-control datetimepicker-input <?php if (form_error('jam')) {echo "is-invalid";} ?>" data-target="#waktu_angkut<?php echo $row->id ?>" data-toggle="datetimepicker"/>
-                                                                                                <div class="input-group-append">
-                                                                                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label>Nomer DO</label>
-                                                                                            <input type="text" name="nodo" value="<?php echo set_value('nodo',$row->nomerdo)?>" class="form-control <?php if (form_error('nodo')) {echo "is-invalid";} ?>" />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-12">
-                                                                                        <div>
-                                                                                            <a href="<?php echo site_url('routes') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                                                            <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
                                                             <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delRitasi<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
-
-                                                            <div class="modal fade" id="mdl_delRitasi<?php echo $row->id ?>">
-                                                                <div class="modal-dialog">
-                                                                  <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title">Hapus Log Ritasi</h4>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <form id="form1" name="form1" action="<?php echo site_url('routes/ritasidel/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label>Yakin menghapus data ini!</label>
-                                                                                            <input type="hidden" name="del" value="1">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-12">
-                                                                                        <div>
-                                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                                                                                            <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -414,7 +273,7 @@
                                                     <th>Proyek</th>
                                                     <th>Lokasi Galian</th>
                                                     <th>No. Polisi</th>
-                                                    <th>No. Bak</th>
+                                                    <th>No. Pintu/Bak/Unit</th>
                                                     <th>Jam Angkut</th>
                                                     <th>Nomer DO</th>
                                                     <th>Uang Jalan</th>
@@ -431,6 +290,157 @@
                         </div>
                     </div>
                     <div class="container-fluid">&nbsp;</div>
+                    <?php foreach ($ritasis as $row) { ?>
+                        <div class="modal fade" id="mdl_editRitasi<?php echo $row->id ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit Log Ritasi</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form1" name="form1" action="<?php echo site_url('routes/ritasiedit/'.$row->id)?>" method="post" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Tanggal</label>
+                                                        <div class="input-group date" id="tgl_edit<?php echo $row->id ?>" data-target-input="nearest">
+                                                            <input type="text" name="tgl" value="<?php echo set_value('tgl',$row->tgl_ritasi)?>" class="form-control datetimepicker-input" data-target="#tgl_edit<?php echo $row->id ?>" data-toggle="datetimepicker" />
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Tim</label>
+                                                        <select name="tim" class="form-control select_rute <?php if (form_error('tim')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                            <option value="">--- Pilih Tim ---</option>
+                                                            <?php
+                                                                foreach ($tims as $value) {
+                                                                  $selected=($value->id == $row->tim_id) ? "selected" : "";
+                                                                  echo " <option value='$value->id' $selected>$value->nama_tim</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Nama Proyek</label>
+                                                        <select name="proyek" class="form-control select_rute <?php if (form_error('proyek')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                            <option value="">--- Pilih Proyek ---</option>
+                                                            <?php
+                                                                foreach ($proyeks as $value) {
+                                                                  $selected=($value->id == $row->proyek_id) ? "selected" : "";
+                                                                  echo " <option value='$value->id' $selected>$value->nama_proyek</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Lokasi Galian</label>
+                                                        <select name="galian" class="form-control <?php if (form_error('galian')) {echo "is-invalid";} ?>">
+                                                            <option value="">--- Pilih Lokasi Galian ---</option>
+                                                            <?php
+                                                                foreach ($galians as $value) {
+                                                                  $selected=($value->id == $row->galian_id) ? "selected" : "";
+                                                                  echo " <option value='$value->id' $selected>$value->lokasi</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Kendaraan</label>
+                                                        <select name="kendaraan" class="form-control select_rute <?php if (form_error('kendaraan')) {echo "is-invalid";} ?>" style="width:100%;" />
+                                                            <option value="">--- Pilih Kendaraan ---</option>
+                                                            <?php
+                                                                foreach ($kendaraans as $value) {
+                                                                  $selected=($value->vehicle_id == $row->vehicle_id) ? "selected" : "";
+                                                                  echo " <option value='$value->vehicle_id' $selected>$value->no_pol</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Jam Angkut</label>
+                                                        <div class="input-group date" id="waktu_angkut<?php echo $row->id ?>" data-target-input="nearest">
+                                                            <input type="text" name="jam" value="<?php echo set_value('jam',$row->jam_angkut)?>" class="form-control datetimepicker-input <?php if (form_error('jam')) {echo "is-invalid";} ?>" data-target="#waktu_angkut<?php echo $row->id ?>" data-toggle="datetimepicker"/>
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Nomer DO</label>
+                                                        <input type="text" name="nodo" value="<?php echo set_value('nodo',$row->nomerdo)?>" class="form-control <?php if (form_error('nodo')) {echo "is-invalid";} ?>" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div>
+                                                        <a href="<?php echo site_url('routes') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="mdl_delRitasi<?php echo $row->id ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Hapus Log Ritasi</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form1" name="form1" action="<?php echo site_url('routes/ritasidel/'.$row->id)?>" method="post" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Yakin menghapus data ini!</label>
+                                                        <input type="hidden" name="del" value="1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
                 </section>
                 <!-- /.Main content -->
             </div>

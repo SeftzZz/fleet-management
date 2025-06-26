@@ -84,7 +84,7 @@
                                             <table class="table table-bordered" id="kendaraan-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>List Kendaraan</th>
+                                                        <th>Kendaraan (No. Pintu/Bak/Unit)</th>
                                                         <th>Jam Angkut</th>
                                                         <th>No. DO</th>
                                                     </tr>

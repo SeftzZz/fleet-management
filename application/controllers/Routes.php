@@ -54,6 +54,14 @@ class Routes extends CI_Controller {
             $data['tims'] = $this->Tim_model->getAllTimAktif();
             $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
             $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
+            // Ambil ringkasan ritasi terakhir
+            $data['last_ritasi_summary'] = $this->Route_model->getLastInsertedRitasiSummary();
+            $data['jmlritasiHari'] = $this->Route_model->getAllJmlRitasiHari();
+            $data['jmlritasiGHari'] = $this->Route_model->getAllJmlRitasiTimGHari();
+            $data['jmlritasiKHari'] = $this->Route_model->getAllJmlRitasiTimKHari();
+            $data['jmlritasiMHari'] = $this->Route_model->getAllJmlRitasiTimMHari();
+            $data['jmlritasiBln'] = $this->Route_model->getAllJmlRitasiBln();
+            $data['jmlritasiTanpaNodo'] = $this->Route_model->getAllJmlRitasiTanpaNodo();
             
             $this->load->view('headernew', $data);
             $this->load->view('routes', $data);
@@ -68,6 +76,12 @@ class Routes extends CI_Controller {
             $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
             // Ambil ringkasan ritasi terakhir
             $data['last_ritasi_summary'] = $this->Route_model->getLastInsertedRitasiSummary();
+            $data['jmlritasiHari'] = $this->Route_model->getAllJmlRitasiHari();
+            $data['jmlritasiGHari'] = $this->Route_model->getAllJmlRitasiTimGHari();
+            $data['jmlritasiKHari'] = $this->Route_model->getAllJmlRitasiTimKHari();
+            $data['jmlritasiMHari'] = $this->Route_model->getAllJmlRitasiTimMHari();
+            $data['jmlritasiBln'] = $this->Route_model->getAllJmlRitasiBln();
+            $data['jmlritasiTanpaNodo'] = $this->Route_model->getAllJmlRitasiTanpaNodo();
             
             $this->load->view('headernew', $data);
             $this->load->view('routes', $data);
@@ -318,7 +332,7 @@ class Routes extends CI_Controller {
             $this->form_validation->set_rules('tim','Tim','required');
             $this->form_validation->set_rules('proyek','Proyek','required');
             $this->form_validation->set_rules('galian','Lokasi Galian','required');
-            $this->form_validation->set_rules('kendaraan','kendaraan','required');
+            $this->form_validation->set_rules('kendaraan','Kendaraan','');
             $this->form_validation->set_rules('jam','Jam Angkut','required');
             $this->form_validation->set_rules('nodo','Nomer DO','required');
 
@@ -329,10 +343,12 @@ class Routes extends CI_Controller {
                 ];
 
                 $data['routes'] = $this->Route_model->getAllRoutes();
-                $data['kendaraans'] = $this->Vehicle_model->getAllKendaraan();
+                $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
                 $data['supirs'] = $this->Driver_model->getAllSupir();
                 $data['ritasis'] = $this->Route_model->getAllRitasi();
+                $data['tims'] = $this->Tim_model->getAllTimAktif();
                 $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
+                $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
                 
                 $this->load->view('headernew', $data);
                 $this->load->view('routes', $data);

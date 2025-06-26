@@ -64,7 +64,18 @@
                         "responsive": true,
                         "lengthChange": false,
                         "autoWidth": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "searching": false,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
                             { targets: [0, 10], orderable: false },
                             { targets: 0, className: 'text-center' }
@@ -147,13 +158,13 @@
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4] // kolom tertentu yang ikut di print
+                                    columns: [0, 1, 2, 3, 4, 5] // kolom tertentu yang ikut di print
                                 }
                             }, 
                             "colvis"
                         ],
                         "columnDefs": [
-                            { targets: [5], orderable: false}
+                            { targets: [6], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_atim_wrapper .col-md-6:eq(0)');
@@ -293,7 +304,7 @@
                                 var row = `
                                     <tr>
                                         <td>
-                                            ${value.no_pol}
+                                            ${value.no_pintu} - ${value.no_pol}
                                             <input type="hidden" name="kendaraan_id[]" value="${value.vehicle_id}">
                                         </td>
                                         <td>
