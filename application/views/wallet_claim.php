@@ -116,12 +116,12 @@
                                     </div>
                                     <div class="tab-pane fade" id="statistik" role="tabpanel" aria-labelledby="statistik_tab">
                                         <?php if (!empty($klaim_done)): ?>
-                                            <h5>Data Klaim Wallet Selesai</h5>
+                                            <h5>Data Klaim Wallet</h5>
                                             <table class="table table-bordered table-striped" id="tbl_reimburse_done">
                                                 <thead>
                                                     <tr>
                                                         <th>Keterangan</th>
-                                                        <th>Amount (Rp)</th>
+                                                        <th>Jumlah (Rp)</th>
                                                         <th>Waktu Update</th>
                                                     </tr>
                                                 </thead>
@@ -140,7 +140,7 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td><strong>Total klaim wallet Done</strong></td>
+                                                        <td><strong>Total klaim wallet</strong></td>
                                                         <td><strong>Rp <?= number_format($total, 0, ',', '.') ?></strong></td>
                                                         <td></td>
                                                     </tr>

@@ -100,23 +100,28 @@ class Wallet extends CI_Controller {
 
     public function submit_walletadd()
     {
-        $this->db->insert('wallet_transactions', [
-            'wallet_id'         => $this->input->post('wallet_id'),
-            'transaction_type'  => $this->input->post('transaksiTipe'),
-            'amount'            => $this->input->post('jmlnya'),
-            'description'       => $this->input->post('utk'),
-            'status'            => '',
-            'created_at'        => date('Y-m-d H:i:s'),
-            'updated_at'        => date('Y-m-d H:i:s')
-        ]);
+        if ($this->input->post('utk') && $this->input->post('jmlnya')) {
+            $this->db->insert('wallet_transactions', [
+                'wallet_id'         => $this->input->post('wallet_id'),
+                'transaction_type'  => $this->input->post('transaksiTipe'),
+                'amount'            => $this->input->post('jmlnya'),
+                'description'       => $this->input->post('utk'),
+                'status'            => '',
+                'created_at'        => date('Y-m-d H:i:s'),
+                'updated_at'        => date('Y-m-d H:i:s')
+            ]);
 
-        $this->db->where('driver_id', $this->input->post('driver_id'));
-        $this->db->update('wallets', [
-            'balance'    => $this->input->post('balance')-$this->input->post('jmlnya'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]); 
+            $this->db->where('driver_id', $this->input->post('driver_id'));
+            $this->db->update('wallets', [
+                'balance'    => $this->input->post('balance') - $this->input->post('jmlnya'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]); 
 
-        $this->session->set_flashdata('pesansukses', 'Form wallet berhasil diproses.');
+            $this->session->set_flashdata('pesansukses', 'Form wallet berhasil diproses.');
+        } else {
+            $this->session->set_flashdata('pesanerror', 'Form Keperluan atau Jumlah tidak boleh kosong.');
+        }
+        
         redirect('wallet');
     }
 
