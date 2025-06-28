@@ -158,11 +158,32 @@ class Route_model extends CI_Model {
         return $data;  
     }
 
+    public function getAllJmlRitasiKemarin() {
+        $data = array();
+        $this->db->from('ritasi'); 
+        $this->db->where('tgl_ritasi', date('Y-m-d', strtotime('-1 day'))); 
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
     public function getAllJmlRitasiBln() {
         $data = array();
         $this->db->from('ritasi');
         $this->db->where('MONTH(tgl_ritasi)', date('m'));
         $this->db->where('YEAR(tgl_ritasi)', date('Y'));
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
+    public function getAllJmlRitasiBlnKemarin() {
+        $data = array();
+        $this->db->from('ritasi');
+        $this->db->where('MONTH(tgl_ritasi)', date('m', strtotime('first day of last month')));
+        $this->db->where('YEAR(tgl_ritasi)', date('Y' , strtotime('first day of last month')));
         $query = $this->db->get();
         $data = $query->num_rows();
         $query->free_result();  

@@ -51,7 +51,21 @@
                                     <div class="icon">
                                         <i class="ion ion-shuffle"></i>
                                     </div>
-                                    <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> <span class="text-success">14%</span> dari kemarin </p>
+                                    <p class="small-box-footer2">
+                                        &nbsp;&nbsp;&nbsp;
+                                        <?php if ($persenRitasiHari >= 0) { ?>
+                                            <i class="fas fa-arrow-up text-success"></i>
+                                            <span class="text-success">
+                                                <?php echo number_format(abs($persenRitasiHari), 1); ?>
+                                            </span> 
+                                        <?php } else { ?>
+                                            <i class="fas fa-arrow-down text-danger"></i>
+                                            <span class="text-danger">
+                                                <?php echo number_format(abs($persenRitasiHari), 1); ?>
+                                            </span> 
+                                        <?php } ?>
+                                        % dari kemarin
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-4">
@@ -63,7 +77,21 @@
                                     <div class="icon">
                                         <i class="ion ion-loop"></i>
                                     </div>
-                                    <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> <span class="text-success">12.7%</span> dari bulan lalu </p>
+                                    <p class="small-box-footer2">
+                                        &nbsp;&nbsp;&nbsp;
+                                        <?php if ($persenRitasiBln >= 0) { ?>
+                                            <i class="fas fa-arrow-up text-success"></i>
+                                            <span class="text-success">
+                                                <?php echo number_format(abs($persenRitasiBln), 1); ?>
+                                            </span> 
+                                        <?php } else { ?>
+                                            <i class="fas fa-arrow-down text-danger"></i>
+                                            <span class="text-danger">
+                                                <?php echo number_format(abs($persenRitasiBln), 1); ?>
+                                            </span> 
+                                        <?php } ?>
+                                        % dari bulan lalu
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-4">
