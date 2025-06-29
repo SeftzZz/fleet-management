@@ -57,108 +57,7 @@
                                                 <td width="8%">
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editGalian<?php echo $row->id ?>"><i class="fas fa-pencil-alt"></i></button>
 
-                                                    <div class="modal fade" id="mdl_editGalian<?php echo $row->id ?>">
-                                                        <div class="modal-dialog">
-                                                          <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title">Edit Lokasi Galian</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form id="form1" name="form1" action="<?php echo site_url('lokasigalian/edit/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div class="form-group">
-                                                                                    <label>Nama Proyek</label>
-                                                                                    <select name="nmProyek" class="form-control <?php if (form_error('nmProyek')) {echo "is-invalid";} ?>">
-                                                                                        <option value="">--- Pilih Proyek ---</option>
-                                                                                        <?php
-                                                                                            foreach ($proyeks as $value) {
-                                                                                              $selected=($value->id == $row->proyek_id) ? "selected" : "";
-                                                                                              echo " <option value='$value->id' $selected>$value->nama_proyek</option>";
-                                                                                            }
-                                                                                        ?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div class="form-group">
-                                                                                    <label>Lokasi Galian</label>
-                                                                                    <input type="text" name="galian" value="<?php echo set_value('galian',$row->lokasi)?>" class="form-control <?php if (form_error('galian')) {echo "is-invalid";} ?>" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div class="form-group">
-                                                                                    <label>Status</label>
-                                                                                    <select name="status" class="custom-select <?php if (form_error('status')) {echo "is-invalid";} ?>" style="width:100%;">
-                                                                                        <option value=""/>--- Pilih Status ---</option>
-                                                                                        <?php
-                                                                                            $pilihanstatus=array("Aktif","Non Aktif");
-                                                                                            foreach ($pilihanstatus as $value) {
-                                                                                                $selected=($value == $row->status_lokasi) ? "selected" : "";
-                                                                                                echo "<option value='$value' $selected>$value</option>";
-                                                                                            }
-                                                                                        ?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div>
-                                                                                    <a href="<?php echo site_url('lokasigalian') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-
-                                                                                    <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                     <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delGalian<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
-
-                                                    <div class="modal fade" id="mdl_delGalian<?php echo $row->id ?>">
-                                                        <div class="modal-dialog">
-                                                          <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title">Hapus Lokasi Galian</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form id="form1" name="form1" action="<?php echo site_url('lokasigalian/del/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div class="form-group">
-                                                                                    <label>Yakin menghapus data ini!</label>
-                                                                                    <input type="hidden" name="del" value="1">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div>
-                                                                                    <a href="<?php echo site_url('lokasigalian') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-
-                                                                                    <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php } ?>
@@ -239,6 +138,109 @@
                             </div>
                         </div>
                     </div>
+
+                    <?php foreach ($galians as $row) { ?>
+                        <div class="modal fade" id="mdl_editGalian<?php echo $row->id ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit Lokasi Galian</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form2" name="form2" action="<?php echo site_url('lokasigalian/edit/'.$row->id)?>" method="post" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Nama Proyek</label>
+                                                        <select name="nmProyek" class="form-control <?php if (form_error('nmProyek')) {echo "is-invalid";} ?>">
+                                                            <option value="">--- Pilih Proyek ---</option>
+                                                            <?php
+                                                                foreach ($proyeks as $value) {
+                                                                  $selected=($value->id == $row->proyek_id) ? "selected" : "";
+                                                                  echo " <option value='$value->id' $selected>$value->nama_proyek</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Lokasi Galian</label>
+                                                        <input type="text" name="galian" value="<?php echo set_value('galian',$row->lokasi)?>" class="form-control <?php if (form_error('galian')) {echo "is-invalid";} ?>" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Status</label>
+                                                        <select name="status" class="custom-select <?php if (form_error('status')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                            <option value=""/>--- Pilih Status ---</option>
+                                                            <?php
+                                                                $pilihanstatus=array("Aktif","Non Aktif");
+                                                                foreach ($pilihanstatus as $value) {
+                                                                    $selected=($value == $row->status_lokasi) ? "selected" : "";
+                                                                    echo "<option value='$value' $selected>$value</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div>
+                                                        <a href="<?php echo site_url('lokasigalian') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="mdl_delGalian<?php echo $row->id ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Hapus Lokasi Galian</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form3" name="form3" action="<?php echo site_url('lokasigalian/del/'.$row->id)?>" method="post" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Yakin menghapus data ini!</label>
+                                                        <input type="hidden" name="del" value="1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div>
+                                                        <a href="<?php echo site_url('lokasigalian') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
                 </section>
                 <!-- /.Main content -->
             </div>

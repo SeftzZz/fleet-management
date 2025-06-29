@@ -119,7 +119,6 @@ class Lokasigalian extends CI_Controller {
             // update tabel galian  
             $dataGalian = array(
                 'is_delete'       => $this->input->post('del'),
-                'status_lokasi'   => 'Non Aktif',
                 'updated_at'      => date('Y-m-d H:i:s')
             );                              
             $this->Lokasigalian_model->update($id,$dataGalian);

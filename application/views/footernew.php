@@ -105,7 +105,17 @@
 
                     $("#tbl_galian").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
                             { targets: [3], orderable: false}
                         ]
