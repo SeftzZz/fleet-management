@@ -87,9 +87,19 @@
 
                     $("#tbl_ujalan").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
-                            { targets: [3], orderable: false}
+                            { targets: [4], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_ujalan_wrapper .col-md-6:eq(0)');

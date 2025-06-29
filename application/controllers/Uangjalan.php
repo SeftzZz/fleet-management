@@ -128,7 +128,6 @@ class Uangjalan extends CI_Controller {
             // update tabel uangjalan  
             $dataUjalan = array(
                 'is_delete'          => $this->input->post('del'),
-                'status_uangjalan'   => 'Non Aktif',
                 'updated_at'         => date('Y-m-d H:i:s')
             );                              
             $this->Uangjalan_model->update($id,$dataUjalan);
