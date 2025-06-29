@@ -11,7 +11,7 @@
         <!-- iCheck -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
         
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081) { ?>
         <!-- Select2 -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/select2/css/select2.min.css">
         
@@ -130,14 +130,20 @@
                                     <p>Form Wallet</p>
                                 </a>
                             </li>
-                            <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1061) { ?>
+                            <li class="nav-item">
+                                <a href="<?php echo site_url('reimbursement') ?>" class="nav-link <?php if ($nopage==1061) echo('active') ?>" />
+                                    <i class="nav-icon fas fa-money-bill"></i>
+                                    <p>Reimbursement</p>
+                                </a>
+                            </li>
+                            <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081) { ?>
                             <li class="nav-item menu-open">
                             <?php } else { ?>
                             <li class="nav-item">
                             <?php } ?>
-                                <a href="#" class="nav-link <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1061) echo ('active') ?>">
+                                <a href="#" class="nav-link <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081) echo ('active') ?>">
                                     <i class="nav-icon fas fa-database"></i>
-                                    <p>Manajemen Data<i class="fas fa-angle-left right"></i></p>
+                                    <p>Master Data<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
@@ -159,9 +165,9 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="<?php echo site_url('reimbursement') ?>" class="nav-link <?php if ($nopage==1061) echo('active') ?>" />
+                                        <a href="<?php echo site_url('pengguna') ?>" class="nav-link <?php if ($nopage==1081) echo('active') ?>" />
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Reimbursement</p>
+                                            <p>Users</p>
                                         </a>
                                     </li>
                                 </ul>

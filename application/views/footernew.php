@@ -29,7 +29,7 @@
         <!-- SweetAlert2 -->
         <script src="<?php echo base_url(); ?>assets/newstyle/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1081) { ?>
             <!-- Select2 -->
             <script src="<?php echo base_url(); ?>assets/newstyle/plugins/select2/js/select2.full.min.js"></script>
             <!-- date-range-picker -->
@@ -111,6 +111,25 @@
                         ]
                     })
                     .buttons().container().appendTo('#tbl_galian_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_user").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [3], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_user_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemenvehicles").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
