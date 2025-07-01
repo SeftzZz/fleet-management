@@ -1,0 +1,172 @@
+SSH Sahirahotelsgroup.com
+HOST=ssh root@103.191.63.18
+PASS=Sahirahotels1$
+
+AAPanel Sahirahotelsgroup.com
+HOST=https://103.191.63.18:21174/a30092c9
+USER=sev2b9ru
+PASS=8060cf21
+
+DBUSER=sql_salamdjourney_affiliate
+DBPASS=xPcpGPZGj5GZwYzY
+
+DBUSER=fleet_management
+DBPASS=ZjA7wJPhxTdYk6sj
+
+FTP sahirahotelsgroup.com
+USER=ftp_sahirahotelsgroup_com
+PASS=9e57c920413dc
+DBUSER=sql_sahirahotels
+DBPASS=4abffa03c49af
+
+FTP cms.sahirahotelsgroup.com
+USER=ftp_cms_sahirahotelsgroup_com
+PASS=1f1bc9a89cf71
+DBUSER=sql_cms_sahiraho
+DBPASS=83b38cc1fe2f
+
+FTP staging.sahirahotelsgroup.com
+USER=ftp_staging_sahirahotelsgroup_com
+PASS=aa93f0a066751
+DBUSER=sql_staging_sahi
+DBPASS=1aa2d8bff2d1a
+
+FTP paledang.sahirahotelsgroup.com
+USER=ftp_paledang_sahirahotelsgroup_com
+PASS=e12606d512625
+
+FTP pakuan.sahirahotelsgroup.com
+USER=ftp_pakuan_sahirahotelsgroup_com
+PASS=99819a098d9a5
+
+FTP thesahira.sahirahotelsgroup.com
+USER=ftp_thesahira_sahirahotelsgroup_com
+PASS=76d35f9752be1
+
+FTP rahisaresto.sahirahotelsgroup.com
+USER=ftp_rahisaresto_sahirahotelsgroup_com
+PASS=f1fcac5905628
+DBUSER=sql_rahisaresto_
+DBPASS=4d2cbea5a5563
+
+
+Cpanel sahirahotels.com
+sangihe.iixcp.rumahweb.net:2083
+USER=saha8372
+PASS=SahiraHotels2022#
+
+##### NGINX #####
+user  www www;
+worker_processes auto;
+error_log  /www/wwwlogs/nginx_error.log  crit;
+pid        /www/server/nginx/logs/nginx.pid;
+worker_rlimit_nofile 51200;
+
+stream {
+    log_format tcp_format '$time_local|$remote_addr|$protocol|$status|$bytes_sent|$bytes_received|$session_time|$upstream_addr|$upstream_bytes_sent|$upstream_bytes_received|$upstream_connect_time';
+  
+    access_log /www/wwwlogs/tcp-access.log tcp_format;
+    error_log /www/wwwlogs/tcp-error.log;
+    include /www/server/panel/vhost/nginx/tcp/*.conf;
+}
+
+events
+    {
+        use epoll;
+        worker_connections 51200;
+        multi_accept on;
+    }
+
+http
+	{
+ 
+ 
+        include       mime.types;
+		#include luawaf.conf;
+
+		include proxy.conf;
+        lua_package_path "/www/server/nginx/lib/lua/?.lua;;";
+
+        default_type  application/octet-stream;
+
+        server_names_hash_bucket_size 512;
+        client_header_buffer_size 32k;
+        large_client_header_buffers 4 32k;
+        client_max_body_size 50m;
+
+        sendfile   on;
+        tcp_nopush on;
+
+        keepalive_timeout 60;
+
+        tcp_nodelay on;
+
+        fastcgi_connect_timeout 300;
+        fastcgi_send_timeout 300;
+        fastcgi_read_timeout 300;
+        fastcgi_buffer_size 64k;
+        fastcgi_buffers 4 64k;
+        fastcgi_busy_buffers_size 128k;
+        fastcgi_temp_file_write_size 256k;
+		fastcgi_intercept_errors on;
+
+        gzip on;
+        gzip_min_length  1k;
+        gzip_buffers     4 16k;
+        gzip_http_version 1.1;
+        gzip_comp_level 2;
+        gzip_types     text/plain application/javascript application/x-javascript text/javascript text/css application/xml application/json image/jpeg image/gif image/png font/ttf font/otf image/svg+xml application/xml+rss text/x-js;
+        gzip_vary on;
+        gzip_proxied   expired no-cache no-store private auth;
+        gzip_disable   "MSIE [1-6]\.";
+
+        limit_conn_zone $binary_remote_addr zone=perip:10m;
+		limit_conn_zone $server_name zone=perserver:10m;
+
+        server_tokens off;
+        access_log off;
+
+server
+    {
+        listen 888;
+        server_name phpmyadmin;
+        index index.html index.htm index.php;
+        root  /www/server/phpmyadmin;
+            location ~ /tmp/ {
+                return 403;
+            }
+
+        #error_page   404   /404.html;
+        include enable-php.conf;
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+        {
+            expires      30d;
+        }
+
+        location ~ .*\.(js|css)?$
+        {
+            expires      12h;
+        }
+
+        location ~ /\.
+        {
+            deny all;
+        }
+
+        access_log  /www/wwwlogs/access.log;
+    }
+include /www/server/panel/vhost/nginx/*.conf;
+}
+
+{
+  "_id": {
+    "$oid": "6751393902ab6000a98382ef"
+  },
+  "account": "yerblues6@gmail.com",
+  "scope": "SUPERUSER",
+  "updated_at": {
+    "$date": "2023-12-24T07:15:57.520Z"
+  },
+  "g_token": "ya29.a0AeDClZCnfaWNsraE2BhFDR9PSemiSV6K62_3vCUkgyoNsrcHhnUJlfIdu1i9iiL4j3A5S2OjROfR6I1P0Sj6pTlFHaM-Q4-Levb7-Dj7MtiBUQjJ_mjt5vEa1tUYxnE4ZgpGNaOfQMQS87JH2C9tSUyAwPxFNkvcy1pfqSlfaCgYKAWMSARASFQHGX2Mi57K1Nc7ju_e-uLOlggGZ9w0175"
+}
