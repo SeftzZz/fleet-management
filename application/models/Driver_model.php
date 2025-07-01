@@ -72,10 +72,13 @@ class Driver_model extends CI_Model {
         return $data;
     }
 
-    public function getAllSupirByFilter($caritanggal,$caristatus) {
+    public function getAllSupirByFilter($carisupir,$caritanggal,$caristatus) {
         $data = array();
         $this->db->from('drivers'); 
         $this->db->where('is_delete', 0);
+        if ($carisupir) {
+            $this->db->like('name', $carisupir);
+        }
         if ($caritanggal) {
             $this->db->like('tgl_join', $caritanggal);
         }

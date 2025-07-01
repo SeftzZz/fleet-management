@@ -111,7 +111,7 @@ class Route_model extends CI_Model {
 
     public function getLastInsertedRitasiSummary()
     {
-        $this->db->select('ANY_VALUE(nama_proyek) AS nama_proyek, ANY_VALUE(lokasi) AS lokasi, ANY_VALUE(nama_tim) AS nama_tim, COUNT(vehicle_id) AS jumlah_kendaraan');
+        $this->db->select('MAX(nama_proyek) AS nama_proyek, MAX(lokasi) AS lokasi, MAX(nama_tim) AS nama_tim, COUNT(vehicle_id) AS jumlah_kendaraan');
         $this->db->from('ritasi');
         $this->db->where('is_delete', 0);
         $this->db->group_by(['tgl_ritasi', 'tim_id', 'proyek_id', 'galian_id']);
@@ -128,7 +128,7 @@ class Route_model extends CI_Model {
     }
 
     public function getKendaraanUsedInRitasi($ids) {
-        $this->db->select('vehicles.id as vehicle_id, vehicles.no_pol');
+        $this->db->select('vehicles.id as vehicle_id, vehicles.no_pol, vehicles.no_pintu');
         $this->db->from('ritasi');
         $this->db->join('vehicles', 'ritasi.vehicle_id = vehicles.id');
         $this->db->where_in('ritasi.id', $ids);
@@ -146,5 +146,90 @@ class Route_model extends CI_Model {
         $this->db->where('ritasi.tim_id', $tim_id);
         $this->db->where('ritasi.is_delete', 0);
         return $this->db->get()->result();
+    }
+
+    public function getAllJmlRitasiHari() {
+        $data = array();
+        $this->db->from('ritasi'); 
+        $this->db->where('tgl_ritasi', date('Y-m-d')); 
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
+    public function getAllJmlRitasiKemarin() {
+        $data = array();
+        $this->db->from('ritasi'); 
+        $this->db->where('tgl_ritasi', date('Y-m-d', strtotime('-1 day'))); 
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
+    public function getAllJmlRitasiBln() {
+        $data = array();
+        $this->db->from('ritasi');
+        $this->db->where('MONTH(tgl_ritasi)', date('m'));
+        $this->db->where('YEAR(tgl_ritasi)', date('Y'));
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
+    public function getAllJmlRitasiBlnKemarin() {
+        $data = array();
+        $this->db->from('ritasi');
+        $this->db->where('MONTH(tgl_ritasi)', date('m', strtotime('first day of last month')));
+        $this->db->where('YEAR(tgl_ritasi)', date('Y' , strtotime('first day of last month')));
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
+    public function getAllJmlRitasiTanpaNodo() {
+        $data = array();
+        $this->db->from('ritasi');
+        $this->db->where('nomerdo', ' '); 
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
+    public function getAllJmlRitasiTimGHari() {
+        $data = array();
+        $this->db->from('ritasi');
+        $this->db->where('nama_tim', 'G'); 
+        $this->db->where('tgl_ritasi', date('Y-m-d')); 
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
+    public function getAllJmlRitasiTimKHari() {
+        $data = array();
+        $this->db->from('ritasi');
+        $this->db->where('nama_tim', 'K');
+        $this->db->where('tgl_ritasi', date('Y-m-d'));  
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
+    }
+
+    public function getAllJmlRitasiTimMHari() {
+        $data = array();
+        $this->db->from('ritasi');
+        $this->db->where('nama_tim', 'M');
+        $this->db->where('tgl_ritasi', date('Y-m-d'));  
+        $query = $this->db->get();
+        $data = $query->num_rows();
+        $query->free_result();  
+        return $data;  
     }
 }

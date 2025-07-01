@@ -18,6 +18,10 @@ class Proyek extends CI_Controller {
         date_default_timezone_set("Asia/Jakarta");
         $this->load->model('Proyek_model');
         $this->load->database();
+        
+        if(!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
     }
 
 	public function index()
@@ -38,6 +42,7 @@ class Proyek extends CI_Controller {
     {
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('nmProyek','Nama Proyek','required');
+            $this->form_validation->set_rules('tabungan','Uang Tabungan','required');
             $this->form_validation->set_rules('statusProyek','status Proyek','required');
 
             if ($this->form_validation->run()==FALSE) {     
@@ -52,9 +57,14 @@ class Proyek extends CI_Controller {
                 $this->load->view('proyek', $data);
                 $this->load->view('footernew');
             } else {
+                $nmProyek = $this->input->post('nmProyek');
+                // 1. Update semua status uangjalan yang aktif untuk galian ini jadi Non Aktif
+                $this->Proyek_model->nonAktifkanProyekByNama($nmProyek);
+                
                 // insert tabel proyek  
                 $dataProyek = array(
                     'nama_proyek'       => $this->input->post('nmProyek'),
+                    'tabungan'          => $this->input->post('tabungan'),
                     'status_proyek'     => $this->input->post('statusProyek'),
                     'is_delete'         => 0,
                     'created_at'        => date('Y-m-d H:i:s'),
@@ -70,6 +80,7 @@ class Proyek extends CI_Controller {
     {
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('nmProyek','Nama Proyek','required');
+            $this->form_validation->set_rules('tabungan','Uang Tabungan','required');
             $this->form_validation->set_rules('statusProyek','status Proyek','required');
 
             if ($this->form_validation->run()==FALSE) {     
@@ -87,6 +98,7 @@ class Proyek extends CI_Controller {
                 // update tabel proyek  
                 $dataProyek = array(
                     'nama_proyek'       => $this->input->post('nmProyek'),
+                    'tabungan'          => $this->input->post('tabungan'),
                     'status_proyek'     => $this->input->post('statusProyek'),
                     'created_at'        => date('Y-m-d H:i:s'),
                     'updated_at'        => date('Y-m-d H:i:s')

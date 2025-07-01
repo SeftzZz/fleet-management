@@ -102,7 +102,7 @@ class Timmgmt_model extends CI_Model {
     }
 
     public function getKendaraanByTimId($tim_id) {
-        $this->db->select('vehicle_id, no_pol');
+        $this->db->select('vehicle_id, no_pol, no_pintu');
         $this->db->from('tim_mgmt');
         $this->db->where('tim_id', $tim_id);
         $this->db->where('is_delete', 0);

@@ -50,7 +50,7 @@ class Proyek_model extends CI_Model {
 
     public function getProyekById($id) {
         $data = array();
-        $this->db->from('proyek');    
+        $this->db->from('proyek');
         $this->db->where('id', $id);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -66,5 +66,15 @@ class Proyek_model extends CI_Model {
 
     public function update($id, $dataProyek) {
         return $this->db->where('id', $id)->update($this->table, $dataProyek);
+    }
+
+    public function nonAktifkanProyekByNama($nama_proyek) {
+        $this->db->where('nama_proyek', $nama_proyek);
+        $this->db->where('status_proyek', 'Aktif');
+        $this->db->where('is_delete', 0);
+        $this->db->update('proyek', [
+            'status_proyek' => 'Non Aktif',
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
     }
 }

@@ -67,4 +67,14 @@ class Tim_model extends CI_Model {
     public function update($id, $dataTim) {
         return $this->db->where('id', $id)->update($this->table, $dataTim);
     }
+
+    public function nonAktifkanTimkByNama($nama_tim) {
+        $this->db->where('nama_tim', $nama_tim);
+        $this->db->where('status_tim', 'Aktif');
+        $this->db->where('is_delete', 0);
+        $this->db->update('tim', [
+            'status_tim' => 'Non Aktif',
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+    }
 }

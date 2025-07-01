@@ -38,7 +38,7 @@
                                             <div class="form-group">
                                                 <label>Tanggal</label>
                                                 <div class="input-group date" id="tglan" data-target-input="nearest">
-                                                    <input type="text" name="tgl" value="<?php echo set_value('tgl')?>" class="form-control datetimepicker-input" data-target="#tglan" data-toggle="datetimepicker" />
+                                                    <input type="date" name="tgl" value="<?php echo set_value('tgl')?>" class="form-control" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
@@ -84,7 +84,7 @@
                                             <table class="table table-bordered" id="kendaraan-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>List Kendaraan</th>
+                                                        <th>Kendaraan (No. Pintu/Bak/Unit)</th>
                                                         <th>Jam Angkut</th>
                                                         <th>No. DO</th>
                                                     </tr>
