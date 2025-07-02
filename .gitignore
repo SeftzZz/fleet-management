@@ -1,6 +1,7 @@
 system/
 application/config/database.php
 application/config/config.php
+application/cache/sessions
 vps sahirahotelsgroup.com.txt
 Key103_191_63_18.ppk
 .htaccess
