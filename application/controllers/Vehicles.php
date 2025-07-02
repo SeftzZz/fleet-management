@@ -162,10 +162,10 @@ class Vehicles extends CI_Controller {
     public function vehiclesdocumentadd()
     {
         if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('vehicle_id','Tanggal Bergabung','required');
-            $this->form_validation->set_rules('doc_type','Nama','required');
-            $this->form_validation->set_rules('expiry_date','No. SIM','required');
-            $this->form_validation->set_rules('doc_number','No. HP','required');
+            $this->form_validation->set_rules('noPintu','Nomor Pintu','required');
+            $this->form_validation->set_rules('doc_type','Type','required');
+            $this->form_validation->set_rules('expiry_date','Tanggal Expired','required');
+            $this->form_validation->set_rules('doc_number','Nomor Dokumen','required');
 
             if ($this->form_validation->run()==FALSE) {     
                 $data = [
@@ -180,7 +180,7 @@ class Vehicles extends CI_Controller {
                 $this->load->view('footernew');
             } else {
                 $dataVehiclesDocument = array(
-                    'vehicle_id'  	=> $this->input->post('vehicle_id'),
+                    'vehicle_id'  	=> $this->input->post('noPintu'),
                     'doc_type'      => $this->input->post('doc_type'),
                     'doc_number'    => $this->input->post('doc_number'),
                     'expiry_date'	=> $this->input->post('expiry_date'),

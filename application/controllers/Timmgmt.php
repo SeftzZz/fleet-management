@@ -73,7 +73,7 @@ class Timmgmt extends CI_Controller {
             $this->form_validation->set_rules('mobil','Kendaraan','required');
             $this->form_validation->set_rules('statusAtim','Status Anggota Tim','required');
 
-            if ($this->form_validation->run()==FALSE) {     
+            if ($this->form_validation->run()==FALSE) {
                 $data = [
                     "title" => "Manajemen AAnggota Tim | Fleet Management",
                     "nopage" => 1031,
@@ -83,7 +83,8 @@ class Timmgmt extends CI_Controller {
                 $data['tims'] = $this->Tim_model->getAllTimAktif();
                 $data['supirs'] = $this->Driver_model->getAllSupirAktif();
                 $data['mobils'] = $this->Vehicle_model->getAllKendaraanAktif();
-                
+                $this->session->set_flashdata('pesanerror','Data kurang lengkap');
+
                 $this->load->view('headernew', $data);
                 $this->load->view('timmgmt', $data);
                 $this->load->view('footernew');

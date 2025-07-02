@@ -37,10 +37,10 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>No. Polisi</label>
-                                                <select name="noPol" class="form-control select_rute" style="width:100%;">
+                                                <select name="noPintu" class="form-control select_rute" style="width:100%;">
                                                     <option value=""></option>
                                                     <?php foreach ($vehicles as $value) { ?>
-                                                        <option value='<?php echo $value->no_pol; ?>' <?php echo set_select('noPol', $value->no_pol );?> ><?php echo $value->no_pol; ?></option>
+                                                        <option value='<?php echo $value->no_pol; ?>' <?php echo set_select('noPintu', $value->no_pol );?> ><?php echo $value->no_pol; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
@@ -136,7 +136,7 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>No. Polisi</th>                                                    
+                                                    <th>No. Pintu</th>                                                    
                                                     <th>No. Bak</th>
                                                     <th>Type</th>
                                                     <th>Warna</th>
@@ -150,27 +150,31 @@
                                         <form id="form1" name="form1" action="<?php echo site_url('vehicles/vehiclesdocumentadd/')?>" method="post" enctype="multipart/form-data">
                                             <div class="row g-3">
                                                 <div class="col-md-6">
-                                                    <label class="form-label">Pilih Kendaraan</label>
-                                                    <select class="form-select form-control" name="vehicle_id">
-                                                        <option selected>Pilih kendaraan...</option>
-                                                        <?php foreach ($vehicles as $value) { ?>
-                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('vehicle_id', $value->id );?> ><?php echo $value->no_pol; ?></option>
-                                                        <?php } ?>
-                                                    </select>
+                                                    <div class="form-group">
+                                                        <label>No. Pintu</label>
+                                                        <select name="noPintu" class="form-control select_rute" style="width:100%;">
+                                                            <option value=""></option>
+                                                            <?php foreach ($vehicles as $value) { ?>
+                                                                <option value='<?php echo $value->id; ?>' <?php echo set_select('noPintu', $value->no_pintu );?> ><?php echo $value->no_pintu; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="form-label">Jenis Dokumen</label>
-                                                    <select class="form-select form-control" name="doc_type">
-                                                        <option selected>Pilih jenis...</option>
-                                                        <!-- <?php foreach ($v_doc_detail as $value) { ?>
-                                                            <option value='<?php echo $value->name; ?>' <?php echo set_select('doc_type', $value->id );?> ><?php echo $value->name; ?></option>
-                                                        <?php } ?> -->
-                                                        <option>STNK</option>
-                                                        <option>KIR</option>
-                                                        <option>Asuransi</option>
-                                                        <option>BPKB</option>
-                                                        <option>Lainnya</option>
-                                                    </select>
+                                                    <div class="form-group">
+                                                        <label class="form-label">Jenis Dokumen</label>
+                                                        <select class="form-select form-control" name="doc_type">
+                                                            <option selected>Pilih jenis...</option>
+                                                            <!-- <?php foreach ($v_doc_detail as $value) { ?>
+                                                                <option value='<?php echo $value->name; ?>' <?php echo set_select('doc_type', $value->id );?> ><?php echo $value->name; ?></option>
+                                                            <?php } ?> -->
+                                                            <option>STNK</option>
+                                                            <option>KIR</option>
+                                                            <option>Asuransi</option>
+                                                            <option>BPKB</option>
+                                                            <option>Lainnya</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
@@ -179,8 +183,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="form-label">Tanggal Expired</label>
-                                                    <input type="date" name="expiry_date" value="<?php echo set_value('expiry_date')?>" class="form-control <?php if (form_error('expiry_date')) {echo "is-invalid";} ?>" />
+                                                    <div class="form-group">
+                                                        <label>Tanggal Expired</label>
+                                                        <div class="input-group date" id="expiry_date" data-target-input="nearest">
+                                                            <input type="text" name="expiry_date" value="<?php echo set_value('expiry_date')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text" data-target="#expiry_date" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <!-- <div class="col-md-8">
                                                     <label class="form-label">Upload File</label>

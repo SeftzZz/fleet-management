@@ -57,11 +57,25 @@ class Routes extends CI_Controller {
             // Ambil ringkasan ritasi terakhir
             $data['last_ritasi_summary'] = $this->Route_model->getLastInsertedRitasiSummary();
             $data['jmlritasiHari'] = $this->Route_model->getAllJmlRitasiHari();
+            $data['jmlritasiKemarin'] = $this->Route_model->getAllJmlRitasiKemarin();
             $data['jmlritasiGHari'] = $this->Route_model->getAllJmlRitasiTimGHari();
             $data['jmlritasiKHari'] = $this->Route_model->getAllJmlRitasiTimKHari();
             $data['jmlritasiMHari'] = $this->Route_model->getAllJmlRitasiTimMHari();
             $data['jmlritasiBln'] = $this->Route_model->getAllJmlRitasiBln();
+            $data['jmlritasiBlnKemarin'] = $this->Route_model->getAllJmlRitasiBlnKemarin();
             $data['jmlritasiTanpaNodo'] = $this->Route_model->getAllJmlRitasiTanpaNodo();
+
+            if ($data['jmlritasiKemarin'] > 0) {
+                $data['persenRitasiHari'] = (($data['jmlritasiHari'] - $data['jmlritasiKemarin']) / $data['jmlritasiKemarin']) * 100;
+            } else {
+                $data['persenRitasiHari'] = 0;
+            }
+
+            if ($data['jmlritasiBlnKemarin'] > 0) {
+                $data['persenRitasiBln'] = (($data['jmlritasiBln'] - $data['jmlritasiBlnKemarin']) / $data['jmlritasiBlnKemarin']) * 100;
+            } else {
+                $data['persenRitasiBln'] = 0;
+            }
             
             $this->load->view('headernew', $data);
             $this->load->view('routes', $data);
@@ -96,7 +110,6 @@ class Routes extends CI_Controller {
             } else {
                 $data['persenRitasiBln'] = 0;
             }
-
             
             $this->load->view('headernew', $data);
             $this->load->view('routes', $data);

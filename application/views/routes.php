@@ -109,7 +109,7 @@
                     </div>
                     <div class="container-fluid">&nbsp;</div>
                     <div class="container-fluid">
-                        <div class="card">
+                        <div class="card" style="z-index: 1;">
                             <div class="card-header">
                                 <h3 class="card-title">Filter Rekapitulasi Ritasi Harian</h3>
                                 <div class="card-tools">
@@ -128,9 +128,9 @@
                                             <div class="form-group">
                                                 <label>Tanggal</label>
                                                 <div class="input-group date" id="tglan_ritasi" data-target-input="nearest">
-                                                    <input type="text" name="tgl_ritasi" value="<?php echo set_value('tgl_ritasi')?>" class="form-control datetimepicker-input" data-target="#tglan_ritasi" data-toggle="datetimepicker" />
+                                                    <input type="text" name="tgl_ritasi" value="<?php echo set_value('tgl_ritasi')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
                                                     <div class="input-group-append">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                        <div class="input-group-text" data-target="#tglan_ritasi" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
