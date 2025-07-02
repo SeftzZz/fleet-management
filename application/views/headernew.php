@@ -4,7 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo $title ?></title>
-        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/favicon.ico.png" type="image/x-icon">
+        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/icons-192.png" sizes="192x192"/> 
+        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/icons-512.png" sizes="512x512"/> 
+        <link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url(); ?>assets/newstyle/dist/img/apple-touch-icon.png">
+        <link rel="manifest" href="<?php echo base_url(); ?>assets/newstyle/dist/img/manifest.webmanifest">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/fontawesome-free/css/all.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
