@@ -18,6 +18,10 @@ class Proyek extends CI_Controller {
         date_default_timezone_set("Asia/Jakarta");
         $this->load->model('Proyek_model');
         $this->load->database();
+
+        if(!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
     }
 
 	public function index()

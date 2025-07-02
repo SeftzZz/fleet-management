@@ -22,6 +22,11 @@ class Wallet_model extends CI_Model {
         return $this->db->update($this->table, $data);
     }
 
+    public function update_nodo($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update($this->transaction_table, $data);
+    }
+
     public function insert_transaction($data) {
         return $this->db->insert($this->transaction_table, $data);
     }
@@ -42,8 +47,6 @@ class Wallet_model extends CI_Model {
         return $this->db
             ->where('wallet_id', $wallet_id)
             ->where('is_delete', 0)
-            ->where('transaction_type', 'credit')
-            ->where('status', 'belum')
             ->order_by('id', 'DESC')
             ->get('wallet_transactions')
             ->result();
@@ -54,8 +57,8 @@ class Wallet_model extends CI_Model {
         return $this->db
             ->where('wallet_id', $wallet_id)
             ->where('is_delete', 0)
-            ->where('transaction_type', 'credit')
-            ->order_by('id', 'DESC')
+            ->not_like('description', 'Uang Jalan DO - ', 'after')
+            ->order_by('id', 'ASC')
             ->get('wallet_transactions')
             ->result();
     }
@@ -71,6 +74,25 @@ class Wallet_model extends CI_Model {
             ->order_by('wallets.id', 'DESC')
             ->get()
             ->result();
+    }
+
+    public function getWalletTransactionsByTabungan($id)
+    {
+        return $this->db
+            ->where('id_ritasi', $id)
+            ->where('is_delete', 0)
+            ->like('description', 'Tabungan DO - ', 'after')
+            ->get('wallet_transactions')
+            ->row();
+    }
+
+    public function getTransactionById($id)
+    {
+        return $this->db
+            ->where('id', $id)
+            ->where('is_delete', 0)
+            ->get('wallet_transactions')
+            ->row();
     }
 
 }

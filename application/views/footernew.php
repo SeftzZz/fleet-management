@@ -29,7 +29,7 @@
         <!-- SweetAlert2 -->
         <script src="<?php echo base_url(); ?>assets/newstyle/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1081) { ?>
             <!-- Select2 -->
             <script src="<?php echo base_url(); ?>assets/newstyle/plugins/select2/js/select2.full.min.js"></script>
             <!-- date-range-picker -->
@@ -64,7 +64,18 @@
                         "responsive": true,
                         "lengthChange": false,
                         "autoWidth": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "searching": false,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
                             { targets: [0, 10], orderable: false },
                             { targets: 0, className: 'text-center' }
@@ -76,9 +87,19 @@
 
                     $("#tbl_ujalan").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
-                            { targets: [3], orderable: false}
+                            { targets: [4], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_ujalan_wrapper .col-md-6:eq(0)');
@@ -94,36 +115,104 @@
 
                     $("#tbl_galian").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
                             { targets: [3], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_galian_wrapper .col-md-6:eq(0)');
 
-                    $("#tbl_atim").DataTable({
+                    $("#tbl_user").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [3], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_user_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_manajemenvehicles").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
                             { targets: [5], orderable: false}
                         ]
                     })
-                    .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
+                    .buttons().container().appendTo('#tbl_manajemenvehicles_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemensupir").DataTable({
-                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
-                        "buttons": ["excel", "pdf", "print", "colvis"],
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                         "columnDefs": [
-                            { targets: [4], orderable: false}
+                            { targets: [7], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_atim").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [6], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_atim_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemenwallet").DataTable({
                         responsive: true,
                         lengthChange: false,
                         autoWidth: false,
-                        searching: false,
+                        searching: true,
                         buttons: [
                             "excel", 
                             "pdf", 
@@ -137,12 +226,10 @@
                             "colvis"
                         ],
                         columnDefs: [
-                            { targets: [2], orderable: false }
+                            { targets: [3], orderable: false }
                         ]
                     })
-                    .buttons()
-                    .container()
-                    .appendTo('#tbl_manajemenwallet_wrapper .col-md-6:eq(0)');
+                    .buttons().container().appendTo('#tbl_manajemenwallet_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_reimburse_done").DataTable({
                         responsive: true,
@@ -256,7 +343,7 @@
                                 var row = `
                                     <tr>
                                         <td>
-                                            ${value.no_pol}
+                                            ${value.no_pintu} - ${value.no_pol}
                                             <input type="hidden" name="kendaraan_id[]" value="${value.vehicle_id}">
                                         </td>
                                         <td>
@@ -354,16 +441,37 @@
                 $('#tglAddExpSim').datetimepicker({
                     format: 'YYYY-MM-DD'
                 });
+                $('#tglCariJoin').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
             </script>
-        <?php } ?>
-
-        <?php if ($nopage==1051) { ?>
             <script>
-                <?php foreach ($kendaraans as $value): ?>
-                    $('#jam-picker<?php echo $value->vehicle_id ?>').datetimepicker({
-                        format: 'HH:mm'
-                    });
-                <?php endforeach; ?>
+                $(function () {
+                  $('[data-toggle="tooltip"]').tooltip()
+                })
+            </script>
+            <script>
+                $(document).ready(function() {
+                    <?php foreach ($supirs as $row) { ?>
+                        (function() {
+                            var id = <?php echo $row->id ?>;
+                            var statusSelector = '#statusSupir' + id;
+                            var keteranganWrapper = '#keteranganWrapper' + id;
+
+                            function toggleKeterangan() {
+                                var status = $(statusSelector).val();
+                                if (status === 'Non Aktif') {
+                                    $(keteranganWrapper).show();
+                                } else {
+                                    $(keteranganWrapper).hide();
+                                }
+                            }
+
+                            toggleKeterangan(); // Saat load
+                            $(statusSelector).change(toggleKeterangan); // Saat berubah
+                        })();
+                    <?php } ?>
+                });
             </script>
         <?php } ?>
 
@@ -443,9 +551,6 @@
                                     title: '<?php echo "[Wallet] " . $row->name . "<br>Jumlah transaksi: " . count($wallet_transactions[$row->wallet_id] ?? []); ?>'
                                 },
                                 "colvis"
-                            ],
-                            columnDefs: [
-                                { targets: [2], orderable: false }
                             ]
                         }).buttons().container().appendTo(wrapperSelector);
                     });

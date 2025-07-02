@@ -84,7 +84,7 @@
                                             <table class="table table-bordered" id="kendaraan-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>List Kendaraan</th>
+                                                        <th>Kendaraan (No. Pintu/Bak/Unit)</th>
                                                         <th>Jam Angkut</th>
                                                         <th>No. DO</th>
                                                     </tr>
@@ -93,7 +93,7 @@
                                                     <?php foreach ($kendaraans as $value) { ?>
                                                         <tr>
                                                             <td>
-                                                                <?php echo $value->no_pol; ?>
+                                                                <?php echo $value->no_pintu.' - '.$value->no_pol; ?>
                                                                 <input type="hidden" name="kendaraan_id[]" value="<?php echo $value->vehicle_id; ?>">
                                                             </td>
                                                             <td>

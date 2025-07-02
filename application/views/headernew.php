@@ -4,14 +4,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo $title ?></title>
-        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/favicon.ico.png" type="image/x-icon">
+        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/icons-192.png" sizes="192x192"/> 
+        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/icons-512.png" sizes="512x512"/> 
+        <link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url(); ?>assets/newstyle/dist/img/apple-touch-icon.png">
+        <link rel="manifest" href="<?php echo base_url(); ?>assets/newstyle/dist/img/manifest.webmanifest">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/fontawesome-free/css/all.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <!-- iCheck -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
         
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081) { ?>
         <!-- Select2 -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/select2/css/select2.min.css">
         
@@ -78,9 +82,9 @@
 
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <a href="index3.html" class="brand-link">
-                    <img src="<?php echo base_url(); ?>assets/newstyle/dist/img/LogoTruck.png" class="brand-image">
-                    <span class="brand-text font-weight-light">FLEETX</span>
+                <a href="#" class="brand-link">
+                    <img src="<?php echo base_url(); ?>assets/newstyle/dist/img/KMPLogoSinga.png" class="brand-image">
+                    <span class="brand-text font-weight-light" style="color:#000000;">Karya Majujaya Perkasa</span>
                 </a>
 
                 <!-- Sidebar -->
@@ -88,12 +92,12 @@
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <!-- <li class="nav-item">
-                                <a href="<?php echo site_url() ?>" class="nav-link">
+                            <li class="nav-item">
+                                <a href="<?php echo site_url('dashboard') ?>" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>Dashboard Utama</p>
+                                    <p>Dashboard</p>
                                 </a>
-                            </li> -->
+                            </li>
                             <li class="nav-item">
                                 <a href="<?php echo site_url('vehicles') ?>" class="nav-link <?php if ($nopage==1051) echo ('active') ?>" />
                                     <i class="nav-icon fas fa-truck"></i>
@@ -124,14 +128,26 @@
                                     <p>Pemeliharaan & BBM</p>
                                 </a>
                             </li>
-                            <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071) { ?>
+                            <li class="nav-item">
+                                <a href="<?php echo site_url('wallet') ?>" class="nav-link <?php if ($nopage==1071) echo('active') ?>" />
+                                    <i class="nav-icon fas fa-wallet"></i>
+                                    <p>Form Wallet</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo site_url('reimbursement') ?>" class="nav-link <?php if ($nopage==1061) echo('active') ?>" />
+                                    <i class="nav-icon fas fa-money-bill"></i>
+                                    <p>Reimbursement</p>
+                                </a>
+                            </li>
+                            <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081) { ?>
                             <li class="nav-item menu-open">
                             <?php } else { ?>
                             <li class="nav-item">
                             <?php } ?>
-                                <a href="#" class="nav-link <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071) echo ('active') ?>">
+                                <a href="#" class="nav-link <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081) echo ('active') ?>">
                                     <i class="nav-icon fas fa-database"></i>
-                                    <p>Manajemen Data<i class="fas fa-angle-left right"></i></p>
+                                    <p>Master Data<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
@@ -153,24 +169,18 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="<?php echo site_url('reimbursement') ?>" class="nav-link <?php if ($nopage==1061) echo('active') ?>" />
+                                        <a href="<?php echo site_url('pengguna') ?>" class="nav-link <?php if ($nopage==1081) echo('active') ?>" />
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Reimbursement</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="<?php echo site_url('wallet') ?>" class="nav-link <?php if ($nopage==1071) echo('active') ?>" />
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Klaim Wallet</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Kendaraan</p>
+                                            <p>Users</p>
                                         </a>
                                     </li>
                                 </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo site_url('auth/logout') ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-power-off"></i>
+                                    <p>Logout</p>
+                                </a>
                             </li>
                         </ul>
                     </nav>

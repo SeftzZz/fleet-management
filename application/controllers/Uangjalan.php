@@ -20,6 +20,10 @@ class Uangjalan extends CI_Controller {
         $this->load->model('Proyek_model');
         $this->load->model('Lokasigalian_model');
         $this->load->database();
+
+        if(!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
     }
 
 	public function index()
@@ -124,7 +128,6 @@ class Uangjalan extends CI_Controller {
             // update tabel uangjalan  
             $dataUjalan = array(
                 'is_delete'          => $this->input->post('del'),
-                'status_uangjalan'   => 'Non Aktif',
                 'updated_at'         => date('Y-m-d H:i:s')
             );                              
             $this->Uangjalan_model->update($id,$dataUjalan);

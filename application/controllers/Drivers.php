@@ -19,6 +19,10 @@ class Drivers extends CI_Controller {
         $this->load->model('Driver_model');
         $this->load->model('Wallet_model');
         $this->load->database();
+
+        if(!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
     }
 
     /**
@@ -44,20 +48,21 @@ class Drivers extends CI_Controller {
         ];
 
         if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('tgl_join','Tanggal Bergabung','required');
-            $this->form_validation->set_rules('status','Status','required');
+            $this->form_validation->set_rules('nmSupir','Nama Supir','');
+            $this->form_validation->set_rules('tglJoin','Tanggal Bergabung','');
+            $this->form_validation->set_rules('statusSupir','Status','');
 
-            $caritanggal = $this->input->post('tgl_join');
-            $caristatus = $this->input->post('status');
+            $carisupir = $this->input->post('nmSupir');
+            $caritanggal = $this->input->post('tglJoin');
+            $caristatus = $this->input->post('statusSupir');
 
-            $data['supirs'] = $this->Driver_model->getAllSupirByFilter($caritanggal,$caristatus);
+            $data['supirs'] = $this->Driver_model->getAllSupirByFilter($carisupir,$caritanggal,$caristatus);
             $data['wallets'] = $this->Wallet_model->getAllWallet();
             
             $this->load->view('headernew', $data);
             $this->load->view('drivers', $data);
             $this->load->view('footernew');
         } else {
-
             $data['supirs'] = $this->Driver_model->getAllSupir();
             $data['wallets'] = $this->Wallet_model->getAllWallet();
 
@@ -634,6 +639,7 @@ class Drivers extends CI_Controller {
             $this->form_validation->set_rules('fotoSim','Foto Supir','');
             $this->form_validation->set_rules('alamat','Alamat','required');
             $this->form_validation->set_rules('statusSupir','Status','required');
+            $this->form_validation->set_rules('keterangan','Keterangan','');
 
             if ($this->form_validation->run()==FALSE) {     
                 $data = [
@@ -712,6 +718,7 @@ class Drivers extends CI_Controller {
                             'img_sim'           => $unggahSim['file_name'],
                             'img_ktp'           => $unggahKtp['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Driver_model->update($id, $dataSupir);
@@ -761,6 +768,7 @@ class Drivers extends CI_Controller {
                             'img_profile'       => $unggahFoto['file_name'],
                             'img_sim'           => $unggahSim['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Driver_model->update($id, $dataSupir);
@@ -810,6 +818,7 @@ class Drivers extends CI_Controller {
                             'img_sim'           => $unggahSim['file_name'],
                             'img_ktp'           => $unggahKtp['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Driver_model->update($id, $dataSupir);
@@ -859,6 +868,7 @@ class Drivers extends CI_Controller {
                             'img_profile'       => $unggahFoto['file_name'],
                             'img_ktp'           => $unggahKtp['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Driver_model->update($id, $dataSupir);
@@ -893,6 +903,7 @@ class Drivers extends CI_Controller {
                             'tgl_exp_sim'       => $this->input->post('tglExpSim'),
                             'img_profile'       => $unggahFoto['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Driver_model->update($id, $dataSupir);
@@ -927,6 +938,7 @@ class Drivers extends CI_Controller {
                             'tgl_exp_sim'       => $this->input->post('tglExpSim'),
                             'img_sim'           => $unggahSim['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Driver_model->update($id, $dataSupir);
@@ -961,6 +973,7 @@ class Drivers extends CI_Controller {
                             'tgl_exp_sim'       => $this->input->post('tglExpSim'),
                             'img_ktp'           => $unggahKtp['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Driver_model->update($id, $dataSupir);
@@ -978,6 +991,7 @@ class Drivers extends CI_Controller {
                         'nomor_darurat'     => $this->input->post('noDarurat'),
                         'tgl_exp_sim'       => $this->input->post('tglExpSim'),
                         'status'            => $this->input->post('statusSupir'),
+                        'keterangan'        => $this->input->post('keterangan'),
                         'updated_at'        => date('Y-m-d H:i:s')
                     );
                     $this->Driver_model->update($id, $dataSupir);
