@@ -21,34 +21,49 @@
         <script>
           $.widget.bridge('uibutton', $.ui.button)
         </script>
-        <!-- Bootstrap 4 -->
+        <!-- Bootstrap 4 (berdasarkan asumsi jQuery sudah dimuat) -->
         <script src="<?php echo base_url(); ?>assets/newstyle/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Moment.js (digunakan untuk tanggal/waktu) -->
         <script src="<?php echo base_url(); ?>assets/newstyle/plugins/moment/moment.min.js"></script>
-        <!-- overlayScrollbars -->
-        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+        <!-- Tempusdominus Bootstrap 4 (depend on moment and bootstrap) -->
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Date Range Picker (depend on moment.js & Bootstrap) -->
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/daterangepicker/daterangepicker.js"></script>
+
+        <!-- Select2 (plugin untuk select dropdown) -->
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/select2/js/select2.full.min.js"></script>
+
         <!-- SweetAlert2 -->
         <script src="<?php echo base_url(); ?>assets/newstyle/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1081) { ?>
-            <!-- Select2 -->
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/select2/js/select2.full.min.js"></script>
-            <!-- date-range-picker -->
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/daterangepicker/daterangepicker.js"></script>
-            <!-- Tempusdominus Bootstrap 4 -->
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-            <!-- DataTables & Plugins -->
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables/jquery.dataTables.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/jszip/jszip.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/pdfmake/pdfmake.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/pdfmake/vfs_fonts.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+        <!-- overlayScrollbars -->
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+        <!-- DataTables core -->
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+        <!-- DataTables Responsive -->
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+        <!-- DataTables Buttons -->
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/jszip/jszip.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/pdfmake/pdfmake.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/pdfmake/vfs_fonts.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/newstyle/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+        <!-- Script utama (pastikan ini paling akhir agar semua dependensi sudah ter-load) -->
+        <script src="<?php echo base_url(); ?>assets/newstyle/dist/js/newtheme.js?v=3.2.0"></script>
+
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081) { ?>
             <script>
                 $(function () {
                     $("#tbl_daftarrute").DataTable({
@@ -87,19 +102,9 @@
 
                     $("#tbl_ujalan").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
-                        "buttons": [
-                            "excel", "pdf", 
-                            {
-                                extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3] // kolom tertentu yang ikut di print
-                                }
-                            }, 
-                            "colvis"
-                        ],
+                        "buttons": ["excel", "pdf", "print", "colvis"],
                         "columnDefs": [
-                            { targets: [4], orderable: false}
+                            { targets: [3], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_ujalan_wrapper .col-md-6:eq(0)');
@@ -115,57 +120,32 @@
 
                     $("#tbl_galian").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
-                        "buttons": [
-                            "excel", "pdf", 
-                            {
-                                extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                                exportOptions: {
-                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
-                                }
-                            }, 
-                            "colvis"
-                        ],
+                        "buttons": ["excel", "pdf", "print", "colvis"],
                         "columnDefs": [
                             { targets: [3], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_galian_wrapper .col-md-6:eq(0)');
 
-                    $("#tbl_user").DataTable({
-                        "responsive": true, "lengthChange": false, "autoWidth": false,
-                        "buttons": [
-                            "excel", "pdf", 
-                            {
-                                extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                                exportOptions: {
-                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
-                                }
-                            }, 
-                            "colvis"
-                        ],
-                        "columnDefs": [
-                            { targets: [3], orderable: false}
-                        ]
-                    })
-                    .buttons().container().appendTo('#tbl_user_wrapper .col-md-6:eq(0)');
-
                     $("#tbl_manajemenvehicles").DataTable({
-                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
+                        "responsive": true,
+                        "lengthChange": false,
+                        "autoWidth": false,
+                        "searching": false,
+                        "order": [[1, "asc"]], // 🔽 Urutkan kolom ke-1 (indeks 1) dari kecil ke besar
                         "buttons": [
-                            "excel", "pdf", 
+                            "excel", "pdf",
                             {
                                 extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                footer: true,
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4] // kolom tertentu yang ikut di print
+                                    columns: [0, 1, 2, 3, 4]
                                 }
-                            }, 
+                            },
                             "colvis"
                         ],
                         "columnDefs": [
-                            { targets: [5], orderable: false}
+                            { targets: [0], orderable: false }
                         ]
                     })
                     .buttons().container().appendTo('#tbl_manajemenvehicles_wrapper .col-md-6:eq(0)');
@@ -442,7 +422,7 @@
                     format: 'YYYY-MM-DD'
                 });
                 $('#tglCariJoin').datetimepicker({
-                    format: 'DD-MM-YYYY'
+                    format: 'YYYY-MM-DD'
                 });
             </script>
             <script>
@@ -585,7 +565,5 @@
         <?php } else { ?>
             <!-- sengaja dikosongkan -->
         <?php } ?>
-
-        <script src="<?php echo base_url(); ?>assets/newstyle/dist/js/newtheme.js?v=3.2.0"></script>
     </body>
 </html>
