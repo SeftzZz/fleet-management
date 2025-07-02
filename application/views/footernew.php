@@ -171,7 +171,7 @@
                     .buttons().container().appendTo('#tbl_manajemenvehicles_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemensupir").DataTable({
-                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
                         "buttons": [
                             "excel", "pdf", 
                             {
@@ -212,7 +212,7 @@
                         responsive: true,
                         lengthChange: false,
                         autoWidth: false,
-                        searching: false,
+                        searching: true,
                         buttons: [
                             "excel", 
                             "pdf", 
@@ -442,7 +442,7 @@
                     format: 'YYYY-MM-DD'
                 });
                 $('#tglCariJoin').datetimepicker({
-                    format: 'YYYY-MM-DD'
+                    format: 'DD-MM-YYYY'
                 });
             </script>
             <script>
