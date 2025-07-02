@@ -284,7 +284,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Nama Supir</label>
-                                                        <select name="nmSupir" class="form-control select_rute <?php if (form_error('nmSupir')) {echo "is-invalid";} ?>" style="width:100%;" />
+                                                        <select name="nmSupir" class="form-control select_rute <?php if (form_error('nmSupir')) {echo "is-invalid";} ?>" style="width:100%;" disabled="disabled" />
                                                             <option value="">--- Pilih Supir ---</option>
                                                             <?php
                                                                 foreach ($supirs as $value) {
@@ -300,7 +300,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Kendaraan</label>
-                                                        <select name="mobil" class="form-control select_rute" data-selected="<?php echo $row->vehicle_id ?>" style="width:100%;" />
+                                                        <select name="mobil" class="form-control select_rute" data-selected="<?php echo $row->vehicle_id ?>" style="width:100%;" disabled="disabled" />
                                                             <option value="">--- Pilih Kendaraan ---</option>
                                                             <?php
                                                                 foreach ($mobils as $value) {

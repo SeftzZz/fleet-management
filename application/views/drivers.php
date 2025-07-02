@@ -73,9 +73,9 @@
                                             <div class="form-group">
                                                 <label>Tanggal Bergabung</label>
                                                 <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
-                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control datetimepicker-input" data-target="#tglCariJoin" data-toggle="datetimepicker" />
+                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
                                                     <div class="input-group-append">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                        <div class="input-group-text" data-target="#tglCariJoin" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -148,7 +148,7 @@
                                                 <?php foreach ($supirs as $row) { ?>
                                                     <tr>
                                                         <td><?php echo $row->name ?></td>
-                                                        <td><?php echo $this->fppfunction->tglblnthn_ind($row->tgl_join); ?></td>
+                                                        <td><?php echo $row->tgl_join; ?></td>
                                                         <td><?php echo $row->phone ?></td>
                                                         <td><?php echo $row->nomor_darurat ?></td>
                                                         <td><?php echo $row->license_number ?></td>
@@ -193,15 +193,13 @@
                                     <div class="tab-pane fade" id="mgmt_wallet" role="tabpanel" aria-labelledby="mgmt_wallet_tab">
                                         <p class="lead2 mb-3">
                                             Manajemen Wallet Supir
-                                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#mdl_tmbhLog">
-                                                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Tambah Wallet Supir
-                                            </button>
                                         </p>
                                         <table id="tbl_manajemenwallet" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Nama</th>
                                                     <th>Balance</th>
+                                                    <th>Status</th>
                                                     <th>Update At</th>
                                                     <th width="8%">Aksi</th>
                                                 </tr>
@@ -211,6 +209,7 @@
                                                     <tr>
                                                         <td><?php echo $row->name ?></td>
                                                         <td><?php echo $this->fppfunction->rupiah_ind($row->balance) ?></td>
+                                                        <td><?php echo $row->status_wallet ?></td>
                                                         <td><?php echo $this->fppfunction->tglangkajam_ind($row->updated_at) ?></td>
                                                         <td width="8%">
                                                             <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#mdl_wallet<?php echo $row->wallet_id ?>"><i class="fas fa-eye"></i></button>
@@ -222,6 +221,7 @@
                                                 <tr>
                                                     <th>Nama</th>
                                                     <th>Balance</th>
+                                                    <th>Status</th>
                                                     <th>Update At</th>
                                                     <th width="8%">Aksi</th>
                                                 </tr>
@@ -256,21 +256,21 @@
                                                 <div class="form-group">
                                                     <label>Tgl. Lahir</label>
                                                     <div class="input-group date" id="tglAddLahir" data-target-input="nearest">
-                                                        <input type="date" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control <?php if (form_error('tglLahir')) {echo "is-invalid";} ?> datetimepicker-input" data-target="#tglAddLahir" data-toggle="datetimepicker" />
-                                                        <!-- <div class="input-group-append">
+                                                        <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <div class="input-group-append">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                        </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Tanggal Bergabung</label>
-                                                    <div class="input-group date" id="tglAddJoin" data-target-input="nearest">
-                                                        <input type="date" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control <?php if (form_error('tglJoin')) {echo "is-invalid";} ?> datetimepicker-input" data-target="#tglAddJoin" data-toggle="datetimepicker" />
-                                                        <!-- <div class="input-group-append">
+                                                    <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
+                                                        <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <div class="input-group-append">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                        </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -312,10 +312,10 @@
                                                 <div class="form-group">
                                                     <label>Tgl. Exp. SIM</label>
                                                     <div class="input-group date" id="tglAddExpSim" data-target-input="nearest">
-                                                        <input type="date" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control <?php if (form_error('tglExpSim')) {echo "is-invalid";} ?> datetimepicker-input" data-target="#tglAddExpSim" data-toggle="datetimepicker" />
-                                                        <!-- <div class="input-group-append">
+                                                        <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <div class="input-group-append">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                        </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -581,9 +581,8 @@
                                                 <tr>
                                                     <th>No.</th>
                                                     <th>Tipe transaksi</th>
-                                                    <th>Balance</th>
+                                                    <th>Amount</th>
                                                     <th>Keterangan</th>
-                                                    <th>Status</th>
                                                     <th>Create At</th>
                                                     <th>Update At</th>
                                                 </tr>
@@ -598,7 +597,6 @@
                                                         <td><?php echo $trans->transaction_type ?></td>
                                                         <td><?php echo $this->fppfunction->rupiah_ind($trans->amount) ?></td>
                                                         <td><?php echo $trans->description ?></td>
-                                                        <td><?php echo $trans->status ?></td>
                                                         <td><?php echo $this->fppfunction->tglangkajam_ind($trans->created_at) ?></td>
                                                         <td><?php echo $this->fppfunction->tglangkajam_ind($trans->updated_at) ?></td>
                                                     </tr>
@@ -606,13 +604,12 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>No.</th>
-                                                    <th>Tipe transaksi</th>
-                                                    <th>Balance</th>
-                                                    <th>Keterangan</th>
-                                                    <th>Status</th>
-                                                    <th>Create</th>
-                                                    <th>Last update</th>
+                                                    <th colspan="1">Balance</th>
+                                                    <th></th>
+                                                    <th colspan="1"><?php echo $this->fppfunction->rupiah_ind($row->balance) ?></th>
+                                                    <th></th>                                                    
+                                                    <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </tfoot>
                                         </table>

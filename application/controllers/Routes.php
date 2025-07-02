@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Routes extends CI_Controller {
-	public function __construct() {
+    public function __construct() {
         parent::__construct();
         $this->load->helper(["form", "url"]);
         $this->load->library("curl");
@@ -29,9 +29,9 @@ class Routes extends CI_Controller {
         $this->load->database();
     }
 
-	public function index()
-	{
-		$data = [
+    public function index()
+    {
+        $data = [
             "title" => "Manajemen Rute / Ritasi | Fleet Management",
             "nopage" => 4,
         ];
@@ -102,7 +102,7 @@ class Routes extends CI_Controller {
             $this->load->view('routes', $data);
             $this->load->view('footernew');
         }
-	}
+    }
 
     public function tambah()
     {
@@ -203,7 +203,7 @@ class Routes extends CI_Controller {
             // Validasi minimal satu kendaraan harus lengkap
             $valid_count = 0;
             for ($i = 0; $i < count($kendaraan_ids); $i++) {
-                if (!empty(trim($kendaraan_ids[$i])) && !empty(trim($jam_list[$i])) && !empty(trim($nodo_list[$i]))) {
+                if (!empty(trim($kendaraan_ids[$i])) && !empty(trim($jam_list[$i]))) {
                     $valid_count++;
                 }
             }
@@ -212,16 +212,39 @@ class Routes extends CI_Controller {
                 $data = [
                     "title" => "Manajemen Rute / Ritasi | Fleet Management",
                     "nopage" => 4,
-                    "routes" => $this->Route_model->getAllRoutes(),
-                    "kendaraans" => $this->Vehicle_model->getAllVehicles(),
-                    "supirs" => $this->Driver_model->getAllSupir(),
-                    "ritasis" => $this->Route_model->getAllRitasi(),
-                    "proyeks" => $this->Proyek_model->getAllProyekAktif(),
-                    "galians" => $this->Lokasigalian_model->getAllGalianByLokasi(),
-                    "tims" => $this->Tim_model->getAllTim()
                 ];
 
-                $this->session->set_flashdata('error', 'Data tidak lengkap. Pastikan semua kendaraan memiliki jam dan DO.');
+                $data['routes'] = $this->Route_model->getAllRoutes();
+                $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
+                $data['supirs'] = $this->Driver_model->getAllSupir();
+                $data['ritasis'] = $this->Route_model->getAllRitasi();
+                $data['tims'] = $this->Tim_model->getAllTimAktif();
+                $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
+                $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
+                // Ambil ringkasan ritasi terakhir
+                $data['last_ritasi_summary'] = $this->Route_model->getLastInsertedRitasiSummary();
+                $data['jmlritasiHari'] = $this->Route_model->getAllJmlRitasiHari();
+                $data['jmlritasiKemarin'] = $this->Route_model->getAllJmlRitasiKemarin();
+                $data['jmlritasiGHari'] = $this->Route_model->getAllJmlRitasiTimGHari();
+                $data['jmlritasiKHari'] = $this->Route_model->getAllJmlRitasiTimKHari();
+                $data['jmlritasiMHari'] = $this->Route_model->getAllJmlRitasiTimMHari();
+                $data['jmlritasiBln'] = $this->Route_model->getAllJmlRitasiBln();
+                $data['jmlritasiBlnKemarin'] = $this->Route_model->getAllJmlRitasiBlnKemarin();
+                $data['jmlritasiTanpaNodo'] = $this->Route_model->getAllJmlRitasiTanpaNodo();
+
+                if ($data['jmlritasiKemarin'] > 0) {
+                    $data['persenRitasiHari'] = (($data['jmlritasiHari'] - $data['jmlritasiKemarin']) / $data['jmlritasiKemarin']) * 100;
+                } else {
+                    $data['persenRitasiHari'] = 0;
+                }
+
+                if ($data['jmlritasiBlnKemarin'] > 0) {
+                    $data['persenRitasiBln'] = (($data['jmlritasiBln'] - $data['jmlritasiBlnKemarin']) / $data['jmlritasiBlnKemarin']) * 100;
+                } else {
+                    $data['persenRitasiBln'] = 0;
+                }
+
+                $this->session->set_flashdata('pesanerror', 'Data tidak lengkap. Pastikan semua kendaraan memiliki jam dan DO.');
                 $this->load->view('headernew', $data);
                 $this->load->view('routes', $data);
                 $this->load->view('footernew');
@@ -237,11 +260,11 @@ class Routes extends CI_Controller {
             $tim        = $this->Tim_model->getTimById($timId);
             $proyek     = $this->Proyek_model->getProyekById($proyekId);
             $galian     = $this->Lokasigalian_model->getGalianById($galianId);
-            $tabungan   = $this->Uangjalan_model->getAllTabunganAktif();
+            $tabungan   = $this->Proyek_model->getProyekById($proyekId);
             $uangjalan  = $this->Uangjalan_model->getUangJalanByGalianId($galianId);
 
             for ($i = 0; $i < count($kendaraan_ids); $i++) {
-                if (empty($kendaraan_ids[$i]) || empty($jam_list[$i]) || empty($nodo_list[$i])) {
+                if (empty($kendaraan_ids[$i]) || empty($jam_list[$i])) {
                     continue;
                 }
 
@@ -260,6 +283,7 @@ class Routes extends CI_Controller {
                 $wallet_id = $this->Wallet_model->get_by_driver($tim_mgmnt->id);
                 if (!$wallet_id) {
                     log_message('error', "[ritasiadd] Wallet tidak ditemukan untuk driver ID: {$tim_mgmnt->id}");
+                    continue;
 
                     // Buat wallet baru jika tidak ada
                     $wallet_id = $this->Wallet_model->insert([
@@ -267,6 +291,70 @@ class Routes extends CI_Controller {
                         'balance' => 0,
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+
+                    log_message('error', '[ritasiadd] Kendaraan ID: ' . print_r($kendaraan_ids, true));
+                    log_message('error', '[ritasiadd] Jam: ' . print_r($jam_list, true));
+                    log_message('error', '[ritasiadd] No DO: ' . print_r($nodo_list, true));
+
+                    log_message('error', '[ritasiadd] INSERTING ritasi: ' . print_r([
+                        'vehicle_id' => $kendaraan->id,
+                        'no_pol' => $kendaraan->no_pol,
+                        'jam' => $jam_list[$i],
+                        'nodo' => $nodo_list[$i]
+                    ], true));
+
+
+                    // Simpan ke tabel ritasi
+                    $this->Route_model->insertRitasi([
+                        'tgl_ritasi'    => $tgl,
+                        'tim_id'        => $timId,
+                        'nama_tim'      => $tim->nama_tim,
+                        'proyek_id'     => $proyekId,
+                        'nama_proyek'   => $proyek->nama_proyek,
+                        'galian_id'     => $galianId,
+                        'lokasi'        => $galian->lokasi,
+                        'vehicle_id'    => $kendaraan->id,
+                        'no_pol'        => $kendaraan->no_pol,
+                        'jam_angkut'    => $jam_list[$i],
+                        'nomerdo'       => $nodo_list[$i],
+                        'uang_jalan'    => $uangjalan->uang_jalan,
+                        'is_delete'     => 0,
+                        'created_at'    => date('Y-m-d H:i:s'),
+                        'updated_at'    => date('Y-m-d H:i:s')
+                    ]);
+                    $id_ritasi = $this->db->insert_id();
+                    log_message('error', "[ritasiadd] ID Ritasi Inserted: " . $id_ritasi);
+                    
+                    // Transaksi tabungan (credit)
+                    $this->Wallet_model->insert_transaction([
+                        'wallet_id'         => $wallet_id->id,
+                        'transaction_type'  => 'credit',
+                        'id_ritasi'         => $id_ritasi,
+                        'description'       => 'Tabungan DO - ' . $nodo_list[$i],
+                        'amount'            => $tabungan->tabungan,
+                        'status'            => 'belum',
+                        'created_at'        => date('Y-m-d H:i:s'),
+                        'updated_at'        => date('Y-m-d H:i:s')
+                    ]);
+
+                    // Transaksi uang jalan (debit)
+                    $this->Wallet_model->insert_transaction([
+                        'wallet_id'         => $wallet_id->id,
+                        'transaction_type'  => 'debit',
+                        'id_ritasi'         => $id_ritasi,
+                        'description'       => 'Uang Jalan DO - ' . $nodo_list[$i],
+                        'amount'            => $uangjalan->uang_jalan,
+                        'status'            => 'belum',
+                        'created_at'        => date('Y-m-d H:i:s'),
+                        'updated_at'        => date('Y-m-d H:i:s')
+                    ]);
+
+                    // Update saldo wallet
+                    $this->Wallet_model->update($wallet_id->id, [
+                        'driver_id'     => $tim_mgmnt->id,
+                        'balance'       => $tabungan->tabungan + $wallet_id->balance,
+                        'updated_at'    => date('Y-m-d H:i:s')
                     ]);
                 }
 
@@ -309,7 +397,7 @@ class Routes extends CI_Controller {
                     'transaction_type'  => 'credit',
                     'id_ritasi'         => $id_ritasi,
                     'description'       => 'Tabungan DO - ' . $nodo_list[$i],
-                    'amount'            => $tabungan->amount,
+                    'amount'            => $tabungan->tabungan,
                     'status'            => 'belum',
                     'created_at'        => date('Y-m-d H:i:s'),
                     'updated_at'        => date('Y-m-d H:i:s')
@@ -330,7 +418,7 @@ class Routes extends CI_Controller {
                 // Update saldo wallet
                 $this->Wallet_model->update($wallet_id->id, [
                     'driver_id'     => $tim_mgmnt->id,
-                    'balance'       => $tabungan->amount + $wallet_id->balance,
+                    'balance'       => $tabungan->tabungan + $wallet_id->balance,
                     'updated_at'    => date('Y-m-d H:i:s')
                 ]);
             }
@@ -349,7 +437,7 @@ class Routes extends CI_Controller {
             $this->form_validation->set_rules('galian','Lokasi Galian','required');
             $this->form_validation->set_rules('kendaraan','Kendaraan','');
             $this->form_validation->set_rules('jam','Jam Angkut','required');
-            $this->form_validation->set_rules('nodo','Nomer DO','required');
+            $this->form_validation->set_rules('nodo','Nomer DO','');
 
             if ($this->form_validation->run()==FALSE) {     
                 $data = [
@@ -373,6 +461,11 @@ class Routes extends CI_Controller {
                 $proyek = $this->Proyek_model->getProyekById($this->input->post('proyek'));
                 $galian = $this->Lokasigalian_model->getGalianById($this->input->post('galian'));
                 $kendaraan = $this->Vehicle_model->getKendaraanById($this->input->post('kendaraan'));
+                $tabungan   = $this->Proyek_model->getProyekById($proyek->id);
+                $uangjalan  = $this->Uangjalan_model->getUangJalanByGalianId($galian->id);
+                $tim_mgmnt = $this->Timmgmt_model->getKendaraanTimByIdMobil($kendaraan->id);
+                $wallet = $this->Wallet_model->get_by_driver($tim_mgmnt->id);
+                $wallet_id = $wallet->id;
 
                 // update tabel ritasi  
                 $dataRitasi = array(
@@ -390,6 +483,18 @@ class Routes extends CI_Controller {
                     'updated_at'    => date('Y-m-d H:i:s')
                 );                              
                 $this->Route_model->updateRitasi($id,$dataRitasi);
+
+                // Ambil transaksi wallet dengan id_ritasi dan deskripsi diawali "Tabungan DO - "
+                $wallet_transactions = $this->Wallet_model->getWalletTransactionsByTabungan($id);
+
+                // Ambil input NoDO
+                $nodo = $this->input->post('nodo');
+
+                $this->Wallet_model->update_nodo($wallet_transactions->id, [
+                    'description' => 'Tabungan DO - ' . $nodo,
+                    'updated_at'  => date('Y-m-d H:i:s')
+                ]);
+
                 $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                 redirect('/routes');
             }
