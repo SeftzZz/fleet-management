@@ -73,7 +73,7 @@
                                             <div class="form-group">
                                                 <label>Tanggal Bergabung</label>
                                                 <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
-                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control datetimepicker-input" />
+                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text" data-target="#tglCariJoin" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                     </div>
@@ -148,7 +148,7 @@
                                                 <?php foreach ($supirs as $row) { ?>
                                                     <tr>
                                                         <td><?php echo $row->name ?></td>
-                                                        <td><?php echo $this->fppfunction->tglblnthn_ind($row->tgl_join); ?></td>
+                                                        <td><?php echo $row->tgl_join; ?></td>
                                                         <td><?php echo $row->phone ?></td>
                                                         <td><?php echo $row->nomor_darurat ?></td>
                                                         <td><?php echo $row->license_number ?></td>
@@ -193,9 +193,6 @@
                                     <div class="tab-pane fade" id="mgmt_wallet" role="tabpanel" aria-labelledby="mgmt_wallet_tab">
                                         <p class="lead2 mb-3">
                                             Manajemen Wallet Supir
-                                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#mdl_tmbhLog">
-                                                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Tambah Wallet Supir
-                                            </button>
                                         </p>
                                         <table id="tbl_manajemenwallet" class="table table-bordered table-striped">
                                             <thead>
@@ -259,21 +256,21 @@
                                                 <div class="form-group">
                                                     <label>Tgl. Lahir</label>
                                                     <div class="input-group date" id="tglAddLahir" data-target-input="nearest">
-                                                        <input type="date" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control <?php if (form_error('tglLahir')) {echo "is-invalid";} ?>" />
-                                                        <!-- <div class="input-group-append">
+                                                        <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <div class="input-group-append">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                        </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Tanggal Bergabung</label>
-                                                    <div class="input-group date" id="tglAddJoin" data-target-input="nearest">
-                                                        <input type="date" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control <?php if (form_error('tglJoin')) {echo "is-invalid";} ?>" />
-                                                        <!-- <div class="input-group-append">
+                                                    <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
+                                                        <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <div class="input-group-append">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                        </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -315,10 +312,10 @@
                                                 <div class="form-group">
                                                     <label>Tgl. Exp. SIM</label>
                                                     <div class="input-group date" id="tglAddExpSim" data-target-input="nearest">
-                                                        <input type="date" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control <?php if (form_error('tglExpSim')) {echo "is-invalid";} ?>" />
-                                                        <!-- <div class="input-group-append">
+                                                        <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <div class="input-group-append">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                        </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

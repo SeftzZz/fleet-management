@@ -7,7 +7,7 @@
                             <div class="col-sm-6"><h1 class="m-0">Manajemen Proyek</h1></div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="<?php echo site_url('dashboard') ?>">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="<?php echo site_url() ?>">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Proyek</li>
                                 </ol>
                             </div>
@@ -32,6 +32,7 @@
                                         <tr>
                                             <th>Nama Proyek</th>
                                             <th>Status</th>
+                                            <th>Uang Tabungan</th>
                                             <th width="8%">Aksi</th>
                                         </tr>
                                     </thead>
@@ -40,6 +41,7 @@
                                             <tr>
                                                 <td><?php echo $row->nama_proyek; ?></td>
                                                 <td><?php echo $row->status_proyek; ?></td>
+                                                <td><?php echo $this->fppfunction->rupiah_ind($row->tabungan); ?></td>
                                                 <td width="8%">
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editProyek<?php echo $row->id ?>"><i class="fas fa-pencil-alt"></i></button>
 
@@ -100,7 +102,7 @@
                                                         <div class="modal-dialog">
                                                           <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h4 class="modal-title">Hapus Uang Jalan</h4>
+                                                                    <h4 class="modal-title">Hapus Proyek</h4>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
@@ -137,6 +139,7 @@
                                         <tr>
                                             <th>Nama Proyek</th>
                                             <th>Status</th>
+                                            <th>Uang Tabungan</th>
                                             <th width="8%">Aksi</th>
                                         </tr>
                                     </tfoot>
@@ -162,6 +165,14 @@
                                                 <div class="form-group">
                                                     <label>Nama Proyek</label>
                                                     <input type="text" name="nmProyek" value="<?php echo set_value('nmProyek')?>" class="form-control <?php if (form_error('nmProyek')) {echo "is-invalid";} ?>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Uang Tabungan</label>
+                                                    <input type="text" name="tabungan" value="<?php echo set_value('tabungan')?>" class="form-control <?php if (form_error('tabungan')) {echo "is-invalid";} ?>" />
                                                 </div>
                                             </div>
                                         </div>
