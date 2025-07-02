@@ -242,11 +242,11 @@
                     $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
 
                     $('#tglan').datetimepicker({
-                        format: 'YYYY-MM-DD'
+                        format: 'DD-MM-YYYY'
                     });
 
                     $('#tglan_ritasi').datetimepicker({
-                        format: 'YYYY-MM-DD'
+                        format: 'DD-MM-YYYY'
                     });
 
                     $('#waktu').datetimepicker({
@@ -283,13 +283,36 @@
                     });
                 });
             </script>
+            <script>
+                function autoFormatTanggal(input) {
+                    const angka = input.value.replace(/\D/g, '').substring(0, 8); // hanya angka max 8 digit
+                    let formatted = '';
+
+                    if (angka.length > 0) formatted = angka.substring(0, 2);
+                    if (angka.length > 2) formatted += '-' + angka.substring(2, 4);
+                    if (angka.length > 4) formatted += '-' + angka.substring(4, 8);
+
+                    // Simpan posisi kursor
+                    const start = input.selectionStart;
+                    const end = input.selectionEnd;
+
+                    input.value = formatted;
+
+                    // Hitung posisi baru setelah auto-format
+                    const dashCount = (formatted.slice(0, start).match(/-/g) || []).length;
+                    const offset = dashCount > 0 ? dashCount : 0;
+
+                    // Set ulang posisi kursor
+                    input.setSelectionRange(start + offset, end + offset);
+                }
+            </script>
         <?php } ?>
 
         <?php if ($nopage == 4) { ?>
             <script>
                 <?php foreach ($ritasis as $row) { ?>
                     $('#tgl_edit<?php echo $row->id ?>').datetimepicker({
-                        format: 'YYYY-MM-DD'
+                        format: 'DD-MM-YYYY'
                     });
 
                     $('#waktu_angkut<?php echo $row->id ?>').datetimepicker({
@@ -361,7 +384,7 @@
 
                     // Init tanggal
                     $('#tglan').datetimepicker({
-                        format: 'YYYY-MM-DD'
+                        format: 'DD-MM-YYYY'
                     });
                 });
 
@@ -402,27 +425,27 @@
             <script>
                 <?php foreach ($supirs as $row) { ?>
                     $('#tglEditSupir<?php echo $row->id ?>').datetimepicker({
-                        format: 'YYYY-MM-DD'
+                        format: 'DD-MM-YYYY'
                     });
                     $('#tglEditLahir<?php echo $row->id ?>').datetimepicker({
-                        format: 'YYYY-MM-DD'
+                        format: 'DD-MM-YYYY'
                     });
                     $('#tglEditExpSim<?php echo $row->id ?>').datetimepicker({
-                        format: 'YYYY-MM-DD'
+                        format: 'DD-MM-YYYY'
                     });
                 <?php } ?>
 
                 $('#tglAddLahir').datetimepicker({
-                    format: 'YYYY-MM-DD'
+                    format: 'DD-MM-YYYY'
                 });
                 $('#tglAddJoin').datetimepicker({
-                    format: 'YYYY-MM-DD'
+                    format: 'DD-MM-YYYY'
                 });
                 $('#tglAddExpSim').datetimepicker({
-                    format: 'YYYY-MM-DD'
+                    format: 'DD-MM-YYYY'
                 });
                 $('#tglCariJoin').datetimepicker({
-                    format: 'YYYY-MM-DD'
+                    format: 'DD-MM-YYYY'
                 });
             </script>
             <script>
@@ -502,7 +525,7 @@
                 $('#tanggal, #proyek, #galian, #tim').on('change', loadRitasiData);
 
                 // Inisialisasi datepicker dan select2 jika diperlukan
-                $('.datepicker').datetimepicker({ format: 'YYYY-MM-DD' });
+                $('.datepicker').datetimepicker({ format: 'DD-MM-YYYY' });
                 $('.select2').select2();
             </script>
         <?php } ?>
