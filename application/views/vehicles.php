@@ -137,7 +137,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <th>No. Pintu</th>                                                    
-                                                    <th>No. Bak</th>
+                                                    <th>No. Pintu</th>
                                                     <th>Type</th>
                                                     <th>Warna</th>
                                                     <th>Status</th>
@@ -186,7 +186,7 @@
                                                     <div class="form-group">
                                                         <label>Tanggal Expired</label>
                                                         <div class="input-group date" id="expiry_date" data-target-input="nearest">
-                                                            <input type="text" name="expiry_date" value="<?php echo set_value('expiry_date')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                            <input type="text" name="expiry_date" value="<?php echo set_value('expiry_date')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                             <div class="input-group-append">
                                                                 <div class="input-group-text" data-target="#expiry_date" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                             </div>
@@ -217,7 +217,7 @@
                         <div class="modal-dialog">
                           <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Tambah vehicles Baru</h4>
+                                    <h4 class="modal-title">Tambah Kendaraan Baru</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -233,7 +233,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label>No. Bak</label>
+                                                    <label>No. Pintu/Bak/Unit</label>
                                                     <input type="text" name="no_pintu" value="<?php echo set_value('no_pintu')?>" class="form-control <?php if (form_error('no_pintu')) {echo "is-invalid";} ?>" />
                                                 </div>
                                             </div>
@@ -258,6 +258,20 @@
                                                 <div class="form-group">
                                                     <label>Warna</label>
                                                     <input type="text" name="warna" value="<?php echo set_value('warna')?>" class="form-control <?php if (form_error('warna')) {echo "is-invalid";} ?>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>No. Chasis</label>
+                                                    <input type="text" name="no_chasis" value="<?php echo set_value('no_chasis')?>" class="form-control <?php if (form_error('no_chasis')) {echo "is-invalid";} ?>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>No. Mesin</label>
+                                                    <input type="text" name="no_mesin" value="<?php echo set_value('no_mesin')?>" class="form-control <?php if (form_error('no_mesin')) {echo "is-invalid";} ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -313,7 +327,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>No. Bak</label>
+                                                        <label>No. Pintu</label>
                                                         <input type="text" name="no_pintu" value="<?php echo set_value('no_pintu',$row->no_pintu)?>" class="form-control <?php if (form_error('no_pintu')) {echo "is-invalid";} ?>" />
                                                     </div>
                                                 </div>
@@ -329,6 +343,20 @@
                                                     <div class="form-group">
                                                         <label>Warna</label>
                                                         <input type="text" name="warna" value="<?php echo set_value('warna',$row->warna)?>" class="form-control <?php if (form_error('warna')) {echo "is-invalid";} ?>" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>No. Chasis</label>
+                                                        <input type="text" name="no_chasis" value="<?php echo set_value('no_chasis',$row->no_chasis)?>" class="form-control <?php if (form_error('no_chasis')) {echo "is-invalid";} ?>" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>No. Mesin</label>
+                                                        <input type="text" name="no_mesin" value="<?php echo set_value('no_mesin',$row->no_mesin)?>" class="form-control <?php if (form_error('no_mesin')) {echo "is-invalid";} ?>" />
                                                     </div>
                                                 </div>
                                             </div>

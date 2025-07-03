@@ -32,6 +32,7 @@ class Pengguna extends CI_Controller {
         ];
 
         $data['penggunas'] = $this->Pengguna_model->getAllPengguna();
+        $data['groups'] = $this->Pengguna_model->getAllGroup();
         
         $this->load->view('headernew', $data);
         $this->load->view('user', $data);
@@ -45,6 +46,7 @@ class Pengguna extends CI_Controller {
             $this->form_validation->set_rules('lastName','Nama Belakang','');
             $this->form_validation->set_rules('email','Email','required|valid_email');
             $this->form_validation->set_rules('pass','Password','required|min_length[8]');
+            $this->form_validation->set_rules('group_id','Group ID','');
 
             if ($this->form_validation->run() == FALSE) {
                 $data = [
@@ -82,7 +84,7 @@ class Pengguna extends CI_Controller {
                 // insert tabel users_groups  
                 $dataUserG = array(
                     'user_id'           => $idUser,
-                    'group_id'          => 2
+                    'group_id'          => $this->input->post('group_id')
                 );  
                 $this->Pengguna_model->insertUserG($dataUserG);
 
@@ -98,6 +100,7 @@ class Pengguna extends CI_Controller {
             $this->form_validation->set_rules('firstName','Nama Depan','required');
             $this->form_validation->set_rules('lastName','Nama Belakang','');
             $this->form_validation->set_rules('status','Status','required');
+            $this->form_validation->set_rules('group_id','Group ID','');
 
             if ($this->form_validation->run()==FALSE) {     
                 $data = [
@@ -118,6 +121,12 @@ class Pengguna extends CI_Controller {
                     'active'            => $this->input->post('status')
                 );                              
                 $this->Pengguna_model->update($id,$dataUser);
+
+                // update tabel users_groups  
+                $dataUserG = array(                    
+                    'group_id'          => $this->input->post('group_id')
+                );  
+                $this->Pengguna_model->updateUserG($id,$dataUserG);
                 $this->session->set_flashdata('pesansukses','Data Berhasil Disimpan');
                 redirect('/pengguna');
             }

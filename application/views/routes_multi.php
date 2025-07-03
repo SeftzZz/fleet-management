@@ -38,9 +38,9 @@
                                             <div class="form-group">
                                                 <label>Tanggal</label>
                                                 <div class="input-group date" id="tglan" data-target-input="nearest">
-                                                    <input type="text" name="tgl" value="<?php echo set_value('tgl')?>" class="form-control datetimepicker-input" data-target="#tglan" data-toggle="datetimepicker" />
+                                                    <input type="text" name="tgl" value="<?php echo set_value('tgl')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                     <div class="input-group-append">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                        <div class="input-group-text" data-target="#tglan" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>

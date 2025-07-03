@@ -19,7 +19,7 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
-                        <div class="card">
+                        <div class="card" style="z-index: 1;">
                             <div class="card-header">
                                 <h3 class="card-title">Filter Manajemen Reimbursement</h3>
                                 <div class="card-tools">
@@ -37,9 +37,9 @@
                                         <div class="col-md-3">
                                             <label>Tanggal</label>
                                             <div class="input-group date" id="tglan_ritasi" data-target-input="nearest">
-                                                <input type="text" name="tanggal" value="<?php echo set_value('tanggal')?>" class="form-control datetimepicker-input" data-target="#tglan_ritasi" data-toggle="datetimepicker" />
+                                                <input type="text" name="tanggal" value="<?php echo set_value('tanggal')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                 <div class="input-group-append">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    <div class="input-group-text" data-target="#tglan_ritasi" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -68,7 +68,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Lokasi Galian</label>
-                                                <select name="galian" class="form-control" style="width:100%;">
+                                                <select name="galian" class="form-control select_rute" style="width:100%;">
                                                         <option value="">Semua Lokasi</option>
                                                         <?php foreach ($galians as $value) { ?>
                                                             <option value='<?php echo $value->id; ?>' <?php echo set_select('galian', $value->id );?>><?php echo $value->lokasi; ?></option>
@@ -112,6 +112,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
+                                                        <th>No. Unit</th>
                                                         <th>No. Polisi</th>
                                                         <th>Uang Jalan</th>
                                                     </tr>
@@ -123,6 +124,7 @@
                                                             $total += $row->uang_jalan;
                                                     ?>
                                                         <tr>
+                                                            <td><?= $row->no_pintu ?></td>
                                                             <td><?= $row->no_pol ?></td>
                                                             <td>Rp <?= number_format($row->uang_jalan, 0, ',', '.') ?></td>
                                                         </tr>

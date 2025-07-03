@@ -106,7 +106,7 @@ class Wallet extends CI_Controller {
                 'transaction_type'  => $this->input->post('transaksiTipe'),
                 'amount'            => $this->input->post('jmlnya'),
                 'description'       => $this->input->post('utk'),
-                'status'            => '',
+                'status'            => 'sudah',
                 'created_at'        => date('Y-m-d H:i:s'),
                 'updated_at'        => date('Y-m-d H:i:s')
             ]);

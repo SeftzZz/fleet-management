@@ -344,7 +344,7 @@ class Routes extends CI_Controller {
                         'wallet_id'         => $wallet_id->id,
                         'transaction_type'  => 'credit',
                         'id_ritasi'         => $id_ritasi,
-                        'description'       => 'Tabungan DO - ' . $nodo_list[$i],
+                        'description'       => 'Tabungan DO -' . $nodo_list[$i],
                         'amount'            => $tabungan->tabungan,
                         'status'            => 'belum',
                         'created_at'        => date('Y-m-d H:i:s'),
@@ -356,7 +356,7 @@ class Routes extends CI_Controller {
                         'wallet_id'         => $wallet_id->id,
                         'transaction_type'  => 'debit',
                         'id_ritasi'         => $id_ritasi,
-                        'description'       => 'Uang Jalan DO - ' . $nodo_list[$i],
+                        'description'       => 'Uang Jalan DO -' . $nodo_list[$i],
                         'amount'            => $uangjalan->uang_jalan,
                         'status'            => 'belum',
                         'created_at'        => date('Y-m-d H:i:s'),
@@ -409,7 +409,7 @@ class Routes extends CI_Controller {
                     'wallet_id'         => $wallet_id->id,
                     'transaction_type'  => 'credit',
                     'id_ritasi'         => $id_ritasi,
-                    'description'       => 'Tabungan DO - ' . $nodo_list[$i],
+                    'description'       => 'Tabungan DO -' . $nodo_list[$i],
                     'amount'            => $tabungan->tabungan,
                     'status'            => 'belum',
                     'created_at'        => date('Y-m-d H:i:s'),
@@ -421,7 +421,7 @@ class Routes extends CI_Controller {
                     'wallet_id'         => $wallet_id->id,
                     'transaction_type'  => 'debit',
                     'id_ritasi'         => $id_ritasi,
-                    'description'       => 'Uang Jalan DO - ' . $nodo_list[$i],
+                    'description'       => 'Uang Jalan DO -' . $nodo_list[$i],
                     'amount'            => $uangjalan->uang_jalan,
                     'status'            => 'belum',
                     'created_at'        => date('Y-m-d H:i:s'),
@@ -497,14 +497,14 @@ class Routes extends CI_Controller {
                 );                              
                 $this->Route_model->updateRitasi($id,$dataRitasi);
 
-                // Ambil transaksi wallet dengan id_ritasi dan deskripsi diawali "Tabungan DO - "
+                // Ambil transaksi wallet dengan id_ritasi dan deskripsi diawali "Tabungan DO -"
                 $wallet_transactions = $this->Wallet_model->getWalletTransactionsByTabungan($id);
 
                 // Ambil input NoDO
                 $nodo = $this->input->post('nodo');
 
                 $this->Wallet_model->update_nodo($wallet_transactions->id, [
-                    'description' => 'Tabungan DO - ' . $nodo,
+                    'description' => 'Tabungan DO -' . $nodo,
                     'updated_at'  => date('Y-m-d H:i:s')
                 ]);
 

@@ -75,10 +75,12 @@ class Vehicles extends CI_Controller {
 	public function vehiclesadd()
     {
         if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('no_pol','Tanggal Bergabung','required');
-            $this->form_validation->set_rules('no_pintu','Nama','required');
-            $this->form_validation->set_rules('type','No. SIM','required');
-            $this->form_validation->set_rules('warna','No. HP','required');
+            $this->form_validation->set_rules('no_pol','No. Polisi','required');
+            $this->form_validation->set_rules('no_pintu','No. Pintu','required');
+            $this->form_validation->set_rules('type','Type','required');
+            $this->form_validation->set_rules('warna','Warna','required');
+            $this->form_validation->set_rules('no_chasis','No. Chasis','required');
+            $this->form_validation->set_rules('no_mesin','No. Mesin','required');
             $this->form_validation->set_rules('status','Status','required');
 
             if ($this->form_validation->run()==FALSE) {     
@@ -98,6 +100,8 @@ class Vehicles extends CI_Controller {
                     'no_pintu'      => $this->input->post('no_pintu'),
                     'type'			=> $this->input->post('type'),
                     'warna'         => $this->input->post('warna'),
+                    'no_chasis'     => $this->input->post('no_chasis'),
+                    'no_mesin'      => $this->input->post('no_mesin'),
                     'status'        => $this->input->post('status'),
                     'created_at'    => date('Y-m-d H:i:s'),
                     'updated_at'    => date('Y-m-d H:i:s')
@@ -116,6 +120,8 @@ class Vehicles extends CI_Controller {
             $this->form_validation->set_rules('no_pintu','Nama','required');
             $this->form_validation->set_rules('type','No. SIM','required');
             $this->form_validation->set_rules('warna','No. HP','required');
+            $this->form_validation->set_rules('no_chasis','No. Chasis','required');
+            $this->form_validation->set_rules('no_mesin','No. Mesin','required');
             $this->form_validation->set_rules('status','Status','required');
 
             if ($this->form_validation->run()==FALSE) {     
@@ -135,6 +141,8 @@ class Vehicles extends CI_Controller {
                     'no_pintu'      => $this->input->post('no_pintu'),
                     'type'          => $this->input->post('type'),
                     'warna'         => $this->input->post('warna'),
+                    'no_chasis'     => $this->input->post('no_chasis'),
+                    'no_mesin'      => $this->input->post('no_mesin'),
                     'status'        => $this->input->post('status'),
                     'updated_at'    => date('Y-m-d H:i:s')
                 );

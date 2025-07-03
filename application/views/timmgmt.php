@@ -51,13 +51,29 @@
                                                 <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>No. Polisi</label>
-                                                <input type="text" name="noPol" value="<?php echo set_value('noPol')?>" class="form-control" />
+                                                <select name="noPol" class="form-control select_rute" style="width:100%;">
+                                                    <option value=""></option>
+                                                    <?php foreach ($mobils as $value) { ?>
+                                                        <option value='<?php echo $value->no_pol; ?>' <?php echo set_select('noPol', $value->no_pol );?> ><?php echo $value->no_pol; ?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>No. Pintu/Bak/Unit</label>
+                                                <select name="noPintu" class="form-control select_rute" style="width:100%;">
+                                                    <option value=""></option>
+                                                    <?php foreach ($mobils as $value) { ?>
+                                                        <option value='<?php echo $value->no_pintu; ?>' <?php echo set_select('noPintu', $value->no_pintu );?> ><?php echo $value->no_pintu; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Status</label>
                                                 <select name="statusAtim" class="custom-select" style="width:100%;">
@@ -219,7 +235,7 @@
                                                     <select name="mobil" class="form-control select_rute <?php if (form_error('mobil')) {echo "is-invalid";} ?>" style="width:100%;">
                                                         <option value="">--- Pilih Kendaraan ---</option>
                                                         <?php foreach ($mobils as $value) { ?>
-                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('mobil', $value->id );?> ><?php echo $value->no_pol; ?></option>
+                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('mobil', $value->id );?> ><?php echo $value->no_pintu; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -305,7 +321,7 @@
                                                             <?php
                                                                 foreach ($mobils as $value) {
                                                                   $selected=($value->id == $row->vehicle_id) ? "selected" : "";
-                                                                  echo " <option value='$value->id' $selected>$value->no_pol</option>";
+                                                                  echo " <option value='$value->id' $selected>$value->no_pintu</option>";
                                                                 }
                                                             ?>
                                                         </select>

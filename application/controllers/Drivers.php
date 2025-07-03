@@ -65,6 +65,11 @@ class Drivers extends CI_Controller {
         } else {
             $data['supirs'] = $this->Driver_model->getAllSupir();
             $data['wallets'] = $this->Wallet_model->getAllWallet();
+            $data['jmltotalsaldo'] = $this->Wallet_model->getAllJmlTotalSaldo();
+            $topSaldo = $this->Wallet_model->getDriverWithHighestBalance();
+
+            $data['jmlhighestsaldo'] = $topSaldo->balance ?? 0;
+            $data['nmhighestsaldo']  = $topSaldo->name ?? '-';
 
             foreach ($data['wallets'] as $wallet) {
                 $data['wallet_transactions'][$wallet->wallet_id] = $this->Wallet_model->getWalletTransactionsAll($wallet->wallet_id);
@@ -91,6 +96,7 @@ class Drivers extends CI_Controller {
             $this->form_validation->set_rules('fotoKtp','Foto KTP','');
             $this->form_validation->set_rules('alamat','Alamat','required');
             $this->form_validation->set_rules('statusSupir','Status','required');
+            $this->form_validation->set_rules('keterangan','Keterangan','');
 
             if ($this->form_validation->run()==FALSE) {     
                 $data = [
@@ -99,7 +105,12 @@ class Drivers extends CI_Controller {
                 ];
 
                 $data['supirs'] = $this->Driver_model->getAllSupir();
-                
+                $data['wallets'] = $this->Wallet_model->getAllWallet();
+
+                foreach ($data['wallets'] as $wallet) {
+                    $data['wallet_transactions'][$wallet->wallet_id] = $this->Wallet_model->getWalletTransactionsAll($wallet->wallet_id);
+                }
+                $this->session->set_flashdata('pesanerror','Data gagal tambah');
                 $this->load->view('headernew', $data);
                 $this->load->view('drivers', $data);
                 $this->load->view('footernew');
@@ -166,6 +177,7 @@ class Drivers extends CI_Controller {
                             'img_sim'           => $unggahSim['file_name'],
                             'img_ktp'           => $unggahKtp['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'created_at'        => date('Y-m-d H:i:s'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
@@ -237,6 +249,7 @@ class Drivers extends CI_Controller {
                             'img_profile'       => $unggahFoto['file_name'],
                             'img_sim'           => $unggahSim['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'created_at'        => date('Y-m-d H:i:s'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
@@ -308,6 +321,7 @@ class Drivers extends CI_Controller {
                             'img_sim'           => $unggahSim['file_name'],
                             'img_ktp'           => $unggahKtp['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'created_at'        => date('Y-m-d H:i:s'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
@@ -379,6 +393,7 @@ class Drivers extends CI_Controller {
                             'img_profile'       => $unggahFoto['file_name'],
                             'img_ktp'           => $unggahKtp['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'created_at'        => date('Y-m-d H:i:s'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
@@ -436,6 +451,7 @@ class Drivers extends CI_Controller {
                             'tgl_exp_sim'       => $this->input->post('tglExpSim'),
                             'img_profile'       => $unggahFoto['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'created_at'        => date('Y-m-d H:i:s'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
@@ -493,6 +509,7 @@ class Drivers extends CI_Controller {
                             'tgl_exp_sim'       => $this->input->post('tglExpSim'),
                             'img_sim'           => $unggahSim['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'created_at'        => date('Y-m-d H:i:s'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
@@ -550,6 +567,7 @@ class Drivers extends CI_Controller {
                             'tgl_exp_sim'       => $this->input->post('tglExpSim'),
                             'img_ktp'           => $unggahKtp['file_name'],
                             'status'            => $this->input->post('statusSupir'),
+                            'keterangan'        => $this->input->post('keterangan'),
                             'created_at'        => date('Y-m-d H:i:s'),
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
@@ -591,6 +609,7 @@ class Drivers extends CI_Controller {
                         'nomor_darurat'     => $this->input->post('noDarurat'),
                         'tgl_exp_sim'       => $this->input->post('tglExpSim'),
                         'status'            => $this->input->post('statusSupir'),
+                        'keterangan'        => $this->input->post('keterangan'),
                         'created_at'        => date('Y-m-d H:i:s'),
                         'updated_at'        => date('Y-m-d H:i:s')
                     );
@@ -628,27 +647,33 @@ class Drivers extends CI_Controller {
     public function supiredit($id)
     {
         if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('tglJoin','Tanggal Bergabung','required');
-            $this->form_validation->set_rules('nmSupir','Nama Supir','required');
-            $this->form_validation->set_rules('noSim','Nomer SIM','required');
-            $this->form_validation->set_rules('noHp','Nomer HP','required');
-            $this->form_validation->set_rules('tglLahir','Tanggal Lahir','required');
-            $this->form_validation->set_rules('noDarurat','No HP Darurat','required');
-            $this->form_validation->set_rules('tglExpSim','Tgl. Ext. SIM','required');
+            $this->form_validation->set_rules('tglJoin','Tanggal Bergabung','');
+            $this->form_validation->set_rules('nmSupir','Nama Supir','');
+            $this->form_validation->set_rules('noSim','Nomer SIM','');
+            $this->form_validation->set_rules('noHp','Nomer HP','');
+            $this->form_validation->set_rules('tglLahir','Tanggal Lahir','');
+            $this->form_validation->set_rules('noDarurat','No HP Darurat','');
+            $this->form_validation->set_rules('tglExpSim','Tgl. Ext. SIM','');
             $this->form_validation->set_rules('fotoSupir','Foto Supir','');
             $this->form_validation->set_rules('fotoSim','Foto Supir','');
-            $this->form_validation->set_rules('alamat','Alamat','required');
+            $this->form_validation->set_rules('alamat','Alamat','');
             $this->form_validation->set_rules('statusSupir','Status','required');
             $this->form_validation->set_rules('keterangan','Keterangan','');
 
-            if ($this->form_validation->run()==FALSE) {     
+            if ($this->form_validation->run()==FALSE) {
+                $this->session->set_flashdata('pesanerror','Data gagal diubah');
                 $data = [
                     "title" => "Manajemen Supir | Fleet Management",
                     "nopage" => 1041,
                 ];
 
                 $data['supirs'] = $this->Driver_model->getAllSupir();
-                
+                $data['wallets'] = $this->Wallet_model->getAllWallet();
+
+                foreach ($data['wallets'] as $wallet) {
+                    $data['wallet_transactions'][$wallet->wallet_id] = $this->Wallet_model->getWalletTransactionsAll($wallet->wallet_id);
+                }
+
                 $this->load->view('headernew', $data);
                 $this->load->view('drivers', $data);
                 $this->load->view('footernew');
