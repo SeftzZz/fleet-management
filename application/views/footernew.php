@@ -63,7 +63,7 @@
         <!-- Script utama (pastikan ini paling akhir agar semua dependensi sudah ter-load) -->
         <script src="<?php echo base_url(); ?>assets/newstyle/dist/js/newtheme.js?v=3.2.0"></script>
 
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081||$nopage==1091) { ?>
             <script>
                 $(function () {
                     $("#tbl_daftarrute").DataTable({
@@ -233,6 +233,25 @@
                     .buttons()
                     .container()
                     .appendTo('#tbl_reimburse_done_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_Tim").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [2], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_Tim_wrapper .col-md-6:eq(0)');
 
                     $('#tgl_log').datetimepicker({
                         format: 'L'

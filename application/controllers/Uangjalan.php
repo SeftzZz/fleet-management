@@ -117,6 +117,7 @@ class Uangjalan extends CI_Controller {
                     'updated_at'        => date('Y-m-d H:i:s')
                 );                              
                 $this->Uangjalan_model->update($id,$dataUjalan);
+                $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                 redirect('/uangjalan');
             }
         } 
@@ -131,6 +132,7 @@ class Uangjalan extends CI_Controller {
                 'updated_at'         => date('Y-m-d H:i:s')
             );                              
             $this->Uangjalan_model->update($id,$dataUjalan);
+            $this->session->set_flashdata('pesansukses','Data berhasil dihapus');
             redirect('/uangjalan');
         } 
     }
