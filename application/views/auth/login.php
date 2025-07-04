@@ -4,10 +4,14 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="description" content="Fleet Management KMP">
-	    <meta name="keywords" content="Fleet Management KMP">
-	    <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/favicon.ico.png" type="image/x-icon">
-		<title>Login | Fleet Management</title>
+		<meta name="description" content="Fleet Management System">
+	    <meta name="keywords" content="Fleet Management System, KMP, Karya Majujaya Perkasa">
+	    <title>Login | Fleet Management System</title>
+	    <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/icons-192.png" sizes="192x192"/> 
+        <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/icons-512.png" sizes="512x512"/> 
+        <link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url(); ?>assets/newstyle/dist/img/apple-touch-icon.png">
+        <link rel="manifest" href="<?php echo base_url(); ?>assets/newstyle/dist/img/manifest.webmanifest">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/login/css/bootstrap.min.css">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/login/css/all.min.css">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/login/css/login.css">

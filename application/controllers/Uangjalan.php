@@ -29,7 +29,7 @@ class Uangjalan extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Uang Jalan | Fleet Management",
+            "title" => "Manajemen Uang Jalan | Fleet Management System",
             "nopage" => 1001,
         ];
 
@@ -117,7 +117,6 @@ class Uangjalan extends CI_Controller {
                     'updated_at'        => date('Y-m-d H:i:s')
                 );                              
                 $this->Uangjalan_model->update($id,$dataUjalan);
-                $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                 redirect('/uangjalan');
             }
         } 
@@ -132,7 +131,6 @@ class Uangjalan extends CI_Controller {
                 'updated_at'         => date('Y-m-d H:i:s')
             );                              
             $this->Uangjalan_model->update($id,$dataUjalan);
-            $this->session->set_flashdata('pesansukses','Data berhasil dihapus');
             redirect('/uangjalan');
         } 
     }

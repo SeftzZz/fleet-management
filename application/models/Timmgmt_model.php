@@ -48,7 +48,7 @@ class Timmgmt_model extends CI_Model {
         return $data;    
     }
 
-    public function getAllTimMgmtByFilter($caritim,$carisupir,$carimobil,$caristatus) {
+    public function getAllTimMgmtByFilter($caritim,$carisupir,$carinopol,$carinopintu,$caristatus) {
         $data = array();
         $this->db->from('tim_mgmt'); 
         $this->db->where('is_delete', 0);
@@ -58,8 +58,11 @@ class Timmgmt_model extends CI_Model {
         if ($carisupir) {
             $this->db->like('nama_supir', $carisupir);
         }
-        if ($carimobil) {
-            $this->db->like('no_pol', $carimobil);
+        if ($carinopol) {
+            $this->db->like('no_pol', $carinopol);
+        }
+        if ($carinopintu) {
+            $this->db->like('no_pintu', $carinopintu);
         }
         if ($caristatus) {
             $this->db->where('status_tim_mgmt', $caristatus);

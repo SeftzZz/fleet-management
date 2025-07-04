@@ -27,7 +27,7 @@
                                 </button>
                             </div>
                             <div class="card-body">
-                                <table id="tbl_Tim" class="table table-bordered table-striped">
+                                <table id="tbl_tim" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>Nama Tim</th>

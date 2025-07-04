@@ -32,7 +32,7 @@ class Routes extends CI_Controller {
     public function index()
     {
         $data = [
-            "title" => "Manajemen Rute / Ritasi | Fleet Management",
+            "title" => "Manajemen Rute / Ritasi | Fleet Management System",
             "nopage" => 4,
         ];
 
@@ -57,11 +57,25 @@ class Routes extends CI_Controller {
             // Ambil ringkasan ritasi terakhir
             $data['last_ritasi_summary'] = $this->Route_model->getLastInsertedRitasiSummary();
             $data['jmlritasiHari'] = $this->Route_model->getAllJmlRitasiHari();
+            $data['jmlritasiKemarin'] = $this->Route_model->getAllJmlRitasiKemarin();
             $data['jmlritasiGHari'] = $this->Route_model->getAllJmlRitasiTimGHari();
             $data['jmlritasiKHari'] = $this->Route_model->getAllJmlRitasiTimKHari();
             $data['jmlritasiMHari'] = $this->Route_model->getAllJmlRitasiTimMHari();
             $data['jmlritasiBln'] = $this->Route_model->getAllJmlRitasiBln();
+            $data['jmlritasiBlnKemarin'] = $this->Route_model->getAllJmlRitasiBlnKemarin();
             $data['jmlritasiTanpaNodo'] = $this->Route_model->getAllJmlRitasiTanpaNodo();
+
+            if ($data['jmlritasiKemarin'] > 0) {
+                $data['persenRitasiHari'] = (($data['jmlritasiHari'] - $data['jmlritasiKemarin']) / $data['jmlritasiKemarin']) * 100;
+            } else {
+                $data['persenRitasiHari'] = 0;
+            }
+
+            if ($data['jmlritasiBlnKemarin'] > 0) {
+                $data['persenRitasiBln'] = (($data['jmlritasiBln'] - $data['jmlritasiBlnKemarin']) / $data['jmlritasiBlnKemarin']) * 100;
+            } else {
+                $data['persenRitasiBln'] = 0;
+            }
             
             $this->load->view('headernew', $data);
             $this->load->view('routes', $data);
@@ -96,7 +110,6 @@ class Routes extends CI_Controller {
             } else {
                 $data['persenRitasiBln'] = 0;
             }
-
             
             $this->load->view('headernew', $data);
             $this->load->view('routes', $data);
@@ -331,7 +344,7 @@ class Routes extends CI_Controller {
                         'wallet_id'         => $wallet_id->id,
                         'transaction_type'  => 'credit',
                         'id_ritasi'         => $id_ritasi,
-                        'description'       => 'Tabungan DO - ' . $nodo_list[$i],
+                        'description'       => 'Tabungan DO -' . $nodo_list[$i],
                         'amount'            => $tabungan->tabungan,
                         'status'            => 'belum',
                         'created_at'        => date('Y-m-d H:i:s'),
@@ -343,7 +356,7 @@ class Routes extends CI_Controller {
                         'wallet_id'         => $wallet_id->id,
                         'transaction_type'  => 'debit',
                         'id_ritasi'         => $id_ritasi,
-                        'description'       => 'Uang Jalan DO - ' . $nodo_list[$i],
+                        'description'       => 'Uang Jalan DO -' . $nodo_list[$i],
                         'amount'            => $uangjalan->uang_jalan,
                         'status'            => 'belum',
                         'created_at'        => date('Y-m-d H:i:s'),
@@ -396,7 +409,7 @@ class Routes extends CI_Controller {
                     'wallet_id'         => $wallet_id->id,
                     'transaction_type'  => 'credit',
                     'id_ritasi'         => $id_ritasi,
-                    'description'       => 'Tabungan DO - ' . $nodo_list[$i],
+                    'description'       => 'Tabungan DO -' . $nodo_list[$i],
                     'amount'            => $tabungan->tabungan,
                     'status'            => 'belum',
                     'created_at'        => date('Y-m-d H:i:s'),
@@ -408,7 +421,7 @@ class Routes extends CI_Controller {
                     'wallet_id'         => $wallet_id->id,
                     'transaction_type'  => 'debit',
                     'id_ritasi'         => $id_ritasi,
-                    'description'       => 'Uang Jalan DO - ' . $nodo_list[$i],
+                    'description'       => 'Uang Jalan DO -' . $nodo_list[$i],
                     'amount'            => $uangjalan->uang_jalan,
                     'status'            => 'belum',
                     'created_at'        => date('Y-m-d H:i:s'),
@@ -484,14 +497,14 @@ class Routes extends CI_Controller {
                 );                              
                 $this->Route_model->updateRitasi($id,$dataRitasi);
 
-                // Ambil transaksi wallet dengan id_ritasi dan deskripsi diawali "Tabungan DO - "
+                // Ambil transaksi wallet dengan id_ritasi dan deskripsi diawali "Tabungan DO -"
                 $wallet_transactions = $this->Wallet_model->getWalletTransactionsByTabungan($id);
 
                 // Ambil input NoDO
                 $nodo = $this->input->post('nodo');
 
                 $this->Wallet_model->update_nodo($wallet_transactions->id, [
-                    'description' => 'Tabungan DO - ' . $nodo,
+                    'description' => 'Tabungan DO -' . $nodo,
                     'updated_at'  => date('Y-m-d H:i:s')
                 ]);
 

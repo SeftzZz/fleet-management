@@ -32,7 +32,7 @@ class Wallet_model extends CI_Model {
     }
 
     public function getAllWallet() {
-        $this->db->select('wallets.id AS wallet_id, wallets.*, drivers.name'); // Pilih field secara eksplisit
+        $this->db->select('wallets.id AS wallet_id, wallets.*, drivers.name, drivers.nik'); // Pilih field secara eksplisit
         $this->db->from('wallets');
         $this->db->join('drivers', 'wallets.driver_id = drivers.id');
         $this->db->where('wallets.is_delete', 0);
@@ -57,7 +57,7 @@ class Wallet_model extends CI_Model {
         return $this->db
             ->where('wallet_id', $wallet_id)
             ->where('is_delete', 0)
-            ->not_like('description', 'Uang Jalan DO - ', 'after')
+            ->not_like('description', 'Uang Jalan DO -', 'after')
             ->order_by('id', 'ASC')
             ->get('wallet_transactions')
             ->result();
@@ -81,7 +81,7 @@ class Wallet_model extends CI_Model {
         return $this->db
             ->where('id_ritasi', $id)
             ->where('is_delete', 0)
-            ->like('description', 'Tabungan DO - ', 'after')
+            ->like('description', 'Tabungan DO -', 'after')
             ->get('wallet_transactions')
             ->row();
     }
@@ -95,4 +95,25 @@ class Wallet_model extends CI_Model {
             ->row();
     }
 
+    public function getAllJmlTotalSaldo() {
+        $this->db->select_sum('balance');
+        $query = $this->db->get('wallets');
+        $result = $query->row();
+        $query->free_result();
+        return $result->balance ?? 0;
+    }
+
+    public function getDriverWithHighestBalance() {
+        $this->db->select('drivers.name, wallets.driver_id, wallets.balance');
+        $this->db->from('wallets');
+        $this->db->join('drivers', 'drivers.id = wallets.driver_id', 'left');
+        $this->db->order_by('wallets.balance', 'DESC');
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+        $result = $query->row();
+        $query->free_result();
+
+        return $result ?? null;
+    }
 }

@@ -27,7 +27,7 @@ class Tim extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Tim | Fleet Management",
+            "title" => "Manajemen Tim | Fleet Management System",
             "nopage" => 1091,
         ];
 

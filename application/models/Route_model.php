@@ -137,7 +137,7 @@ class Route_model extends CI_Model {
     }
 
     public function getRitasiByFilters($tanggal, $proyek_id, $galian_id, $tim_id) {
-        $this->db->select('ritasi.*, vehicles.no_pol');
+        $this->db->select('ritasi.*, vehicles.no_pol, vehicles.no_pintu');
         $this->db->from('ritasi');
         $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
         $this->db->where('ritasi.tgl_ritasi', $tanggal);

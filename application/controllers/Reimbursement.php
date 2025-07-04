@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use Dompdf\Dompdf;
+
 class Reimbursement extends CI_Controller {
 	public function __construct() {
         parent::__construct();
@@ -49,7 +51,7 @@ class Reimbursement extends CI_Controller {
 	public function index()
     {
         $data = [
-            "title" => "Manajemen Reimbursement | Fleet Management",
+            "title" => "Manajemen Reimbursement | Fleet Management System",
             "nopage" => 1061,
         ];
 
@@ -102,13 +104,15 @@ class Reimbursement extends CI_Controller {
     public function submit_reimburse()
     {
         $ritasi_ids = $this->input->post('ritasi_ids');
+        $tanggal    = $this->input->post('tanggal');
+        $proyek     = $this->input->post('proyek');
+        $galian     = $this->input->post('galian');
+        $tim        = $this->input->post('tim');
 
         if (!empty($ritasi_ids)) {
             foreach ($ritasi_ids as $ritasi_id) {
-                // Ambil data ritasi
                 $ritasi = $this->db->get_where('ritasi', ['id' => $ritasi_id])->row();
                 if ($ritasi) {
-                    // Update wallet_transactions
                     $this->db->where('id_ritasi', $ritasi_id);
                     $this->db->where('transaction_type', 'debit');
                     $this->db->update('wallet_transactions', [
@@ -119,11 +123,48 @@ class Reimbursement extends CI_Controller {
                 }
             }
 
+            // Gabungkan ritasi_ids jadi string
+            // $ritasi_id_str = implode('-', $ritasi_ids);
+
+            // Redirect ke generate PDF
+            // Setelah semua update dilakukan:
+            $this->session->set_flashdata('pdf_url', site_url('reimbursement/generate_pdf?tanggal=' . $tanggal . '&proyek=' . $proyek . '&galian=' . $galian . '&tim=' . $tim));
             $this->session->set_flashdata('pesansukses', 'Reimbursement berhasil diproses.');
+            redirect('reimbursement');
         } else {
             $this->session->set_flashdata('pesanerror', 'Tidak ada data yang dipilih.');
+            redirect('reimbursement');
+        }
+    }
+
+    public function generate_pdf()
+    {
+        $tanggal = $this->input->get('tanggal');
+        $proyek  = $this->input->get('proyek');
+        $galian  = $this->input->get('galian');
+        $tim     = $this->input->get('tim');
+
+        // Ambil data ritasi dengan filter yang sama seperti di index()
+        $ritasi_list = $this->Route_model->getRitasiByFilters($tanggal, $proyek, $galian, $tim);
+
+        $total = 0;
+        foreach ($ritasi_list as $r) {
+            $total += $r->uang_jalan;
         }
 
-        redirect('reimbursement');
+        $html = $this->load->view('pdf/reimbursement_table', [
+            'ritasi_list' => $ritasi_list,
+            'total'       => $total,
+            'tanggal'     => $tanggal,
+            'proyek_nama' => $this->db->get_where('proyek', ['id' => $proyek])->row('nama_proyek'),
+            'lokasi'      => $this->db->get_where('galian', ['id' => $galian])->row('lokasi'),
+            'tim_nama'    => $this->db->get_where('tim', ['id' => $tim])->row('nama_tim'),
+        ], TRUE);
+
+        $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream("reimbursement_" . date('Ymd_His') . ".pdf", ["Attachment" => false]);
     }
 }

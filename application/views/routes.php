@@ -109,7 +109,7 @@
                     </div>
                     <div class="container-fluid">&nbsp;</div>
                     <div class="container-fluid">
-                        <div class="card">
+                        <div class="card" style="z-index: 1;">
                             <div class="card-header">
                                 <h3 class="card-title">Filter Rekapitulasi Ritasi Harian</h3>
                                 <div class="card-tools">
@@ -128,9 +128,9 @@
                                             <div class="form-group">
                                                 <label>Tanggal</label>
                                                 <div class="input-group date" id="tglan_ritasi" data-target-input="nearest">
-                                                    <input type="text" name="tgl_ritasi" value="<?php echo set_value('tgl_ritasi')?>" class="form-control datetimepicker-input" data-target="#tglan_ritasi" data-toggle="datetimepicker" />
+                                                    <input type="text" name="tgl_ritasi" value="<?php echo set_value('tgl_ritasi')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                     <div class="input-group-append">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                        <div class="input-group-text" data-target="#tglan_ritasi" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -160,7 +160,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Lokasi Galian</label>
-                                                <select name="lokasi" class="form-control" style="width:100%;">
+                                                <select name="lokasi" class="form-control select_rute" style="width:100%;">
                                                         <option value="">Semua Lokasi</option>
                                                         <?php foreach ($galians as $value) { ?>
                                                             <option value='<?php echo $value->id; ?>' <?php echo set_select('lokasi', $value->id );?> ><?php echo $value->lokasi; ?></option>
@@ -228,7 +228,7 @@
                                                 <?php foreach ($ritasis as $row) { ?>
                                                     <tr>
                                                         <td><input type="checkbox" class="row-check" value="<?php echo $row->id ?>"></td>
-                                                        <td><?php echo $this->fppfunction->tglblnthn_ind($row->tgl_ritasi); ?></td>
+                                                        <td><?php echo $row->tgl_ritasi; ?></td>
                                                         <td>
                                                             <?php 
                                                                 $this->db->select('nama_tim'); 
@@ -335,9 +335,9 @@
                                                     <div class="form-group">
                                                         <label>Tanggal</label>
                                                         <div class="input-group date" id="tgl_edit<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="tgl" value="<?php echo set_value('tgl',$row->tgl_ritasi)?>" class="form-control datetimepicker-input" data-target="#tgl_edit<?php echo $row->id ?>" data-toggle="datetimepicker" />
+                                                            <input type="text" name="tgl" value="<?php echo set_value('tgl')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                             <div class="input-group-append">
-                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                <div class="input-group-text" data-target="#tgl_edit<?php echo $row->id ?>" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -406,9 +406,9 @@
                                                     <div class="form-group">
                                                         <label>Jam Angkut</label>
                                                         <div class="input-group date" id="waktu_angkut<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="jam" value="<?php echo set_value('jam',$row->jam_angkut)?>" class="form-control datetimepicker-input <?php if (form_error('jam')) {echo "is-invalid";} ?>" data-target="#waktu_angkut<?php echo $row->id ?>" data-toggle="datetimepicker"/>
+                                                            <input type="text" name="jam" value="<?php echo set_value('jam')?>" class="form-control" oninput="autoFormatJam(this)" maxlength="5" placeholder="HH:MM" />
                                                             <div class="input-group-append">
-                                                                <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                                <div class="input-group-text datetimepicker-input" data-target="#waktu_angkut<?php echo $row->id ?>" data-toggle="datetimepicker"><i class="fa fa-clock"></i></div>
                                                             </div>
                                                         </div>
                                                     </div>

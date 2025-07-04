@@ -127,6 +127,44 @@
                     })
                     .buttons().container().appendTo('#tbl_galian_wrapper .col-md-6:eq(0)');
 
+                    $("#tbl_tim").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [2], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_tim_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_user").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [3], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_user_wrapper .col-md-6:eq(0)');
+
                     $("#tbl_manajemenvehicles").DataTable({
                         "responsive": true,
                         "lengthChange": false,
@@ -234,25 +272,6 @@
                     .container()
                     .appendTo('#tbl_reimburse_done_wrapper .col-md-6:eq(0)');
 
-                    $("#tbl_Tim").DataTable({
-                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
-                        "buttons": [
-                            "excel", "pdf", 
-                            {
-                                extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                                exportOptions: {
-                                    columns: [0, 1] // kolom tertentu yang ikut di print
-                                }
-                            }, 
-                            "colvis"
-                        ],
-                        "columnDefs": [
-                            { targets: [2], orderable: false}
-                        ]
-                    })
-                    .buttons().container().appendTo('#tbl_Tim_wrapper .col-md-6:eq(0)');
-
                     $('#tgl_log').datetimepicker({
                         format: 'L'
                     });
@@ -270,6 +289,10 @@
 
                     $('#waktu').datetimepicker({
                         format: 'HH:mm'
+                    });
+
+                    $('#expiry_date').datetimepicker({
+                        format: 'DD-MM-YYYY'
                     });
 
                     //Select2
@@ -324,6 +347,31 @@
                     // Set ulang posisi kursor
                     input.setSelectionRange(start + offset, end + offset);
                 }
+
+                function autoFormatJam(input) {
+                    // Ambil hanya angka, maksimum 4 digit (HHMM)
+                    const angka = input.value.replace(/\D/g, '').substring(0, 4);
+                    let formatted = '';
+
+                    // Simpan posisi kursor sebelum format
+                    const oldPos = input.selectionStart;
+
+                    if (angka.length <= 2) {
+                        formatted = angka;
+                    } else {
+                        formatted = angka.substring(0, 2) + ':' + angka.substring(2, 4);
+                    }
+
+                    // Hitung selisih panjang input sebelum dan sesudah format
+                    const diff = formatted.length - input.value.length;
+
+                    // Masukkan hasil format
+                    input.value = formatted;
+
+                    // Set ulang posisi kursor (hindari error jika di akhir)
+                    const newPos = Math.min(oldPos + diff, formatted.length);
+                    input.setSelectionRange(newPos, newPos);
+                }
             </script>
         <?php } ?>
 
@@ -370,9 +418,9 @@
                                         </td>
                                         <td>
                                             <div class="input-group date" id="jam-picker${value.vehicle_id}" data-target-input="nearest">
-                                                <input type="text" name="jam[]" class="form-control datetimepicker-input" data-target="#jam-picker${value.vehicle_id}" data-toggle="datetimepicker"/>
+                                                <input type="text" name="jam[]" class="form-control" oninput="autoFormatJam(this)" maxlength="5" placeholder="HH:MM"/>
                                                 <div class="input-group-append">
-                                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                    <div class="input-group-text datetimepicker-input" data-target="#jam-picker${value.vehicle_id}" data-toggle="datetimepicker"><i class="far fa-clock"></i></div>
                                                 </div>
                                             </div>
                                         </td>
@@ -547,6 +595,11 @@
                 $('.datepicker').datetimepicker({ format: 'DD-MM-YYYY' });
                 $('.select2').select2();
             </script>
+            <?php if ($this->session->flashdata('pdf_url')): ?>
+            <script>
+                window.open("<?= $this->session->flashdata('pdf_url') ?>", "_blank");
+            </script>
+            <?php endif; ?>
         <?php } ?>
 
         <?php if ($nopage == 1041) { ?>

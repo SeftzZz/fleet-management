@@ -24,10 +24,10 @@
                                 <div class="small-box callout callout-info">
                                     <div class="inner">
                                         <span>Total Saldo Wallet</span>
-                                        <h3>150</h3>
+                                        <h3><?php echo $this->fppfunction->rupiah_ind($jmltotalsaldo) ?></h3>
                                     </div>
                                     <div class="icon">
-                                        <i class="ion ion-trophy"></i>
+                                        <i class="fas fa-wallet"></i>
                                     </div>
                                     <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> <span class="text-success">14%</span> dari kemarin </p>
                                 </div>
@@ -36,12 +36,15 @@
                                 <div class="small-box callout callout-success">
                                     <div class="inner">
                                         <span>Top Saldo Tertinggi</span>
-                                        <h3>1248</h3>
+                                        <h3><?php echo $this->fppfunction->rupiah_ind($jmlhighestsaldo) ?></h3>
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-trophy"></i>
                                     </div>
-                                    <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> <span class="text-success">12.7%</span> dari bulan lalu </p>
+                                    <p class="small-box-footer2">
+                                        &nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> 
+                                        <span class="text-success"><?php echo $nmhighestsaldo ?></span> 
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +76,7 @@
                                             <div class="form-group">
                                                 <label>Tanggal Bergabung</label>
                                                 <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
-                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text" data-target="#tglCariJoin" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                     </div>
@@ -256,9 +259,9 @@
                                                 <div class="form-group">
                                                     <label>Tgl. Lahir</label>
                                                     <div class="input-group date" id="tglAddLahir" data-target-input="nearest">
-                                                        <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                         <div class="input-group-append">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            <div class="input-group-text" data-target="#tglAddLahir" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -266,10 +269,10 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Tanggal Bergabung</label>
-                                                    <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
-                                                        <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                    <div class="input-group date" id="tglAddJoin" data-target-input="nearest">
+                                                        <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                         <div class="input-group-append">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            <div class="input-group-text" data-target="#tglAddJoin" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -312,9 +315,9 @@
                                                 <div class="form-group">
                                                     <label>Tgl. Exp. SIM</label>
                                                     <div class="input-group date" id="tglAddExpSim" data-target-input="nearest">
-                                                        <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                         <div class="input-group-append">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            <div class="input-group-text" data-target="#tglAddExpSim" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -322,29 +325,24 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                 <div class="form-group">
-                                                    <label>Foto KTP</label>
-                                                    <input type="file" name="fotoKtp" />
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                 <div class="form-group">
-                                                    <label>Alamat</label>
-                                                    <textarea rows="3" name="alamat" value="<?php echo set_value('alamat')?>" class="form-control <?php if (form_error('alamat')) {echo "is-invalid";} ?>"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Status Supir</label>
-                                                    <select name="statusSupir" class="custom-select <?php if (form_error('statusSupir')) {echo "is-invalid";} ?>" style="width:100%;">
-                                                        <option value=""/>--- Pilih Status Supir ---</option>
-                                                        <?php 
-                                                            $pilihanstatus=array("Aktif","Non Aktif");
-                                                            foreach ($pilihanstatus as $value) { 
+                                                    <select id="statusSupir<?php echo $row->id ?>" name="statusSupir" class="form-control <?php if (form_error('statusSupir')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                        <option value="">--- Pilih Status ---</option>
+                                                        <?php
+                                                            $pilihanstatus = array("Aktif","Non Aktif");
+                                                            foreach ($pilihanstatus as $value) {
+                                                                $selected = ($value == $row->status) ? "selected" : "";
+                                                                echo "<option value='$value' $selected>$value</option>";
+                                                            }
                                                         ?>
-                                                            <option value='<?php echo $value; ?>' <?php echo set_select('statusSupir', $value);?> /><?php echo $value; ?></option>
-                                                        <?php } ?>
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label>Keterangan</label>
+                                                    <textarea rows="3" name="keterangan" class="form-control <?php if (form_error('keterangan')) {echo "is-invalid";} ?>" placeholder="Keterangan"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -409,9 +407,9 @@
                                                     <div class="form-group">
                                                         <label>Tgl. Lahir</label>
                                                         <div class="input-group date" id="tglEditLahir<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir',$row->tgl_lahir)?>" class="form-control datetimepicker-input" data-target="#tglEditLahir<?php echo $row->id ?>" data-toggle="datetimepicker" />
+                                                            <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir',$row->tgl_lahir)?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                             <div class="input-group-append">
-                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                <div class="input-group-text" data-target="#tglEditLahir<?php echo $row->id ?>" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -420,9 +418,9 @@
                                                     <div class="form-group">
                                                         <label>Tanggal Bergabung</label>
                                                         <div class="input-group date" id="tglEditSupir<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="tglJoin" value="<?php echo set_value('tgl',$row->tgl_join)?>" class="form-control datetimepicker-input" data-target="#tglEditSupir<?php echo $row->id ?>" data-toggle="datetimepicker" />
+                                                            <input type="text" name="tglJoin" value="<?php echo set_value('tgl',$row->tgl_join)?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                             <div class="input-group-append">
-                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                <div class="input-group-text" data-target="#tglEditSupir<?php echo $row->id ?>" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -465,9 +463,9 @@
                                                     <div class="form-group">
                                                         <label>Tgl. Exp. SIM</label>
                                                         <div class="input-group date" id="tglEditExpSim<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim',$row->tgl_exp_sim)?>" class="form-control datetimepicker-input" data-target="#tglEditExpSim<?php echo $row->id ?>" data-toggle="datetimepicker" />
+                                                            <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim',$row->tgl_exp_sim)?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                             <div class="input-group-append">
-                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                <div class="input-group-text" data-target="#tglEditExpSim<?php echo $row->id ?>" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -503,10 +501,10 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-8" id="keteranganWrapper<?php echo $row->id ?>">
+                                                <div class="col-sm-8">
                                                     <div class="form-group">
                                                         <label>Keterangan</label>
-                                                        <textarea rows="3" name="keterangan" class="form-control <?php if (form_error('keterangan')) {echo "is-invalid";} ?>" placeholder="Resign/Bermasalah"><?php echo $row->keterangan ?></textarea>
+                                                        <textarea rows="3" name="keterangan" class="form-control <?php if (form_error('keterangan')) {echo "is-invalid";} ?>" placeholder="Keterangan"><?php echo $row->keterangan ?></textarea>
                                                     </div>
                                                 </div>
                                             </div>

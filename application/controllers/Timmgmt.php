@@ -30,7 +30,7 @@ class Timmgmt extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Anggota Tim | Fleet Management",
+            "title" => "Manajemen Anggota Tim | Fleet Management System",
             "nopage" => 1031,
         ];
         
@@ -38,14 +38,16 @@ class Timmgmt extends CI_Controller {
             $this->form_validation->set_rules('nmTim','Nama Tim','');
             $this->form_validation->set_rules('nmSupir','Nama Supir','');
             $this->form_validation->set_rules('noPol','No Polisi','');
+            $this->form_validation->set_rules('NoPintu','No Pintu','');
             $this->form_validation->set_rules('statusAtim','Status Anggota Tim','');
 
             $caritim = $this->input->post('nmTim');
             $carisupir = $this->input->post('nmSupir');
-            $carimobil = $this->input->post('noPol');
+            $carinopol = $this->input->post('noPol');
+            $carinopintu = $this->input->post('noPintu');
             $caristatus = $this->input->post('statusAtim');
 
-            $data['atims'] = $this->Timmgmt_model->getAllTimMgmtByFilter($caritim,$carisupir,$carimobil,$caristatus);
+            $data['atims'] = $this->Timmgmt_model->getAllTimMgmtByFilter($caritim,$carisupir,$carinopol,$carinopintu,$caristatus);
             $data['tims'] = $this->Tim_model->getAllTimAktif();
             $data['supirs'] = $this->Driver_model->getAllSupirAktif();
             $data['mobils'] = $this->Vehicle_model->getAllKendaraanAktif();
@@ -73,7 +75,7 @@ class Timmgmt extends CI_Controller {
             $this->form_validation->set_rules('mobil','Kendaraan','required');
             $this->form_validation->set_rules('statusAtim','Status Anggota Tim','required');
 
-            if ($this->form_validation->run()==FALSE) {     
+            if ($this->form_validation->run()==FALSE) {
                 $data = [
                     "title" => "Manajemen AAnggota Tim | Fleet Management",
                     "nopage" => 1031,
@@ -83,16 +85,18 @@ class Timmgmt extends CI_Controller {
                 $data['tims'] = $this->Tim_model->getAllTimAktif();
                 $data['supirs'] = $this->Driver_model->getAllSupirAktif();
                 $data['mobils'] = $this->Vehicle_model->getAllKendaraanAktif();
-                
+                $this->session->set_flashdata('pesanerror','Data kurang lengkap');
+
                 $this->load->view('headernew', $data);
                 $this->load->view('timmgmt', $data);
                 $this->load->view('footernew');
             } else {
+                $statusAtim = $this->input->post('statusAtim');
                 $kendaraan = $this->Vehicle_model->getKendaraanById($this->input->post('mobil'));
                 $supir = $this->Driver_model->getSupirById($this->input->post('nmSupir'));
                 $tim = $this->Tim_model->getTimById($this->input->post('nmTim'));
                 $data['mobil'] = $this->Timmgmt_model->getKendaraanTimByIdMobil($this->input->post('mobil'));
-                if ($data['mobil']) {
+                if ($statusAtim !== 'Non Aktif' && $data['mobil']) {
                     $this->session->set_flashdata('pesanerror','Kendaraan masih aktif digunakan oleh '.$data['mobil']->name.' - Tim '.$data['mobil']->nama_tim); 
                     redirect('timmgmt');
                 } else {
@@ -105,7 +109,7 @@ class Timmgmt extends CI_Controller {
                         'vehicle_id'        => $this->input->post('mobil'),
                         'no_pol'            => $kendaraan->no_pol,
                         'no_pintu'          => $kendaraan->no_pintu,
-                        'status_tim_mgmt'   => $this->input->post('statusAtim'),
+                        'status_tim_mgmt'   => $statusAtim,
                         'is_delete'         => 0,
                         'created_at'        => date('Y-m-d H:i:s'),
                         'updated_at'        => date('Y-m-d H:i:s')

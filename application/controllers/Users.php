@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Users extends CI_Controller {
 	public function __construct() {
         parent::__construct();
         $this->load->helper(["form", "url"]);
@@ -16,21 +16,23 @@ class Home extends CI_Controller {
         $this->load->library("user_agent");
         date_default_timezone_set("Asia/Jakarta");
         $this->load->model('Api_m');
+        $this->load->model('Users_model');
         $this->load->database();
     }
 
 	public function index()
 	{
-		redirect('auth/login', 'refresh');
-        
-        // $data = [
-        //     "title" => "Dashboard Utama | Fleet Management System",
-        //     "nopage" => 1,
-        // ];
+		$data = [
+            "title" => "Manajemen Reimbursement | Fleet Management System",
+            "nopage" => 1101,
+        ];
 
-		// $this->load->view('header', $data);
-		// $this->load->view('login');
-		// $this->load->view('footer');
+        // Kirim data master untuk dropdown
+        $data['groups'] = $this->Users_model->getAllGroupAktif();
+
+        $this->load->view('headernew', $data);
+        $this->load->view('user', $data);
+        $this->load->view('footernew');
 	}
 
     public function auth()
