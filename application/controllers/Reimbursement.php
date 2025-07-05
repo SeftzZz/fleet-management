@@ -51,7 +51,7 @@ class Reimbursement extends CI_Controller {
 	public function index()
     {
         $data = [
-            "title" => "Manajemen Reimbursement | Fleet Management",
+            "title" => "Manajemen Reimbursement | Fleet Management System",
             "nopage" => 1061,
         ];
 

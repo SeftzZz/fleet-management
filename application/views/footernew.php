@@ -63,7 +63,7 @@
         <!-- Script utama (pastikan ini paling akhir agar semua dependensi sudah ter-load) -->
         <script src="<?php echo base_url(); ?>assets/newstyle/dist/js/newtheme.js?v=3.2.0"></script>
 
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081||$nopage==1091) { ?>
             <script>
                 $(function () {
                     $("#tbl_daftarrute").DataTable({
@@ -86,16 +86,16 @@
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9] // kolom tertentu yang ikut di print
+                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // kolom tertentu yang ikut di print
                                 }
                             }, 
                             "colvis"
                         ],
                         "columnDefs": [
-                            { targets: [0, 10], orderable: false },
+                            { targets: [0, 11], orderable: false },
                             { targets: 0, className: 'text-center' }
                         ],
-                        "order": [[8, 'desc']]
+                        "order": [[1, 'desc']]
                     });
 
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
@@ -126,6 +126,44 @@
                         ]
                     })
                     .buttons().container().appendTo('#tbl_galian_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_tim").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [2], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_tim_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_user").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [3], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_user_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_manajemenvehicles").DataTable({
                         "responsive": true,
@@ -158,13 +196,13 @@
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] // kolom tertentu yang ikut di print
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7] // kolom tertentu yang ikut di print
                                 }
                             }, 
                             "colvis"
                         ],
                         "columnDefs": [
-                            { targets: [7], orderable: false}
+                            { targets: [7, 8], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');

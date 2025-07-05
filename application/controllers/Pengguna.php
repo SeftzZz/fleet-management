@@ -27,7 +27,7 @@ class Pengguna extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Master Data User | Fleet Management",
+            "title" => "Manajemen User | Fleet Management System",
             "nopage" => 1081,
         ];
 

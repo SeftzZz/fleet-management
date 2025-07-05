@@ -138,11 +138,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>Nama</th>
-                                                    <th>Tgl. Gabung</th>
+                                                    <th>Tanggal Bergabung</th>
                                                     <th>No. HP</th>
                                                     <th>No. Darurat</th>
                                                     <th>No. SIM</th>
-                                                    <th>No. Pintu/Bak/Unit</th>
                                                     <th>Status</th>
                                                     <th>Keterangan</th>
                                                     <th width="8%">Aksi</th>
@@ -156,23 +155,6 @@
                                                         <td><?php echo $row->phone ?></td>
                                                         <td><?php echo $row->nomor_darurat ?></td>
                                                         <td><?php echo $row->license_number ?></td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('no_pintu'); 
-                                                                $this->db->from('tim_mgmt'); 
-                                                                $this->db->where('driver_id', $row->id);
-                                                                $this->db->where('status_tim_mgmt', 'Aktif');
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $unit = $query->row();
-                                                                    $query->free_result();
-                                                                    echo $unit->no_pintu;  
-                                                                } else {
-                                                                    echo "-";
-                                                                }
-                                                                
-                                                            ?>
-                                                        </td>
                                                         <td
                                                             <?php if ($row->status == 'Non Aktif'): ?>
                                                                 data-toggle="tooltip"
@@ -200,11 +182,10 @@
                                             <tfoot>
                                                 <tr>
                                                     <th>Nama</th>
-                                                    <th>Tgl. Gabung</th>
+                                                    <th>Tanggal Bergabung</th>
                                                     <th>No. HP</th>
                                                     <th>No. Darurat</th>
                                                     <th>No. SIM</th>
-                                                    <th>No. Pintu/Bak/Unit</th>
                                                     <th>Status</th>
                                                     <th>Keterangan</th>
                                                     <th width="8%">Aksi</th>
@@ -611,7 +592,6 @@
                                                     <th>Tipe transaksi</th>
                                                     <th>Amount</th>
                                                     <th>Keterangan</th>
-                                                    <th>Tgl. Ritasi</th>
                                                     <th>Create At</th>
                                                     <th>Update At</th>
                                                 </tr>
@@ -626,19 +606,6 @@
                                                         <td><?php echo $trans->transaction_type ?></td>
                                                         <td><?php echo $this->fppfunction->rupiah_ind($trans->amount) ?></td>
                                                         <td><?php echo $trans->description ?></td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('tgl_ritasi'); 
-                                                                $this->db->from('ritasi'); 
-                                                                $this->db->where('id', $trans->id_ritasi);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $ritasi = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $ritasi->tgl_ritasi;  
-                                                            ?>
-                                                        </td>
                                                         <td><?php echo $this->fppfunction->tglangkajam_ind($trans->created_at) ?></td>
                                                         <td><?php echo $this->fppfunction->tglangkajam_ind($trans->updated_at) ?></td>
                                                     </tr>

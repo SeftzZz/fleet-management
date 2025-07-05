@@ -34,7 +34,7 @@
                             <div class="card-body">
                                 <form id="form1" name="form1" action="<?php echo site_url('timmgmt')?>" method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Nama Tim</label>
                                                 <select name="nmTim" class="form-control" style="width:100%;">
@@ -45,7 +45,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Nama Supir</label>
                                                 <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control" />
@@ -58,6 +58,17 @@
                                                     <option value=""></option>
                                                     <?php foreach ($mobils as $value) { ?>
                                                         <option value='<?php echo $value->no_pol; ?>' <?php echo set_select('noPol', $value->no_pol );?> ><?php echo $value->no_pol; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>No. Pintu/Bak/Unit</label>
+                                                <select name="noPintu" class="form-control select_rute" style="width:100%;">
+                                                    <option value=""></option>
+                                                    <?php foreach ($mobils as $value) { ?>
+                                                        <option value='<?php echo $value->no_pintu; ?>' <?php echo set_select('noPintu', $value->no_pintu );?> ><?php echo $value->no_pintu; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
@@ -149,7 +160,7 @@
                                                             $supir = $query->row();
                                                         } 
                                                         $query->free_result();
-                                                        echo $supir->name;  
+                                                        echo $supir->name ?? '-';  
                                                     ?>
                                                 </td>
                                                 <td>
@@ -162,10 +173,10 @@
                                                             $mobil = $query->row();
                                                         } 
                                                         $query->free_result();
-                                                        echo $mobil->no_pol;  
+                                                        echo $mobil->no_pol ?? '-';  
                                                     ?>
                                                 </td>
-                                                <td><?php echo $mobil->no_pintu; ?></td>
+                                                <td><?php echo $mobil->no_pintu ?? '-'; ?></td>
                                                 <td><?php echo $row->status_tim_mgmt; ?></td>
                                                 <td><?php echo $this->fppfunction->tglangkajam_ind($row->updated_at); ?></td>
                                                 <td width="8%">

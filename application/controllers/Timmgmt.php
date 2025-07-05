@@ -30,7 +30,7 @@ class Timmgmt extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Anggota Tim | Fleet Management",
+            "title" => "Manajemen Anggota Tim | Fleet Management System",
             "nopage" => 1031,
         ];
         

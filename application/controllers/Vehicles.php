@@ -44,7 +44,7 @@ class Vehicles extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Kendaraan | Fleet Management",
+            "title" => "Manajemen Kendaraan | Fleet Management System",
             "nopage" => 1051,
         ];
 

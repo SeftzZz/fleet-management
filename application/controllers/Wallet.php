@@ -43,7 +43,7 @@ class Wallet extends CI_Controller {
     public function index()
     {
         $data = [
-            "title"  => "Manajemen Supir | Fleet Management",
+            "title"  => "Manajemen Supir | Fleet Management System",
             "nopage" => 1071,
         ];
 
