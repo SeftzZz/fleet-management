@@ -86,16 +86,16 @@
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9] // kolom tertentu yang ikut di print
+                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // kolom tertentu yang ikut di print
                                 }
                             }, 
                             "colvis"
                         ],
                         "columnDefs": [
-                            { targets: [0, 10], orderable: false },
+                            { targets: [0, 11], orderable: false },
                             { targets: 0, className: 'text-center' }
                         ],
-                        "order": [[8, 'desc']]
+                        "order": [[1, 'desc']]
                     });
 
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
@@ -196,13 +196,13 @@
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] // kolom tertentu yang ikut di print
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7] // kolom tertentu yang ikut di print
                                 }
                             }, 
                             "colvis"
                         ],
                         "columnDefs": [
-                            { targets: [7], orderable: false}
+                            { targets: [7, 8], orderable: false}
                         ]
                     })
                     .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');

@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="description" content="Fleet Management System">
-	    <meta name="keywords" content="Fleet Management System, KMP, Karya Majujaya Perkasa">
+	    <meta name="keywords" content="Fleet Management, KMP, Karya Majujaya Perkasa">
 	    <title>Login | Fleet Management System</title>
 	    <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/icons-192.png" sizes="192x192"/> 

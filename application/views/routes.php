@@ -216,6 +216,7 @@
                                                     <th>Tim</th>
                                                     <th>Proyek</th>
                                                     <th>Lokasi Galian</th>
+                                                    <th>Supir</th>
                                                     <th>No. Polisi</th>
                                                     <th>No. Pintu/Bak/Unit</th>
                                                     <th>Jam Angkut</th>
@@ -270,6 +271,20 @@
                                                         </td>
                                                         <td>
                                                             <?php 
+                                                                $this->db->select('tim_mgmt.driver_id, drivers.name'); 
+                                                                $this->db->from('tim_mgmt'); 
+                                                                $this->db->join('drivers', 'tim_mgmt.driver_id = drivers.id');
+                                                                $this->db->where('tim_mgmt.vehicle_id', $row->vehicle_id);
+                                                                $query = $this->db->get();
+                                                                if ($query->num_rows() > 0) {
+                                                                    $supir = $query->row();
+                                                                } 
+                                                                $query->free_result();
+                                                                echo $supir->name;  
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php 
                                                                 $this->db->select('no_pol, no_pintu'); 
                                                                 $this->db->from('vehicles'); 
                                                                 $this->db->where('id', $row->vehicle_id);
@@ -300,6 +315,7 @@
                                                     <th>Tim</th>
                                                     <th>Proyek</th>
                                                     <th>Lokasi Galian</th>
+                                                    <th>Supir</th>
                                                     <th>No. Polisi</th>
                                                     <th>No. Pintu/Bak/Unit</th>
                                                     <th>Jam Angkut</th>

@@ -84,6 +84,7 @@ class Routes extends CI_Controller {
             $data['routes'] = $this->Route_model->getAllRoutes();
             $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
             $data['supirs'] = $this->Driver_model->getAllSupir();
+            // $data['ritasis'] = $this->Route_model->getAllRitasi();
             $data['ritasis'] = $this->Route_model->getAllRitasi();
             $data['tims'] = $this->Tim_model->getAllTimAktif();
             $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
