@@ -118,33 +118,6 @@ class Routes extends CI_Controller {
         }
     }
 
-    public function ajax_listritasi() {
-        $list = $this->Route_model->get_datatables();
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $ritasi) {
-            $no++;
-            $row = array();
-            $row[] = "<input type='checkbox' class='row-check' value='$ritasi->id'>";
-            $row[] = $ritasi->tgl_ritasi;
-            $row[] = $this->fppfunction->rupiah_ind2($ritasi->uang_jalan);
-            $row[] = "
-                      <button type='button' class='btn btn-sm btn-outline-primary' data-toggle='modal' data-target='#mdl_editRitasi$ritasi->id'><i class='fas fa-pencil-alt'></i></button>
-                      <button type='button' class='btn btn-sm btn-outline-danger' data-toggle='modal' data-target='#mdl_delRitasi$ritasi->id'><i class='fas fa-trash'></i></button>
-            ";
-            $data[] = $row;
-        }
-
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->Route_model->count_all(),
-            "recordsFiltered" => $this->Route_model->count_filtered(),
-            "data" => $data,
-        );
-        //output to json format
-        echo json_encode($output);
-    }
-
     public function tambah()
     {
         if ($post = $this->input->post('submit')) {
