@@ -213,14 +213,14 @@
                                                 <tr>
                                                     <th><input type="checkbox" id="select-all"></th> <!-- Master checkbox -->
                                                     <th>Tanggal</th>
-                                                    <!-- <th>Tim</th>
+                                                    <th>Tim</th>
                                                     <th>Proyek</th>
                                                     <th>Lokasi Galian</th>
                                                     <th>Supir</th>
                                                     <th>No. Polisi</th>
                                                     <th>No. Pintu/Bak/Unit</th>
                                                     <th>Jam Angkut</th>
-                                                    <th>Nomer DO</th> -->
+                                                    <th>Nomer DO</th>
                                                     <th>Uang Jalan</th>
                                                     <th width="8%">Aksi</th>
                                                 </tr>
@@ -230,14 +230,14 @@
                                                 <tr>
                                                     <th></th>
                                                     <th>Tanggal</th>
-                                                    <!-- <th>Tim</th>
+                                                    <th>Tim</th>
                                                     <th>Proyek</th>
                                                     <th>Lokasi Galian</th>
                                                     <th>Supir</th>
                                                     <th>No. Polisi</th>
                                                     <th>No. Pintu/Bak/Unit</th>
                                                     <th>Jam Angkut</th>
-                                                    <th>Nomer DO</th> -->
+                                                    <th>Nomer DO</th>
                                                     <th>Uang Jalan</th>
                                                     <th width="8%">Aksi</th>
                                                 </tr>

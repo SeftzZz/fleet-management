@@ -75,33 +75,6 @@
                     })
                     .buttons().container().appendTo('#tbl_daftarrute_wrapper .col-md-6:eq(0)');
 
-                    var table = $("#tbl_logritasi").DataTable({
-                        "responsive": true,
-                        "lengthChange": false,
-                        "autoWidth": false,
-                        "searching": false,
-                        // "buttons": [
-                        //     "excel", "pdf", 
-                        //     {
-                        //         extend: "print",
-                        //         footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                        //         exportOptions: {
-                        //             columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // kolom tertentu yang ikut di print
-                        //         }
-                        //     }, 
-                        //     "colvis"
-                        // ],
-                        // "columnDefs": [
-                        //     { targets: [0, 11], orderable: false },
-                        //     { targets: 0, className: 'text-center' }
-                        // ],
-                        "order": [[1, 'desc']],
-                        "processing": true,
-                        "serverSide": true,
-                        "ajax": {
-                            "url": "<?php echo site_url('routes/ajax_listritasi')?>",
-                            "type": "POST"
-                        },
                     var table = $('#tbl_logritasi').DataTable({
                         "processing": true,
                         "serverSide": true,
@@ -124,9 +97,9 @@
                             { "data": "uang_jalan", "className": "text-right" },
                             { "data": "aksi", "orderable": false }
                         ]
->>>>>>> 619aac32373b4c0c672882aabbe20d7b7bcc6326
                     });
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
+                    
                     $(document).on('click', '.btn-edit-ritasi', function () {
                       const id = $(this).data('id');
                       $('#formEditRitasi').attr('action', `<?= site_url('routes/ritasiedit/') ?>${id}`);
