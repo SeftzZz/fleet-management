@@ -81,7 +81,13 @@
                         "order": [[1, 'desc']],
                         "ajax": {
                             "url": "<?php echo site_url('routes/ajax_list'); ?>",
-                            "type": "POST"
+                            "type": "POST",
+                            "data": function ( d ) {
+                                d.tgl_ritasi = $('#tgl_ritasi').val();
+                                d.nama_tim = $('#nama_tim').val();
+                                d.nama_proyek = $('#nama_proyek').val();
+                                d.lokasi_gali = $('#lokasi_gali').val();
+                            }
                         },
                         "columns": [
                             { "data": "checkbox", "orderable": false, "className": "text-center" },
@@ -99,6 +105,18 @@
                         ]
                     });
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
+
+                    $('#btn-filter').click(function(){
+                        table.ajax.reload();
+                    });
+
+                    $('#btn-reset').click(function(){
+                        $('#tgl_ritasi').val('');
+                        $('#nama_tim').val('');
+                        $('#nama_proyek').val('');
+                        $('#lokasi_gali').val('');
+                        table.ajax.reload();
+                    });
                     
                     $(document).on('click', '.btn-edit-ritasi', function () {
                       const id = $(this).data('id');
