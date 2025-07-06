@@ -68,16 +68,20 @@ class Driver_model extends CI_Model {
         if ($query->num_rows() > 0) {
             $data = $query->row();
         }
-        $query->free_result();  
+        $query->free_result();
         return $data;
     }
 
-    public function getAllSupirByFilter($carisupir,$caritanggal,$caristatus) {
+    public function getAllSupirByFilter($carisupir,$cariunit,$caritanggal,$caristatus) {
         $data = array();
-        $this->db->from('drivers'); 
-        $this->db->where('is_delete', 0);
+        $this->db->from('drivers');
+        $this->db->join('tim_mgmt', 'tim_mgmt.driver_id=drivers.id');
+        $this->db->where('drivers.is_delete', 0);
         if ($carisupir) {
             $this->db->like('name', $carisupir);
+        }
+        if ($cariunit) {
+            $this->db->like('no_pintu', $cariunit);
         }
         if ($caritanggal) {
             $this->db->like('tgl_join', $caritanggal);

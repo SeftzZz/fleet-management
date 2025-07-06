@@ -284,4 +284,82 @@ class Route_model extends CI_Model {
         $query->free_result();  
         return $data;  
     }
+
+    private function _get_datatables_query()
+    {
+        $this->db->select('
+            ritasi.*,
+            tim.nama_tim,
+            proyek.nama_proyek,
+            galian.lokasi,
+            vehicles.no_pol,
+            vehicles.no_pintu,
+            drivers.name as nama_driver
+        ');
+        $this->db->from('ritasi');
+        $this->db->join('tim', 'tim.id = ritasi.tim_id');
+        $this->db->join('proyek', 'proyek.id = ritasi.proyek_id');
+        $this->db->join('galian', 'galian.id = ritasi.galian_id');
+        $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
+        $this->db->join('tim_mgmt', 'tim_mgmt.vehicle_id = vehicles.id');
+        $this->db->join('drivers', 'drivers.id = tim_mgmt.driver_id');
+
+        // Hindari duplikasi data jika banyak tim_mgmt
+        $this->db->group_by('ritasi.id');
+
+        // Search global
+        if (!empty($_POST['search']['value'])) {
+            $this->db->group_start();
+            $this->db->like('tim.nama_tim', $_POST['search']['value']);
+            $this->db->or_like('proyek.nama_proyek', $_POST['search']['value']);
+            $this->db->or_like('galian.lokasi', $_POST['search']['value']);
+            $this->db->or_like('drivers.name', $_POST['search']['value']);
+            $this->db->or_like('vehicles.no_pol', $_POST['search']['value']);
+            $this->db->or_like('ritasi.nomerdo', $_POST['search']['value']);
+            $this->db->group_end();
+        }
+
+        // Ordering
+        if (isset($_POST['order'])) {
+            $columns = [
+                'checkbox',
+                'ritasi.tgl_ritasi',
+                'tim.nama_tim',
+                'proyek.nama_proyek',
+                'galian.lokasi',
+                'drivers.name',
+                'vehicles.no_pol',
+                'vehicles.no_pintu',
+                'ritasi.jam_angkut',
+                'ritasi.nomerdo',
+                'ritasi.uang_jalan',
+                'aksi'
+            ];
+            $order_col = $_POST['order'][0]['column'];
+            $order_dir = $_POST['order'][0]['dir'];
+            $this->db->order_by($columns[$order_col], $order_dir);
+        } else {
+            $this->db->order_by('ritasi.tgl_ritasi', 'desc');
+        }
+    }
+
+    public function get_datatables()
+    {
+        $this->_get_datatables_query();
+        if ($_POST['length'] != -1) {
+            $this->db->limit($_POST['length'], $_POST['start']);
+        }
+        return $this->db->get()->result();
+    }
+
+    public function count_filtered()
+    {
+        $this->_get_datatables_query();
+        return $this->db->get()->num_rows();
+    }
+
+    public function count_all()
+    {
+        return $this->db->count_all('ritasi');
+    }
 }

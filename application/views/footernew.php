@@ -102,8 +102,48 @@
                             "url": "<?php echo site_url('routes/ajax_listritasi')?>",
                             "type": "POST"
                         },
+                    var table = $('#tbl_logritasi').DataTable({
+                        "processing": true,
+                        "serverSide": true,
+                        "order": [[1, 'desc']],
+                        "ajax": {
+                            "url": "<?php echo site_url('routes/ajax_list'); ?>",
+                            "type": "POST"
+                        },
+                        "columns": [
+                            { "data": "checkbox", "orderable": false, "className": "text-center" },
+                            { "data": "tgl_ritasi" },
+                            { "data": "nama_tim" },
+                            { "data": "nama_proyek" },
+                            { "data": "lokasi" },
+                            { "data": "nama_driver" },
+                            { "data": "no_pol" },
+                            { "data": "no_pintu" },
+                            { "data": "jam_angkut" },
+                            { "data": "nomerdo" },
+                            { "data": "uang_jalan", "className": "text-right" },
+                            { "data": "aksi", "orderable": false }
+                        ]
+>>>>>>> 619aac32373b4c0c672882aabbe20d7b7bcc6326
                     });
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
+                    $(document).on('click', '.btn-edit-ritasi', function () {
+                      const id = $(this).data('id');
+                      $('#formEditRitasi').attr('action', `<?= site_url('routes/ritasiedit/') ?>${id}`);
+
+                      $('#edit_ritasi_id').val(id);
+                      $('#edit_tgl').val($(this).data('tgl'));
+                      $('#edit_tim').val($(this).data('tim')).trigger('change');
+                      $('#edit_proyek').val($(this).data('proyek')).trigger('change');
+                      $('#edit_galian').val($(this).data('galian')).trigger('change');
+                      $('#edit_kendaraan').val($(this).data('vehicle')).trigger('change');
+                      $('#edit_jam').val($(this).data('jam'));
+                      $('#edit_nodo').val($(this).data('nodo'));
+                    });
+                    $(document).on('click', '.btn-del-ritasi', function () {
+                      const id = $(this).data('id');
+                      $('#formDeleteRitasi').attr('action', `<?= site_url('routes/ritasidel/') ?>${id}`);
+                    });
 
                     $("#tbl_ujalan").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -382,16 +422,6 @@
 
         <?php if ($nopage == 4) { ?>
             <script>
-                <?php foreach ($ritasis as $row) { ?>
-                    $('#tgl_edit<?php echo $row->id ?>').datetimepicker({
-                        format: 'DD-MM-YYYY'
-                    });
-
-                    $('#waktu_angkut<?php echo $row->id ?>').datetimepicker({
-                        format: 'HH:mm'
-                    });
-                <?php } ?>
-
                 /**
                  * Ambil kendaraan berdasarkan tim_id lalu isi <select> mobil.
                  * @param {Number|String} timId        – ID tim.
@@ -467,29 +497,29 @@
                 <?php endforeach; ?>
             </script>
             <script>
-                $(document).ready(function() {
-                    $('select[name="tim"]').on('change', function() {
-                        var timId = $(this).val();
-                        if (timId) {
-                            $.ajax({
-                                url: "<?php echo site_url('routes/get_kendaraan_by_tim'); ?>",
-                                type: "POST",
-                                data: { tim_id: timId },
-                                dataType: "json",
-                                success: function(data) {
-                                    var kendaraanSelect = $('select[name="kendaraan"]');
-                                    kendaraanSelect.empty();
-                                    kendaraanSelect.append('<option value="">--- Pilih Kendaraan ---</option>');
-                                    $.each(data, function(key, value) {
-                                        kendaraanSelect.append('<option value="' + value.vehicle_id + '">' + value.no_pol + '</option>');
-                                    });
-                                }
-                            });
-                        } else {
-                            $('select[name="kendaraan"]').html('<option value="">--- Pilih Kendaraan ---</option>');
-                        }
-                    });
-                });
+                // $(document).ready(function() {
+                //     $('select[name="tim"]').on('change', function() {
+                //         var timId = $(this).val();
+                //         if (timId) {
+                //             $.ajax({
+                //                 url: "<?php echo site_url('routes/get_kendaraan_by_tim'); ?>",
+                //                 type: "POST",
+                //                 data: { tim_id: timId },
+                //                 dataType: "json",
+                //                 success: function(data) {
+                //                     var kendaraanSelect = $('select[name="kendaraan"]');
+                //                     kendaraanSelect.empty();
+                //                     kendaraanSelect.append('<option value="">--- Pilih Kendaraan ---</option>');
+                //                     $.each(data, function(key, value) {
+                //                         kendaraanSelect.append('<option value="' + value.vehicle_id + '">' + value.no_pol + '</option>');
+                //                     });
+                //                 }
+                //             });
+                //         } else {
+                //             $('select[name="kendaraan"]').html('<option value="">--- Pilih Kendaraan ---</option>');
+                //         }
+                //     });
+                // });
             </script>
         <?php } ?>
 
@@ -609,32 +639,33 @@
 
         <?php if ($nopage == 1041) { ?>
             <script>
-                <?php foreach ($wallets as $row): ?>
-                    $(document).ready(function () {
-                        var tableId = "#tbl_manajemenwallet_transactions<?php echo $row->wallet_id ?>";
-                        var wrapperSelector = tableId + "_wrapper .col-md-6:eq(0)";
+                $(document).ready(function () {
+                    $('div[id^="mdl_wallet"]').on('shown.bs.modal', function () {
+                        const table = $(this).find('table.table');
 
-                        var jumlahTransaksi = <?php echo count($wallet_transactions[$row->wallet_id] ?? []); ?>;
-
-                        $(tableId).DataTable({
-                            responsive: true,
-                            paging: false,
-                            lengthChange: false,
-                            autoWidth: false,
-                            searching: false,
-                            buttons: [
-                                "excel",
-                                "pdf",
-                                {
-                                    extend: "print",
-                                    footer: true,
-                                    title: '<?php echo "[Wallet] " . $row->name . "<br>Jumlah transaksi: " . count($wallet_transactions[$row->wallet_id] ?? []); ?>'
-                                },
-                                "colvis"
-                            ]
-                        }).buttons().container().appendTo(wrapperSelector);
+                        // Jika belum diinisialisasi DataTable, inisialisasi
+                        if (!$.fn.DataTable.isDataTable(table)) {
+                            table.DataTable({
+                                responsive: true,
+                                paging: false,
+                                lengthChange: false,
+                                autoWidth: false,
+                                searching: false,
+                                buttons: [
+                                    "excel",
+                                    "pdf",
+                                    {
+                                        extend: "print",
+                                        footer: true,
+                                        title: table.closest('.modal').find('.modal-title').text()
+                                    },
+                                    "colvis"
+                                ]
+                            }).buttons().container()
+                              .appendTo(table.closest('.dataTables_wrapper').find('.col-md-6:eq(0)'));
+                        }
                     });
-                <?php endforeach; ?>
+                });
             </script>
         <?php } ?>
 
