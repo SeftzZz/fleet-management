@@ -213,113 +213,30 @@
                                                 <tr>
                                                     <th><input type="checkbox" id="select-all"></th> <!-- Master checkbox -->
                                                     <th>Tanggal</th>
-                                                    <th>Tim</th>
+                                                    <!-- <th>Tim</th>
                                                     <th>Proyek</th>
                                                     <th>Lokasi Galian</th>
                                                     <th>Supir</th>
                                                     <th>No. Polisi</th>
                                                     <th>No. Pintu/Bak/Unit</th>
                                                     <th>Jam Angkut</th>
-                                                    <th>Nomer DO</th>
+                                                    <th>Nomer DO</th> -->
                                                     <th>Uang Jalan</th>
                                                     <th width="8%">Aksi</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <?php foreach ($ritasis as $row) { ?>
-                                                    <tr>
-                                                        <td><input type="checkbox" class="row-check" value="<?php echo $row->id ?>"></td>
-                                                        <td><?php echo $row->tgl_ritasi; ?></td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('nama_tim'); 
-                                                                $this->db->from('tim'); 
-                                                                $this->db->where('id', $row->tim_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $tim = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $tim->nama_tim;  
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('nama_proyek'); 
-                                                                $this->db->from('proyek'); 
-                                                                $this->db->where('id', $row->proyek_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $proyek = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $proyek->nama_proyek;  
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('lokasi'); 
-                                                                $this->db->from('galian'); 
-                                                                $this->db->where('id', $row->galian_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $galian = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $galian->lokasi;  
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('tim_mgmt.driver_id, drivers.name'); 
-                                                                $this->db->from('tim_mgmt'); 
-                                                                $this->db->join('drivers', 'tim_mgmt.driver_id = drivers.id');
-                                                                $this->db->where('tim_mgmt.vehicle_id', $row->vehicle_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $supir = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $supir->name;  
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('no_pol, no_pintu'); 
-                                                                $this->db->from('vehicles'); 
-                                                                $this->db->where('id', $row->vehicle_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $mobil = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $mobil->no_pol;  
-                                                            ?>
-                                                        </td>
-                                                        <td><?php echo $mobil->no_pintu; ?></td>
-                                                        <td><?php echo $row->jam_angkut; ?></td>
-                                                        <td><?php echo $row->nomerdo; ?></td>
-                                                        <td><?php echo $this->fppfunction->rupiah_ind2($row->uang_jalan); ?></td>
-                                                        <td width="8%">
-                                                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editRitasi<?php echo $row->id ?>"><i class="fas fa-pencil-alt"></i></button>
-
-                                                            <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delRitasi<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th></th>
                                                     <th>Tanggal</th>
-                                                    <th>Tim</th>
+                                                    <!-- <th>Tim</th>
                                                     <th>Proyek</th>
                                                     <th>Lokasi Galian</th>
                                                     <th>Supir</th>
                                                     <th>No. Polisi</th>
                                                     <th>No. Pintu/Bak/Unit</th>
                                                     <th>Jam Angkut</th>
-                                                    <th>Nomer DO</th>
+                                                    <th>Nomer DO</th> -->
                                                     <th>Uang Jalan</th>
                                                     <th width="8%">Aksi</th>
                                                 </tr>

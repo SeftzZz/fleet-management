@@ -80,24 +80,29 @@
                         "lengthChange": false,
                         "autoWidth": false,
                         "searching": false,
-                        "buttons": [
-                            "excel", "pdf", 
-                            {
-                                extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                                exportOptions: {
-                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // kolom tertentu yang ikut di print
-                                }
-                            }, 
-                            "colvis"
-                        ],
-                        "columnDefs": [
-                            { targets: [0, 11], orderable: false },
-                            { targets: 0, className: 'text-center' }
-                        ],
-                        "order": [[1, 'desc']]
+                        // "buttons": [
+                        //     "excel", "pdf", 
+                        //     {
+                        //         extend: "print",
+                        //         footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                        //         exportOptions: {
+                        //             columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // kolom tertentu yang ikut di print
+                        //         }
+                        //     }, 
+                        //     "colvis"
+                        // ],
+                        // "columnDefs": [
+                        //     { targets: [0, 11], orderable: false },
+                        //     { targets: 0, className: 'text-center' }
+                        // ],
+                        "order": [[1, 'desc']],
+                        "processing": true,
+                        "serverSide": true,
+                        "ajax": {
+                            "url": "<?php echo site_url('routes/ajax_listritasi')?>",
+                            "type": "POST"
+                        },
                     });
-
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_ujalan").DataTable({
