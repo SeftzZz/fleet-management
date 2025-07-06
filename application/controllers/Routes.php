@@ -50,7 +50,7 @@ class Routes extends CI_Controller {
             $data['routes'] = $this->Route_model->getAllRoutes();
             $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
             $data['supirs'] = $this->Driver_model->getAllSupir();
-            $data['ritasis'] = $this->Route_model->getAllRitasiByFilter($caritim,$cariproyek,$caritanggal,$carilokasi);
+            // $data['ritasis'] = $this->Route_model->getAllRitasiByFilter($caritim,$cariproyek,$caritanggal,$carilokasi);
             $data['tims'] = $this->Tim_model->getAllTimAktif();
             $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
             $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
@@ -85,7 +85,7 @@ class Routes extends CI_Controller {
             $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
             $data['supirs'] = $this->Driver_model->getAllSupir();
             // $data['ritasis'] = $this->Route_model->getAllRitasi();
-            $data['ritasis'] = $this->Route_model->getAllRitasi();
+            // $data['ritasis'] = $this->Route_model->getAllRitasi();
             $data['tims'] = $this->Tim_model->getAllTimAktif();
             $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
             $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
@@ -131,9 +131,35 @@ class Routes extends CI_Controller {
                 ];
 
                 $data['routes'] = $this->Route_model->getAllRoutes();
-                $data['kendaraans'] = $this->Vehicle_model->getAllKendaraan();
+                $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
                 $data['supirs'] = $this->Driver_model->getAllSupir();
+                // $data['ritasis'] = $this->Route_model->getAllRitasi();
                 $data['ritasis'] = $this->Route_model->getAllRitasi();
+                $data['tims'] = $this->Tim_model->getAllTimAktif();
+                $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
+                $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
+                // Ambil ringkasan ritasi terakhir
+                $data['last_ritasi_summary'] = $this->Route_model->getLastInsertedRitasiSummary();
+                $data['jmlritasiHari'] = $this->Route_model->getAllJmlRitasiHari();
+                $data['jmlritasiKemarin'] = $this->Route_model->getAllJmlRitasiKemarin();
+                $data['jmlritasiGHari'] = $this->Route_model->getAllJmlRitasiTimGHari();
+                $data['jmlritasiKHari'] = $this->Route_model->getAllJmlRitasiTimKHari();
+                $data['jmlritasiMHari'] = $this->Route_model->getAllJmlRitasiTimMHari();
+                $data['jmlritasiBln'] = $this->Route_model->getAllJmlRitasiBln();
+                $data['jmlritasiBlnKemarin'] = $this->Route_model->getAllJmlRitasiBlnKemarin();
+                $data['jmlritasiTanpaNodo'] = $this->Route_model->getAllJmlRitasiTanpaNodo();
+
+                if ($data['jmlritasiKemarin'] > 0) {
+                    $data['persenRitasiHari'] = (($data['jmlritasiHari'] - $data['jmlritasiKemarin']) / $data['jmlritasiKemarin']) * 100;
+                } else {
+                    $data['persenRitasiHari'] = 0;
+                }
+
+                if ($data['jmlritasiBlnKemarin'] > 0) {
+                    $data['persenRitasiBln'] = (($data['jmlritasiBln'] - $data['jmlritasiBlnKemarin']) / $data['jmlritasiBlnKemarin']) * 100;
+                } else {
+                    $data['persenRitasiBln'] = 0;
+                }
                 
                 $this->load->view('headernew', $data);
                 $this->load->view('routes', $data);
@@ -168,9 +194,35 @@ class Routes extends CI_Controller {
                 ];
 
                 $data['routes'] = $this->Route_model->getAllRoutes();
-                $data['kendaraans'] = $this->Vehicle_model->getAllKendaraan();
+                $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
                 $data['supirs'] = $this->Driver_model->getAllSupir();
+                // $data['ritasis'] = $this->Route_model->getAllRitasi();
                 $data['ritasis'] = $this->Route_model->getAllRitasi();
+                $data['tims'] = $this->Tim_model->getAllTimAktif();
+                $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
+                $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
+                // Ambil ringkasan ritasi terakhir
+                $data['last_ritasi_summary'] = $this->Route_model->getLastInsertedRitasiSummary();
+                $data['jmlritasiHari'] = $this->Route_model->getAllJmlRitasiHari();
+                $data['jmlritasiKemarin'] = $this->Route_model->getAllJmlRitasiKemarin();
+                $data['jmlritasiGHari'] = $this->Route_model->getAllJmlRitasiTimGHari();
+                $data['jmlritasiKHari'] = $this->Route_model->getAllJmlRitasiTimKHari();
+                $data['jmlritasiMHari'] = $this->Route_model->getAllJmlRitasiTimMHari();
+                $data['jmlritasiBln'] = $this->Route_model->getAllJmlRitasiBln();
+                $data['jmlritasiBlnKemarin'] = $this->Route_model->getAllJmlRitasiBlnKemarin();
+                $data['jmlritasiTanpaNodo'] = $this->Route_model->getAllJmlRitasiTanpaNodo();
+
+                if ($data['jmlritasiKemarin'] > 0) {
+                    $data['persenRitasiHari'] = (($data['jmlritasiHari'] - $data['jmlritasiKemarin']) / $data['jmlritasiKemarin']) * 100;
+                } else {
+                    $data['persenRitasiHari'] = 0;
+                }
+
+                if ($data['jmlritasiBlnKemarin'] > 0) {
+                    $data['persenRitasiBln'] = (($data['jmlritasiBln'] - $data['jmlritasiBlnKemarin']) / $data['jmlritasiBlnKemarin']) * 100;
+                } else {
+                    $data['persenRitasiBln'] = 0;
+                }
                 
                 $this->load->view('headernew', $data);
                 $this->load->view('routes', $data);
@@ -444,75 +496,113 @@ class Routes extends CI_Controller {
 
     public function ritasiedit($id)
     {
-        if ($post = $this->input->post('submit')) {
+        if ($this->input->post('submit')) {
             $this->form_validation->set_rules('tgl','Tanggal','required');
             $this->form_validation->set_rules('tim','Tim','required');
             $this->form_validation->set_rules('proyek','Proyek','required');
             $this->form_validation->set_rules('galian','Lokasi Galian','required');
-            $this->form_validation->set_rules('kendaraan','Kendaraan','');
+            $this->form_validation->set_rules('kendaraan','Kendaraan','required');
             $this->form_validation->set_rules('jam','Jam Angkut','required');
             $this->form_validation->set_rules('nodo','Nomer DO','');
 
-            if ($this->form_validation->run()==FALSE) {     
+            if ($this->form_validation->run() == FALSE) {
+                $this->session->set_flashdata('pesanerror', 'Data referensi tidak lengkap.');
                 $data = [
-                    "title" => "Manajemen Rute / Ritasi | Fleet Management",
+                    "title" => "Manajemen Rute / Ritasi | Fleet Management System",
                     "nopage" => 4,
                 ];
 
                 $data['routes'] = $this->Route_model->getAllRoutes();
                 $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
                 $data['supirs'] = $this->Driver_model->getAllSupir();
-                $data['ritasis'] = $this->Route_model->getAllRitasi();
+                // $data['ritasis'] = $this->Route_model->getAllRitasi();
+                // $data['ritasis'] = $this->Route_model->getAllRitasi();
                 $data['tims'] = $this->Tim_model->getAllTimAktif();
                 $data['proyeks'] = $this->Proyek_model->getAllProyekAktif();
                 $data['galians'] = $this->Lokasigalian_model->getAllGalianAktif();
-                
+                // Ambil ringkasan ritasi terakhir
+                $data['last_ritasi_summary'] = $this->Route_model->getLastInsertedRitasiSummary();
+                $data['jmlritasiHari'] = $this->Route_model->getAllJmlRitasiHari();
+                $data['jmlritasiKemarin'] = $this->Route_model->getAllJmlRitasiKemarin();
+                $data['jmlritasiGHari'] = $this->Route_model->getAllJmlRitasiTimGHari();
+                $data['jmlritasiKHari'] = $this->Route_model->getAllJmlRitasiTimKHari();
+                $data['jmlritasiMHari'] = $this->Route_model->getAllJmlRitasiTimMHari();
+                $data['jmlritasiBln'] = $this->Route_model->getAllJmlRitasiBln();
+                $data['jmlritasiBlnKemarin'] = $this->Route_model->getAllJmlRitasiBlnKemarin();
+                $data['jmlritasiTanpaNodo'] = $this->Route_model->getAllJmlRitasiTanpaNodo();
+
+                if ($data['jmlritasiKemarin'] > 0) {
+                    $data['persenRitasiHari'] = (($data['jmlritasiHari'] - $data['jmlritasiKemarin']) / $data['jmlritasiKemarin']) * 100;
+                } else {
+                    $data['persenRitasiHari'] = 0;
+                }
+
+                if ($data['jmlritasiBlnKemarin'] > 0) {
+                    $data['persenRitasiBln'] = (($data['jmlritasiBln'] - $data['jmlritasiBlnKemarin']) / $data['jmlritasiBlnKemarin']) * 100;
+                } else {
+                    $data['persenRitasiBln'] = 0;
+                }
+
                 $this->load->view('headernew', $data);
                 $this->load->view('routes', $data);
                 $this->load->view('footernew');
-            } else {
-                $tim = $this->Tim_model->getTimById($this->input->post('tim'));
-                $proyek = $this->Proyek_model->getProyekById($this->input->post('proyek'));
-                $galian = $this->Lokasigalian_model->getGalianById($this->input->post('galian'));
-                $kendaraan = $this->Vehicle_model->getKendaraanById($this->input->post('kendaraan'));
-                $tabungan   = $this->Proyek_model->getProyekById($proyek->id);
-                $uangjalan  = $this->Uangjalan_model->getUangJalanByGalianId($galian->id);
-                $tim_mgmnt = $this->Timmgmt_model->getKendaraanTimByIdMobil($kendaraan->id);
-                $wallet = $this->Wallet_model->get_by_driver($tim_mgmnt->id);
-                $wallet_id = $wallet->id;
+            }
 
-                // update tabel ritasi  
-                $dataRitasi = array(
-                    'tgl_ritasi'    => $this->input->post('tgl'),
-                    'tim_id'        => $this->input->post('tim'),
-                    'nama_tim'      => $tim->nama_tim,
-                    'proyek_id'     => $this->input->post('proyek'),
-                    'nama_proyek'   => $proyek->nama_proyek,
-                    'galian_id'     => $this->input->post('galian'),
-                    'lokasi'        => $galian->lokasi,
-                    'vehicle_id'    => $this->input->post('kendaraan'),
-                    'no_pol'        => $kendaraan->no_pol,
-                    'jam_angkut'    => $this->input->post('jam'),
-                    'nomerdo'       => $this->input->post('nodo'),
-                    'updated_at'    => date('Y-m-d H:i:s')
-                );                              
-                $this->Route_model->updateRitasi($id,$dataRitasi);
+            // Ambil data referensi
+            $tim = $this->Tim_model->getTimById($this->input->post('tim'));
+            $proyek = $this->Proyek_model->getProyekById($this->input->post('proyek'));
+            $galian = $this->Lokasigalian_model->getGalianById($this->input->post('galian'));
+            $kendaraan = $this->Vehicle_model->getKendaraanById($this->input->post('kendaraan'));
 
-                // Ambil transaksi wallet dengan id_ritasi dan deskripsi diawali "Tabungan DO -"
-                $wallet_transactions = $this->Wallet_model->getWalletTransactionsByTabungan($id);
+            if (!$tim || !$proyek || !$galian || !$kendaraan) {
+                $this->session->set_flashdata('pesanerror', 'Data referensi tidak lengkap.');
+                redirect('/routes');
+                return;
+            }
 
-                // Ambil input NoDO
-                $nodo = $this->input->post('nodo');
+            $tim_mgmnt = $this->Timmgmt_model->getKendaraanTimByIdMobil($kendaraan->id);
+            if (!$tim_mgmnt || !is_object($tim_mgmnt)) {
+                $this->session->set_flashdata('pesanerror', 'Data tim kendaraan tidak ditemukan.');
+                redirect('/routes');
+                return;
+            }
 
+            $wallet = $this->Wallet_model->get_by_driver($tim_mgmnt->id);
+            if (!$wallet || !is_object($wallet)) {
+                $this->session->set_flashdata('pesanerror', 'Dompet supir tidak ditemukan.');
+                redirect('/routes');
+                return;
+            }
+
+            // Update data ritasi
+            $dataRitasi = [
+                'tgl_ritasi'    => $this->input->post('tgl'),
+                'tim_id'        => $tim->id,
+                'nama_tim'      => $tim->nama_tim,
+                'proyek_id'     => $proyek->id,
+                'nama_proyek'   => $proyek->nama_proyek,
+                'galian_id'     => $galian->id,
+                'lokasi'        => $galian->lokasi,
+                'vehicle_id'    => $kendaraan->id,
+                'no_pol'        => $kendaraan->no_pol,
+                'jam_angkut'    => $this->input->post('jam'),
+                'nomerdo'       => $this->input->post('nodo'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            ];
+            $this->Route_model->updateRitasi($id, $dataRitasi);
+
+            // Update deskripsi wallet transaction jika ada
+            $wallet_transactions = $this->Wallet_model->getWalletTransactionsByTabungan($id);
+            if ($wallet_transactions && is_object($wallet_transactions)) {
                 $this->Wallet_model->update_nodo($wallet_transactions->id, [
-                    'description' => 'Tabungan DO -' . $nodo,
+                    'description' => 'Tabungan DO -' . $this->input->post('nodo'),
                     'updated_at'  => date('Y-m-d H:i:s')
                 ]);
-
-                $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
-                redirect('/routes');
             }
-        } 
+
+            $this->session->set_flashdata('pesansukses', 'Data berhasil disimpan');
+            redirect('/routes');
+        }
     }
 
     public function ritasidel($id)
@@ -650,5 +740,63 @@ class Routes extends CI_Controller {
       $result = $this->Route_model->getRitasiByFilters($tanggal, $proyek, $galian, $tim);
 
       echo json_encode($result);
+    }
+
+    public function ajax_list()
+    {
+        $list = $this->Route_model->get_datatables();
+        $data = [];
+        $no = $this->input->post('start');
+
+        foreach ($list as $row) {
+            $no++;
+            $data[] = [
+                'checkbox'     => '<input type="checkbox" class="row-check" value="'.$row->id.'">',
+                'tgl_ritasi'   => $row->tgl_ritasi,
+                'nama_tim'     => $row->nama_tim,
+                'nama_proyek'  => $row->nama_proyek,
+                'lokasi'       => $row->lokasi,
+                'nama_driver'  => $row->nama_driver,
+                'no_pol'       => $row->no_pol,
+                'no_pintu'     => $row->no_pintu,
+                'jam_angkut'   => $row->jam_angkut,
+                'nomerdo'      => $row->nomerdo,
+                'uang_jalan'   => $this->fppfunction->rupiah_ind2($row->uang_jalan),
+                'aksi' => '
+                    <button type="button"
+                        class="btn btn-sm btn-outline-primary btn-edit-ritasi"
+                        data-toggle="modal"
+                        data-target="#modalEditRitasi"
+                        data-id="'.$row->id.'"
+                        data-tgl="'.$row->tgl_ritasi.'"
+                        data-tim="'.$row->tim_id.'"
+                        data-proyek="'.$row->proyek_id.'"
+                        data-galian="'.$row->galian_id.'"
+                        data-vehicle="'.$row->vehicle_id.'"
+                        data-vehicle_name="'.$row->no_pol.'"
+                        data-jam="'.$row->jam_angkut.'"
+                        data-nodo="'.$row->nomerdo.'">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+
+                    <button type="button"
+                        class="btn btn-sm btn-outline-danger btn-del-ritasi"
+                        data-toggle="modal"
+                        data-target="#modalDeleteRitasi"
+                        data-id="'.$row->id.'">
+                        <i class="fas fa-trash"></i>
+                    </button>'
+
+            ];
+        }
+
+        $output = [
+            "draw" => intval($this->input->post('draw')),
+            "recordsTotal" => $this->Route_model->count_all(),
+            "recordsFiltered" => $this->Route_model->count_filtered(),
+            "data" => $data,
+        ];
+
+        echo json_encode($output);
     }
 }

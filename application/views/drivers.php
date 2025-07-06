@@ -66,13 +66,24 @@
                             <div class="card-body">
                                 <form id="form1" name="form1" action="<?php echo site_url('drivers')?>" method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Nama Supir</label>
                                                 <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>No. Pintu/Bak/Unit</label>
+                                                <select name="noPintu" class="form-control select_rute" style="width:100%;">
+                                                    <option value=""></option>
+                                                    <?php foreach ($mobils as $value) { ?>
+                                                        <option value='<?php echo $value->no_pintu; ?>' <?php echo set_select('noPintu', $value->no_pintu );?> ><?php echo $value->no_pintu; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Tanggal Bergabung</label>
                                                 <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
@@ -83,7 +94,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Status</label>
                                                 <select name="statusSupir" class="custom-select" style="width:100%;">
@@ -159,18 +170,17 @@
                                                         <td>
                                                             <?php 
                                                                 $this->db->select('no_pintu'); 
-                                                                $this->db->from('tim_mgmt'); 
+                                                                $this->db->from('tim_mgmt');
                                                                 $this->db->where('driver_id', $row->id);
                                                                 $this->db->where('status_tim_mgmt', 'Aktif');
                                                                 $query = $this->db->get();
                                                                 if ($query->num_rows() > 0) {
                                                                     $unit = $query->row();
-                                                                    $query->free_result();
-                                                                    echo $unit->no_pintu;  
+                                                                    echo $unit->no_pintu;
                                                                 } else {
-                                                                    echo "-";
+                                                                    echo "<small class='text-danger'>Belum ada Tim</small>";
                                                                 }
-                                                                
+                                                                $query->free_result();
                                                             ?>
                                                         </td>
                                                         <td
@@ -613,7 +623,6 @@
                                                     <th>Keterangan</th>
                                                     <th>Tgl. Ritasi</th>
                                                     <th>Create At</th>
-                                                    <th>Update At</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -634,13 +643,12 @@
                                                                 $query = $this->db->get();
                                                                 if ($query->num_rows() > 0) {
                                                                     $ritasi = $query->row();
+                                                                    echo $ritasi->tgl_ritasi;
                                                                 } 
                                                                 $query->free_result();
-                                                                echo $ritasi->tgl_ritasi;  
                                                             ?>
                                                         </td>
                                                         <td><?php echo $this->fppfunction->tglangkajam_ind($trans->created_at) ?></td>
-                                                        <td><?php echo $this->fppfunction->tglangkajam_ind($trans->updated_at) ?></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>

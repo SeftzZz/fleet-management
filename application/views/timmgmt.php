@@ -45,30 +45,19 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Nama Supir</label>
                                                 <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>No. Polisi</label>
                                                 <select name="noPol" class="form-control select_rute" style="width:100%;">
                                                     <option value=""></option>
                                                     <?php foreach ($mobils as $value) { ?>
                                                         <option value='<?php echo $value->no_pol; ?>' <?php echo set_select('noPol', $value->no_pol );?> ><?php echo $value->no_pol; ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label>No. Pintu/Bak/Unit</label>
-                                                <select name="noPintu" class="form-control select_rute" style="width:100%;">
-                                                    <option value=""></option>
-                                                    <?php foreach ($mobils as $value) { ?>
-                                                        <option value='<?php echo $value->no_pintu; ?>' <?php echo set_select('noPintu', $value->no_pintu );?> ><?php echo $value->no_pintu; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>

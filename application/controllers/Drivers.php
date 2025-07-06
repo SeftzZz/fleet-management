@@ -17,6 +17,7 @@ class Drivers extends CI_Controller {
         $this->load->library('pagination');
         date_default_timezone_set("Asia/Jakarta");
         $this->load->model('Driver_model');
+        $this->load->model('Vehicle_model');
         $this->load->model('Wallet_model');
         $this->load->database();
 
@@ -49,15 +50,27 @@ class Drivers extends CI_Controller {
 
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('nmSupir','Nama Supir','');
+            $this->form_validation->set_rules('noPintu','Nama Supir','');
             $this->form_validation->set_rules('tglJoin','Tanggal Bergabung','');
             $this->form_validation->set_rules('statusSupir','Status','');
 
             $carisupir = $this->input->post('nmSupir');
+            $cariunit = $this->input->post('noPintu');
             $caritanggal = $this->input->post('tglJoin');
             $caristatus = $this->input->post('statusSupir');
 
-            $data['supirs'] = $this->Driver_model->getAllSupirByFilter($carisupir,$caritanggal,$caristatus);
+            $data['supirs'] = $this->Driver_model->getAllSupirByFilter($carisupir,$cariunit,$caritanggal,$caristatus);
             $data['wallets'] = $this->Wallet_model->getAllWallet();
+            $data['mobils'] = $this->Vehicle_model->getAllKendaraanAktif();
+            $data['jmltotalsaldo'] = $this->Wallet_model->getAllJmlTotalSaldo();
+            $topSaldo = $this->Wallet_model->getDriverWithHighestBalance();
+
+            $data['jmlhighestsaldo'] = $topSaldo->balance ?? 0;
+            $data['nmhighestsaldo']  = $topSaldo->name ?? '-';
+
+            foreach ($data['wallets'] as $wallet) {
+                $data['wallet_transactions'][$wallet->wallet_id] = $this->Wallet_model->getWalletTransactionsAll($wallet->wallet_id);
+            }
             
             $this->load->view('headernew', $data);
             $this->load->view('drivers', $data);
@@ -65,6 +78,7 @@ class Drivers extends CI_Controller {
         } else {
             $data['supirs'] = $this->Driver_model->getAllSupir();
             $data['wallets'] = $this->Wallet_model->getAllWallet();
+            $data['mobils'] = $this->Vehicle_model->getAllKendaraanAktif();
             $data['jmltotalsaldo'] = $this->Wallet_model->getAllJmlTotalSaldo();
             $topSaldo = $this->Wallet_model->getDriverWithHighestBalance();
 
