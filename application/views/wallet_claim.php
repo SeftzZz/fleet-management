@@ -34,13 +34,33 @@
                             <div class="card-body">
                                 <form id="form1" name="form1" action="<?php echo site_url('wallet')?>" method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nama Supir</label>
                                                 <select name="driver_id" class="form-control select_rute" style="width:100%;">
                                                     <option value="">Semua Supir</option>
                                                     <?php foreach ($supirs as $value) { ?>
-                                                        <option value='<?php echo $value->id; ?>' <?php echo set_select('driver_id', $value->id );?>><?php echo $value->name; ?></option>
+                                                        <option value='<?php echo $value->id; ?>' <?php echo set_select('driver_id', $value->id );?>>
+                                                            <?php
+                                                                $this->db->select('no_pintu, nama_tim');
+                                                                $this->db->from('tim_mgmt');
+                                                                $this->db->where('driver_id', $value->id);
+                                                                $this->db->where('status_tim_mgmt', 'Aktif');
+                                                                $query = $this->db->get();
+
+                                                                if ($query->num_rows() > 0) {
+                                                                    $unit = $query->row();
+                                                                    $no_pintu = $unit->no_pintu;
+                                                                    $nama_tim = $unit->nama_tim;
+                                                                } else {
+                                                                    $no_pintu = 'Tida ada unit';
+                                                                    $nama_tim = 'Tidak ada tim';
+                                                                }
+                                                                $query->free_result();
+
+                                                                echo $value->name . ' - ' . $no_pintu . ' - ' . $nama_tim;
+                                                            ?>
+                                                        </option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
@@ -87,7 +107,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label>Jumlah </label>
-                                                            <input type="text" name="jmlnya" value="<?php echo set_value('jmlnya')?>" class="form-control <?php if (form_error('jmlnya')) {echo "is-invalid";} ?>" />
+                                                            <input type="number" name="jmlnya" value="<?php echo set_value('jmlnya')?>" class="form-control <?php if (form_error('jmlnya')) {echo "is-invalid";} ?>" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -107,7 +127,7 @@
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label>Saldo Wallet</label>
-                                                                <input type="text" readonly name="balance" class="form-control" value="<?= $this->fppfunction->rupiah_ind($row->balance) ?>">
+                                                                <input type="number" readonly name="balance" class="form-control" value="<?= $row->balance ?>">
                                                             </div>
                                                         </div>
                                                     </div>

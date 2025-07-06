@@ -225,89 +225,7 @@
                                                     <th width="8%">Aksi</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <?php foreach ($ritasis as $row) { ?>
-                                                    <tr>
-                                                        <td><input type="checkbox" class="row-check" value="<?php echo $row->id ?>"></td>
-                                                        <td><?php echo $row->tgl_ritasi; ?></td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('nama_tim'); 
-                                                                $this->db->from('tim'); 
-                                                                $this->db->where('id', $row->tim_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $tim = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $tim->nama_tim;  
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('nama_proyek'); 
-                                                                $this->db->from('proyek'); 
-                                                                $this->db->where('id', $row->proyek_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $proyek = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $proyek->nama_proyek;  
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('lokasi'); 
-                                                                $this->db->from('galian'); 
-                                                                $this->db->where('id', $row->galian_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $galian = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $galian->lokasi;  
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('tim_mgmt.driver_id, drivers.name'); 
-                                                                $this->db->from('tim_mgmt'); 
-                                                                $this->db->join('drivers', 'tim_mgmt.driver_id = drivers.id');
-                                                                $this->db->where('tim_mgmt.vehicle_id', $row->vehicle_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $supir = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $supir->name;  
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('no_pol, no_pintu'); 
-                                                                $this->db->from('vehicles'); 
-                                                                $this->db->where('id', $row->vehicle_id);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $mobil = $query->row();
-                                                                } 
-                                                                $query->free_result();
-                                                                echo $mobil->no_pol;  
-                                                            ?>
-                                                        </td>
-                                                        <td><?php echo $mobil->no_pintu; ?></td>
-                                                        <td><?php echo $row->jam_angkut; ?></td>
-                                                        <td><?php echo $row->nomerdo; ?></td>
-                                                        <td><?php echo $this->fppfunction->rupiah_ind2($row->uang_jalan); ?></td>
-                                                        <td width="8%">
-                                                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editRitasi<?php echo $row->id ?>"><i class="fas fa-pencil-alt"></i></button>
-
-                                                            <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delRitasi<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
+                                            <tbody></tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th></th>
@@ -334,157 +252,123 @@
                         </div>
                     </div>
                     <div class="container-fluid">&nbsp;</div>
-                    <?php foreach ($ritasis as $row) { ?>
-                        <div class="modal fade" id="mdl_editRitasi<?php echo $row->id ?>">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Edit Log Ritasi</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="form1" name="form1" action="<?php echo site_url('routes/ritasiedit/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Tanggal</label>
-                                                        <div class="input-group date" id="tgl_edit<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="tgl" value="<?php echo set_value('tgl')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
-                                                            <div class="input-group-append">
-                                                                <div class="input-group-text" data-target="#tgl_edit<?php echo $row->id ?>" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Tim</label>
-                                                        <select name="tim" class="form-control select_rute <?php if (form_error('tim')) {echo "is-invalid";} ?>" style="width:100%;">
-                                                            <option value="">--- Pilih Tim ---</option>
-                                                            <?php
-                                                                foreach ($tims as $value) {
-                                                                  $selected=($value->id == $row->tim_id) ? "selected" : "";
-                                                                  echo " <option value='$value->id' $selected>$value->nama_tim</option>";
-                                                                }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Nama Proyek</label>
-                                                        <select name="proyek" class="form-control select_rute <?php if (form_error('proyek')) {echo "is-invalid";} ?>" style="width:100%;">
-                                                            <option value="">--- Pilih Proyek ---</option>
-                                                            <?php
-                                                                foreach ($proyeks as $value) {
-                                                                  $selected=($value->id == $row->proyek_id) ? "selected" : "";
-                                                                  echo " <option value='$value->id' $selected>$value->nama_proyek</option>";
-                                                                }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Lokasi Galian</label>
-                                                        <select name="galian" class="form-control <?php if (form_error('galian')) {echo "is-invalid";} ?>">
-                                                            <option value="">--- Pilih Lokasi Galian ---</option>
-                                                            <?php
-                                                                foreach ($galians as $value) {
-                                                                  $selected=($value->id == $row->galian_id) ? "selected" : "";
-                                                                  echo " <option value='$value->id' $selected>$value->lokasi</option>";
-                                                                }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Kendaraan</label>
-                                                        <select name="kendaraan" class="form-control select_rute <?php if (form_error('kendaraan')) {echo "is-invalid";} ?>" style="width:100%;" />
-                                                            <option value="">--- Pilih Kendaraan ---</option>
-                                                            <?php
-                                                                foreach ($kendaraans as $value) {
-                                                                  $selected=($value->vehicle_id == $row->vehicle_id) ? "selected" : "";
-                                                                  echo " <option value='$value->vehicle_id' $selected>$value->no_pol</option>";
-                                                                }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Jam Angkut</label>
-                                                        <div class="input-group date" id="waktu_angkut<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="jam" value="<?php echo set_value('jam')?>" class="form-control" oninput="autoFormatJam(this)" maxlength="5" placeholder="HH:MM" />
-                                                            <div class="input-group-append">
-                                                                <div class="input-group-text datetimepicker-input" data-target="#waktu_angkut<?php echo $row->id ?>" data-toggle="datetimepicker"><i class="fa fa-clock"></i></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <label>Nomer DO</label>
-                                                        <input type="text" name="nodo" value="<?php echo set_value('nodo',$row->nomerdo)?>" class="form-control <?php if (form_error('nodo')) {echo "is-invalid";} ?>" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div>
-                                                        <a href="<?php echo site_url('routes') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                    <div class="modal fade" id="modalEditRitasi" tabindex="-1" role="dialog">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <form id="formEditRitasi" method="post" action="">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Edit Log Ritasi</h4>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-                        </div>
 
-                        <div class="modal fade" id="mdl_delRitasi<?php echo $row->id ?>">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Hapus Log Ritasi</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="form1" name="form1" action="<?php echo site_url('routes/ritasidel/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <label>Yakin menghapus data ini!</label>
-                                                        <input type="hidden" name="del" value="1">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                            <div class="modal-body">
+                              <input type="hidden" name="ritasi_id" id="edit_ritasi_id">
+
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Tanggal</label>
+                                    <input type="text" name="tgl" id="edit_tgl" class="form-control" maxlength="10" placeholder="DD-MM-YYYY" oninput="autoFormatTanggal(this)">
+                                  </div>
                                 </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Tim</label>
+                                    <select name="tim" id="edit_tim" class="form-control select_rute" style="width:100%;">
+                                      <option value="">--- Pilih Tim ---</option>
+                                      <?php foreach ($tims as $value): ?>
+                                        <option value="<?= $value->id ?>"><?= $value->nama_tim ?></option>
+                                      <?php endforeach; ?>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Nama Proyek</label>
+                                    <select name="proyek" id="edit_proyek" class="form-control select_rute" style="width:100%;">
+                                      <option value="">--- Pilih Proyek ---</option>
+                                      <?php foreach ($proyeks as $value): ?>
+                                        <option value="<?= $value->id ?>"><?= $value->nama_proyek ?></option>
+                                      <?php endforeach; ?>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Lokasi Galian</label>
+                                    <select name="galian" id="edit_galian" class="form-control">
+                                      <option value="">--- Pilih Lokasi Galian ---</option>
+                                      <?php foreach ($galians as $value): ?>
+                                        <option value="<?= $value->id ?>"><?= $value->lokasi ?></option>
+                                      <?php endforeach; ?>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Kendaraan</label>
+                                    <select name="kendaraan" id="edit_kendaraan" class="form-control select_rute" style="width:100%;">
+                                      <option value="">--- Pilih Kendaraan ---</option>
+                                      <?php foreach ($kendaraans as $value): ?>
+                                        <option value="<?= $value->vehicle_id ?>"><?= $value->no_pol ?></option>
+                                      <?php endforeach; ?>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Jam Angkut</label>
+                                    <input type="text" name="jam" id="edit_jam" class="form-control" maxlength="5" placeholder="HH:MM" oninput="autoFormatJam(this)">
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label>Nomer DO</label>
+                                    <input type="text" name="nodo" id="edit_nodo" class="form-control">
+                                  </div>
+                                </div>
+                              </div>
                             </div>
+
+                            <div class="modal-footer">
+                              <a href="<?= site_url('routes') ?>" class="btn btn-default">Batal</a>
+                              <input type="submit" name="submit" class="btn btn-primary float-right" value="Simpan">
+                            </div>
+                          </form>
                         </div>
-                    <?php } ?>
+                      </div>
+                    </div>
+
+                    <div class="modal fade" id="modalDeleteRitasi">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <form id="formDeleteRitasi" method="post" action="">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Hapus Log Ritasi</h4>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Yakin ingin menghapus data ini?</p>
+                              <input type="hidden" name="del" value="1">
+                            </div>
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-danger">Hapus</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
                 </section>
                 <!-- /.Main content -->
             </div>
