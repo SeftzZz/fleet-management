@@ -669,6 +669,7 @@
                 $(document).ready(function () {
                     $('div[id^="mdl_wallet"]').on('shown.bs.modal', function () {
                         const table = $(this).find('table.table');
+
                         // Jika belum diinisialisasi DataTable, inisialisasi
                         if (!$.fn.DataTable.isDataTable(table)) {
                             table.DataTable({
@@ -676,7 +677,6 @@
                                 paging: false,
                                 lengthChange: false,
                                 autoWidth: false,
-                                searching: true,
                                 searching: false,
                                 columnDefs: [{ targets: [0,1,2,3,4,5], orderable: false}],
                                 buttons: [
@@ -688,10 +688,9 @@
                                         title: table.closest('.modal').find('.modal-title').text()
                                     },
                                     "colvis"
-                                ],
-                                order: [[4, 'desc']]
-                            })
-                            .buttons().container().appendTo(table.closest('.dataTables_wrapper').find('.col-md-6:eq(0)'));
+                                ]
+                            }).buttons().container()
+                              .appendTo(table.closest('.dataTables_wrapper').find('.col-md-6:eq(0)'));
                         }
                     });
                 });
