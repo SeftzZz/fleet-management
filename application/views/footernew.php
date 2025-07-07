@@ -85,6 +85,8 @@
                             "data": function ( d ) {
                                 d.tgl_ritasi = $('#tgl_ritasi').val();
                                 d.nama_tim = $('#nama_tim').val();
+                                d.nama_driver = $('#nama_driver').val();
+                                d.no_pintu = $('#no_pintu').val();
                                 d.nama_proyek = $('#nama_proyek').val();
                                 d.lokasi_gali = $('#lokasi_gali').val();
                             }

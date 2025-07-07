@@ -261,6 +261,14 @@ class Route_model extends CI_Model {
             $this->db->where('ritasi.nama_tim', $_POST['nama_tim']);
         }
 
+        if(!empty($_POST['nama_driver'])) {
+            $this->db->where('drivers.name', $_POST['nama_driver']);
+        }
+
+        if(!empty($_POST['no_pintu'])) {
+            $this->db->where('vehicles.no_pintu', $_POST['no_pintu']);
+        }
+
         if(!empty($_POST['nama_proyek'])) {
             $this->db->where('ritasi.nama_proyek', $_POST['nama_proyek']);
         }
