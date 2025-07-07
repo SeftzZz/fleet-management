@@ -116,4 +116,15 @@ class Wallet_model extends CI_Model {
 
         return $result ?? null;
     }
+
+    public function getWalletBalanceByWalletId($wallet_id)
+    {
+        $this->db->select_sum('balance');
+        $this->db->where('id', $wallet_id);
+        $query = $this->db->get('wallets');
+        $result = $query->row();
+        $query->free_result();
+        return $result->balance ?? 0;
+    }
+
 }

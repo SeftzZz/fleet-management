@@ -298,6 +298,29 @@
                     })
                     .buttons().container().appendTo('#tbl_manajemenwallet_wrapper .col-md-6:eq(0)');
 
+                    $("#tbl_manajemenwallet_transactions").DataTable({
+                        responsive: true,
+                        lengthChange: false,
+                        autoWidth: false,
+                        searching: true,
+                        buttons: [
+                            "excel", 
+                            "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // Hanya kolom Nama, Balance, Update At
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        columnDefs: [
+                            { targets: [3], orderable: false }
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_manajemenwallet_transactions_wrapper .col-md-6:eq(0)');
+
                     $("#tbl_reimburse_done").DataTable({
                         responsive: true,
                         paging: false,
@@ -654,6 +677,8 @@
                                 lengthChange: false,
                                 autoWidth: false,
                                 searching: true,
+                                searching: false,
+                                columnDefs: [{ targets: [0,1,2,3,4,5], orderable: false}],
                                 buttons: [
                                     "excel",
                                     "pdf",
