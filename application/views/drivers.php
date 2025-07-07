@@ -601,73 +601,92 @@
                     <?php } ?>
 
                     <?php foreach ($wallets as $row) { ?>
-                        <div class="modal fade" id="mdl_wallet<?php echo $row->wallet_id ?>">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Wallet detail <?php echo $row->name ?></h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Wallet ID: <?php echo $row->wallet_id ?></p>
-                                        <p>Jumlah transaksi: <?php echo count($wallet_transactions[$row->wallet_id] ?? []) ?></p>
+                    <div class="modal fade" id="mdl_wallet<?php echo $row->wallet_id ?>">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Wallet detail <?php echo $row->name ?></h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Wallet ID: <?php echo $row->wallet_id ?></p>
+                                    <p>Jumlah transaksi: <?php echo count($wallet_transactions[$row->wallet_id] ?? []) ?></p>
 
-                                        <table id="tbl_manajemenwallet_transactions<?php echo $row->wallet_id ?>" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Tipe transaksi</th>
-                                                    <th>Amount</th>
-                                                    <th>Keterangan</th>
-                                                    <th>Tgl. Ritasi</th>
-                                                    <th>Create At</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php 
-                                                    $no = 1;
-                                                    foreach ($wallet_transactions[$row->wallet_id] ?? [] as $trans) { 
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $no++ ?></td>
-                                                        <td><?php echo $trans->transaction_type ?></td>
-                                                        <td><?php echo $this->fppfunction->rupiah_ind($trans->amount) ?></td>
-                                                        <td><?php echo $trans->description ?></td>
-                                                        <td>
-                                                            <?php 
-                                                                $this->db->select('tgl_ritasi'); 
-                                                                $this->db->from('ritasi'); 
-                                                                $this->db->where('id', $trans->id_ritasi);
-                                                                $query = $this->db->get();
-                                                                if ($query->num_rows() > 0) {
-                                                                    $ritasi = $query->row();
-                                                                    echo $ritasi->tgl_ritasi;
-                                                                } 
-                                                                $query->free_result();
-                                                            ?>
-                                                        </td>
-                                                        <td><?php echo $this->fppfunction->tglangkajam_ind($trans->created_at) ?></td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="1">Balance</th>
-                                                    <th></th>
-                                                    <th colspan="1"><?php echo $this->fppfunction->rupiah_ind($row->balance) ?></th>
-                                                    <th></th>                                                    
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
+                                    <?php
+                                        $transList = $wallet_transactions[$row->wallet_id] ?? [];
+
+                                        // Ambil tgl_ritasi jika ada
+                                        foreach ($transList as &$tr) {
+                                            $this->db->select('tgl_ritasi');
+                                            $this->db->from('ritasi');
+                                            $this->db->where('id', $tr->id_ritasi);
+                                            $query = $this->db->get();
+                                            $tr->tgl_ritasi_result = ($query->num_rows() > 0) ? $query->row()->tgl_ritasi : null;
+                                            $query->free_result();
+                                        }
+                                        unset($tr); // good practice
+
+                                        // Urutkan berdasarkan tgl_ritasi (jika ada), fallback ke created_at
+                                        usort($transList, function($a, $b) {
+                                            $aDate = $a->tgl_ritasi_result ?? $a->created_at;
+                                            $bDate = $b->tgl_ritasi_result ?? $b->created_at;
+                                            return strtotime($aDate) <=> strtotime($bDate);
+                                        });
+                                    ?>
+
+                                    <table id="tbl_manajemenwallet_transactions<?php echo $row->wallet_id ?>" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Tipe transaksi</th>
+                                                <th>Amount</th>
+                                                <th>Keterangan</th>
+                                                <th>Tgl. Ritasi</th>
+                                                <th>Create At</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                                $no = 1;
+                                                foreach ($transList as $trans) { 
+                                                    $tgl_ritasi_raw = ($trans->tgl_ritasi_result && $trans->tgl_ritasi_result != '00-00-0000') 
+                                                        ? $trans->tgl_ritasi_result 
+                                                        : $trans->created_at;
+
+                                                    $tgl_ritasi_display = ($trans->tgl_ritasi_result && $trans->tgl_ritasi_result != '00-00-0000') 
+                                                        ? date('d-m-Y', strtotime($trans->tgl_ritasi_result)) 
+                                                        : '';
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $no++ ?></td>
+                                                <td><?php echo $trans->transaction_type ?></td>
+                                                <td><?php echo $this->fppfunction->rupiah_ind($trans->amount) ?></td>
+                                                <td><?php echo $trans->description ?></td>
+                                                <td data-order="<?= $tgl_ritasi_raw ?>"><?= $tgl_ritasi_display ?></td>
+                                                <td><?php echo $this->fppfunction->tglangkajam_ind($trans->created_at) ?></td>
+                                            </tr>
+                                            <?php } ?>
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="1">Balance</th>
+                                                <th></th>
+                                                <th colspan="1"><?php echo $this->fppfunction->rupiah_ind($row->balance) ?></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <?php } ?>
+
                 </section>
                 <!-- /.Main content -->
             </div>
