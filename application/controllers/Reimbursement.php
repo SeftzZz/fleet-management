@@ -118,6 +118,7 @@ class Reimbursement extends CI_Controller {
                     $this->db->update('wallet_transactions', [
                         'amount' => $ritasi->uang_jalan,
                         'status' => 'sudah',
+                        'description' => 'Uang Jalan DO -'. $ritasi->nomerdo,
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
 

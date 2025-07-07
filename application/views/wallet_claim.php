@@ -115,34 +115,22 @@
                                                 <?php foreach ($wallets as $row): ?>
                                                     <?php 
                                                         $transactions = $wallet_transactions[$row->wallet_id] ?? [];
-                                                        $has_belum = false;
-                                                        $tabungan_awal = 0;
-                                                        $total_debit_klaim = 0;
+                                                        $sisa_tabungan = 0;
 
                                                         foreach ($transactions as $trans) {
-                                                            // Flag untuk transaksi belum diproses
-                                                            if ($trans->status === 'belum' && $trans->transaction_type === 'debit') {
-                                                                $has_belum = true;
-                                                            }
+                                                            $description = trim($trans->description);
 
-                                                            // Jumlahkan semua "Tabungan DO - angka"
-                                                            if (preg_match('/^Tabungan DO - \d+$/', trim($trans->description))) {
-                                                                $tabungan_awal += $trans->amount;
-                                                            }
-
-                                                            // Jumlahkan semua debit kasbon yang status "sudah"
-                                                            if ($trans->transaction_type === 'debit' && $trans->status === 'sudah' && !preg_match('/^Tabungan DO - \d+$/', trim($trans->description))) {
-                                                                $total_debit_klaim += $trans->amount;
+                                                            // Hanya ambil transaksi "Tabungan DO -<angka>"
+                                                            if (preg_match('/^Tabungan DO -\d+$/', $description)) {
+                                                                $sisa_tabungan += $trans->amount;
                                                             }
                                                         }
-
-                                                        // Hitung sisa tabungan DO
-                                                        $sisa_tabungan = $tabungan_awal - $total_debit_klaim;
                                                     ?>
+                                                    
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label>Saldo Wallet</label>
+                                                                <label>Saldo Tabungan DO</label>
                                                                 <input type="text" readonly class="form-control" value="Rp <?= $this->fppfunction->rupiah_ind2($sisa_tabungan) ?>">
                                                                 <input type="hidden" name="balance" class="form-control" value="<?= $sisa_tabungan ?>">
                                                             </div>
@@ -152,6 +140,7 @@
                                                     <input type="hidden" name="wallet_id" value="<?= $row->wallet_id ?>">
                                                     <input type="hidden" name="driver_id" value="<?= $row->driver_id ?>">
                                                 <?php endforeach; ?>
+
                                                 <button type="submit" class="btn btn-success mt-3">Submit Form Wallet</button>
                                             </form>
                                         <?php else: ?>

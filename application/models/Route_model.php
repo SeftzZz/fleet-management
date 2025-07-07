@@ -145,6 +145,8 @@ class Route_model extends CI_Model {
         $this->db->where('ritasi.galian_id', $galian_id);
         $this->db->where('ritasi.tim_id', $tim_id);
         $this->db->where('ritasi.is_delete', 0);
+        $this->db->where('ritasi.nomerdo IS NOT NULL');
+        $this->db->where('ritasi.nomerdo !=', '');
         return $this->db->get()->result();
     }
 
