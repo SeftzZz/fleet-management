@@ -148,6 +148,18 @@ class Route_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function getRitasiByFiltersReumbersment($tanggal, $proyek_id, $galian_id, $tim_id) {
+        $this->db->select('ritasi.*, vehicles.no_pol, vehicles.no_pintu');
+        $this->db->from('ritasi');
+        $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
+        $this->db->where('ritasi.tgl_ritasi', $tanggal);
+        $this->db->where('ritasi.proyek_id', $proyek_id);
+        $this->db->where('ritasi.galian_id', $galian_id);
+        $this->db->where('ritasi.tim_id', $tim_id);
+        $this->db->where('ritasi.is_delete', 1);
+        return $this->db->get()->result();
+    }
+
     public function getAllJmlRitasiHari() {
         $data = array();
         $this->db->from('ritasi'); 

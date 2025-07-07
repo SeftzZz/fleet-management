@@ -632,7 +632,7 @@
                                         usort($transList, function($a, $b) {
                                             $aDate = $a->tgl_ritasi_result ?? $a->created_at;
                                             $bDate = $b->tgl_ritasi_result ?? $b->created_at;
-                                            return strtotime($aDate) <=> strtotime($bDate);
+                                            return strtotime($bDate) <=> strtotime($aDate);
                                         });
                                     ?>
 
