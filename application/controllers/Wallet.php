@@ -100,22 +100,31 @@ class Wallet extends CI_Controller {
 
     public function submit_walletadd()
     {
+        $wallet_id = $this->input->post('wallet_id');
+        $driver_id = $this->input->post('driver_id');
+        $current_balance = $this->Wallet_model->getWalletBalanceByWalletId($wallet_id);
+
         if ($this->input->post('utk') && $this->input->post('jmlnya')) {
+            $amount = $this->input->post('jmlnya');
+
             $this->db->insert('wallet_transactions', [
-                'wallet_id'         => $this->input->post('wallet_id'),
+                'wallet_id'         => $wallet_id,
                 'transaction_type'  => $this->input->post('transaksiTipe'),
-                'amount'            => $this->input->post('jmlnya'),
+                'amount'            => $amount,
                 'description'       => $this->input->post('utk'),
                 'status'            => 'sudah',
                 'created_at'        => date('Y-m-d H:i:s'),
                 'updated_at'        => date('Y-m-d H:i:s')
             ]);
 
-            $this->db->where('driver_id', $this->input->post('driver_id'));
+            // Kurangi saldo berdasarkan balance dari DB, bukan dari input form
+            $new_balance = $current_balance - $amount;
+
+            $this->db->where('driver_id', $driver_id);
             $this->db->update('wallets', [
-                'balance'    => $this->input->post('balance') - $this->input->post('jmlnya'),
+                'balance'    => $new_balance,
                 'updated_at' => date('Y-m-d H:i:s')
-            ]); 
+            ]);
 
             $this->session->set_flashdata('pesansukses', 'Form wallet berhasil diproses.');
         } else {

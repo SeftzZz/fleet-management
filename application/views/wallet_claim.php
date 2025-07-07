@@ -116,18 +116,35 @@
                                                     <?php 
                                                         $transactions = $wallet_transactions[$row->wallet_id] ?? [];
                                                         $has_belum = false;
+                                                        $tabungan_awal = 0;
+                                                        $total_debit_klaim = 0;
+
                                                         foreach ($transactions as $trans) {
+                                                            // Flag untuk transaksi belum diproses
                                                             if ($trans->status === 'belum' && $trans->transaction_type === 'debit') {
                                                                 $has_belum = true;
-                                                                break;
+                                                            }
+
+                                                            // Jumlahkan semua "Tabungan DO - angka"
+                                                            if (preg_match('/^Tabungan DO - \d+$/', trim($trans->description))) {
+                                                                $tabungan_awal += $trans->amount;
+                                                            }
+
+                                                            // Jumlahkan semua debit kasbon yang status "sudah"
+                                                            if ($trans->transaction_type === 'debit' && $trans->status === 'sudah' && !preg_match('/^Tabungan DO - \d+$/', trim($trans->description))) {
+                                                                $total_debit_klaim += $trans->amount;
                                                             }
                                                         }
+
+                                                        // Hitung sisa tabungan DO
+                                                        $sisa_tabungan = $tabungan_awal - $total_debit_klaim;
                                                     ?>
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label>Saldo Wallet</label>
-                                                                <input type="number" readonly name="balance" class="form-control" value="<?= $row->balance ?>">
+                                                                <input type="text" readonly class="form-control" value="Rp <?= $this->fppfunction->rupiah_ind2($sisa_tabungan) ?>">
+                                                                <input type="hidden" name="balance" class="form-control" value="<?= $sisa_tabungan ?>">
                                                             </div>
                                                         </div>
                                                     </div>
