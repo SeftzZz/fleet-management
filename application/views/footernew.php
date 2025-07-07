@@ -81,7 +81,13 @@
                         "order": [[1, 'desc']],
                         "ajax": {
                             "url": "<?php echo site_url('routes/ajax_list'); ?>",
-                            "type": "POST"
+                            "type": "POST",
+                            "data": function ( d ) {
+                                d.tgl_ritasi = $('#tgl_ritasi').val();
+                                d.nama_tim = $('#nama_tim').val();
+                                d.nama_proyek = $('#nama_proyek').val();
+                                d.lokasi_gali = $('#lokasi_gali').val();
+                            }
                         },
                         "columns": [
                             { "data": "checkbox", "orderable": false, "className": "text-center" },
@@ -96,9 +102,35 @@
                             { "data": "nomerdo" },
                             { "data": "uang_jalan", "className": "text-right" },
                             { "data": "aksi", "orderable": false }
-                        ]
+                        ],
+                        "responsive": true, "lengthChange": false, "searching": false,
+                        "dom": "Bfrtip",
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
                     });
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
+
+                    $('#btn-filter').click(function(){
+                        table.ajax.reload();
+                    });
+
+                    $('#btn-reset').click(function(){
+                        $('#tgl_ritasi').val('');
+                        $('#nama_tim').val('');
+                        $('#nama_proyek').val('');
+                        $('#lokasi_gali').val('');
+                        table.ajax.reload();
+                    });
+                    
                     $(document).on('click', '.btn-edit-ritasi', function () {
                       const id = $(this).data('id');
                       $('#formEditRitasi').attr('action', `<?= site_url('routes/ritasiedit/') ?>${id}`);

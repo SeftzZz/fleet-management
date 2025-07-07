@@ -742,8 +742,7 @@ class Routes extends CI_Controller {
       echo json_encode($result);
     }
 
-    public function ajax_list()
-    {
+    public function ajax_list() {
         $list = $this->Route_model->get_datatables();
         $data = [];
         $no = $this->input->post('start');
@@ -796,7 +795,6 @@ class Routes extends CI_Controller {
             "recordsFiltered" => $this->Route_model->count_filtered(),
             "data" => $data,
         ];
-
         echo json_encode($output);
     }
 }

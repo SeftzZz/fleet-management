@@ -251,6 +251,23 @@ class Route_model extends CI_Model {
         $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
         $this->db->join('tim_mgmt', 'tim_mgmt.vehicle_id = vehicles.id');
         $this->db->join('drivers', 'drivers.id = tim_mgmt.driver_id');
+        // $this->db->where('ritasi.is_delete', 0);
+
+        if(!empty($_POST['tgl_ritasi'])) {
+            $this->db->where('ritasi.tgl_ritasi', $_POST['tgl_ritasi']);
+        }
+
+        if(!empty($_POST['nama_tim'])) {
+            $this->db->where('ritasi.nama_tim', $_POST['nama_tim']);
+        }
+
+        if(!empty($_POST['nama_proyek'])) {
+            $this->db->where('ritasi.nama_proyek', $_POST['nama_proyek']);
+        }
+
+        if(!empty($_POST['lokasi_gali'])) {
+            $this->db->where('ritasi.lokasi', $_POST['lokasi_gali']);
+        }
 
         // Hindari duplikasi data jika banyak tim_mgmt
         $this->db->group_by('ritasi.id');

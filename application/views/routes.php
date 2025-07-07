@@ -122,63 +122,62 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form id="form1" name="form1" action="<?php echo site_url('routes')?>" method="post" enctype="multipart/form-data">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Tanggal</label>
-                                                <div class="input-group date" id="tglan_ritasi" data-target-input="nearest">
-                                                    <input type="text" name="tgl_ritasi" value="<?php echo set_value('tgl_ritasi')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
-                                                    <div class="input-group-append">
-                                                        <div class="input-group-text" data-target="#tglan_ritasi" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
-                                                    </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Tanggal</label>
+                                            <div class="input-group date" id="tglan_ritasi" data-target-input="nearest">
+                                                <input type="text" name="tgl_ritasi" id="tgl_ritasi" value="<?php echo set_value('tgl_ritasi')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text" data-target="#tglan_ritasi" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Nama Tim</label>
-                                                <select name="nama_tim" class="form-control" style="width:100%;">
-                                                        <option value="">Semua Tim</option>
-                                                        <?php foreach ($tims as $value) { ?>
-                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('nama_tim', $value->id );?> ><?php echo 'Tim '.$value->nama_tim; ?></option>
-                                                        <?php } ?>
-                                                </select>
-                                            </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Nama Tim</label>
+                                            <select name="nama_tim" id="nama_tim" class="form-control" style="width:100%;">
+                                                    <option value="">Semua Tim</option>
+                                                    <?php foreach ($tims as $value) { ?>
+                                                        <option value='<?php echo $value->nama_tim; ?>' <?php echo set_select('nama_tim', $value->nama_tim );?> ><?php echo 'Tim '.$value->nama_tim; ?></option>
+                                                    <?php } ?>
+                                            </select>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Nama Proyek</label>
-                                                <select name="nama_proyek" class="form-control" style="width:100%;">
-                                                        <option value="">Semua Proyek</option>
-                                                        <?php foreach ($proyeks as $value) { ?>
-                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('nama_proyek', $value->id );?> ><?php echo 'Proyek '.$value->nama_proyek; ?></option>
-                                                        <?php } ?>
-                                                </select>
-                                            </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Nama Proyek</label>
+                                            <select name="nama_proyek" id="nama_proyek" class="form-control" style="width:100%;">
+                                                    <option value="">Semua Proyek</option>
+                                                    <?php foreach ($proyeks as $value) { ?>
+                                                        <option value='<?php echo $value->nama_proyek; ?>' <?php echo set_select('nama_proyek', $value->nama_proyek );?> ><?php echo 'Proyek '.$value->nama_proyek; ?></option>
+                                                    <?php } ?>
+                                            </select>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Lokasi Galian</label>
-                                                <select name="lokasi" class="form-control select_rute" style="width:100%;">
-                                                        <option value="">Semua Lokasi</option>
-                                                        <?php foreach ($galians as $value) { ?>
-                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('lokasi', $value->id );?> ><?php echo $value->lokasi; ?></option>
-                                                        <?php } ?>
-                                                </select>
-                                            </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Lokasi Galian</label>
+                                            <select name="lokasi_gali" id="lokasi_gali" class="form-control select_rute" style="width:100%;">
+                                                    <option value="">Semua Lokasi</option>
+                                                    <?php foreach ($galians as $value) { ?>
+                                                        <option value='<?php echo $value->lokasi; ?>' <?php echo set_select('lokasi_gali', $value->lokasi );?> ><?php echo $value->lokasi; ?></option>
+                                                    <?php } ?>
+                                            </select>
                                         </div>
-                                    </div>   
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <center>
-                                                <a href="<?php echo site_url('routes') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="submit" name="submit" class="btn btn-primary" value="&nbsp;&nbsp;&nbsp;&nbsp;Filter&nbsp;&nbsp;&nbsp;&nbsp;">
-                                            </center>
-                                        </div>
-                                    </div>  
-                                </form>
+                                    </div>
+                                </div>   
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <center>
+                                            <!-- <button id="btn-reset" class="btn btn-default">Reset</button> -->
+                                            <a href="<?php echo site_url('routes') ?>" class="btn btn-default">&nbsp;&nbsp;Reset&nbsp;&nbsp;</a>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button id="btn-filter" class="btn btn-primary">Filter</button>
+                                        </center>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,122 +252,121 @@
                     </div>
                     <div class="container-fluid">&nbsp;</div>
                     <div class="modal fade" id="modalEditRitasi" tabindex="-1" role="dialog">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <form id="formEditRitasi" method="post" action="">
-                            <div class="modal-header">
-                              <h4 class="modal-title">Edit Log Ritasi</h4>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form id="formEditRitasi" method="post" action="">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit Log Ritasi</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <input type="hidden" name="ritasi_id" id="edit_ritasi_id">
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                              <div class="form-group">
+                                                <label>Tanggal</label>
+                                                <input type="text" name="tgl" id="edit_tgl" class="form-control" maxlength="10" placeholder="DD-MM-YYYY" oninput="autoFormatTanggal(this)">
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                              <div class="form-group">
+                                                <label>Tim</label>
+                                                <select name="tim" id="edit_tim" class="form-control select_rute" style="width:100%;">
+                                                  <option value="">--- Pilih Tim ---</option>
+                                                  <?php foreach ($tims as $value): ?>
+                                                    <option value="<?= $value->id ?>"><?= $value->nama_tim ?></option>
+                                                  <?php endforeach; ?>
+                                                </select>
+                                              </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                              <div class="form-group">
+                                                <label>Nama Proyek</label>
+                                                <select name="proyek" id="edit_proyek" class="form-control select_rute" style="width:100%;">
+                                                  <option value="">--- Pilih Proyek ---</option>
+                                                  <?php foreach ($proyeks as $value): ?>
+                                                    <option value="<?= $value->id ?>"><?= $value->nama_proyek ?></option>
+                                                  <?php endforeach; ?>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                              <div class="form-group">
+                                                <label>Lokasi Galian</label>
+                                                <select name="galian" id="edit_galian" class="form-control">
+                                                  <option value="">--- Pilih Lokasi Galian ---</option>
+                                                  <?php foreach ($galians as $value): ?>
+                                                    <option value="<?= $value->id ?>"><?= $value->lokasi ?></option>
+                                                  <?php endforeach; ?>
+                                                </select>
+                                              </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                              <div class="form-group">
+                                                <label>Kendaraan</label>
+                                                <select name="kendaraan" id="edit_kendaraan" class="form-control select_rute" style="width:100%;">
+                                                  <option value="">--- Pilih Kendaraan ---</option>
+                                                  <?php foreach ($kendaraans as $value): ?>
+                                                    <option value="<?= $value->vehicle_id ?>"><?= $value->no_pol ?></option>
+                                                  <?php endforeach; ?>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                              <div class="form-group">
+                                                <label>Jam Angkut</label>
+                                                <input type="text" name="jam" id="edit_jam" class="form-control" maxlength="5" placeholder="HH:MM" oninput="autoFormatJam(this)">
+                                              </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                              <div class="form-group">
+                                                <label>Nomer DO</label>
+                                                <input type="text" name="nodo" id="edit_nodo" class="form-control">
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <a href="<?= site_url('routes') ?>" class="btn btn-default">Batal</a>
+                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="Simpan">
+                                    </div>
+                                </form>
                             </div>
-
-                            <div class="modal-body">
-                              <input type="hidden" name="ritasi_id" id="edit_ritasi_id">
-
-                              <div class="row">
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <label>Tanggal</label>
-                                    <input type="text" name="tgl" id="edit_tgl" class="form-control" maxlength="10" placeholder="DD-MM-YYYY" oninput="autoFormatTanggal(this)">
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <label>Tim</label>
-                                    <select name="tim" id="edit_tim" class="form-control select_rute" style="width:100%;">
-                                      <option value="">--- Pilih Tim ---</option>
-                                      <?php foreach ($tims as $value): ?>
-                                        <option value="<?= $value->id ?>"><?= $value->nama_tim ?></option>
-                                      <?php endforeach; ?>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="row">
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <label>Nama Proyek</label>
-                                    <select name="proyek" id="edit_proyek" class="form-control select_rute" style="width:100%;">
-                                      <option value="">--- Pilih Proyek ---</option>
-                                      <?php foreach ($proyeks as $value): ?>
-                                        <option value="<?= $value->id ?>"><?= $value->nama_proyek ?></option>
-                                      <?php endforeach; ?>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <label>Lokasi Galian</label>
-                                    <select name="galian" id="edit_galian" class="form-control">
-                                      <option value="">--- Pilih Lokasi Galian ---</option>
-                                      <?php foreach ($galians as $value): ?>
-                                        <option value="<?= $value->id ?>"><?= $value->lokasi ?></option>
-                                      <?php endforeach; ?>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="row">
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <label>Kendaraan</label>
-                                    <select name="kendaraan" id="edit_kendaraan" class="form-control select_rute" style="width:100%;">
-                                      <option value="">--- Pilih Kendaraan ---</option>
-                                      <?php foreach ($kendaraans as $value): ?>
-                                        <option value="<?= $value->vehicle_id ?>"><?= $value->no_pol ?></option>
-                                      <?php endforeach; ?>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <label>Jam Angkut</label>
-                                    <input type="text" name="jam" id="edit_jam" class="form-control" maxlength="5" placeholder="HH:MM" oninput="autoFormatJam(this)">
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <div class="form-group">
-                                    <label>Nomer DO</label>
-                                    <input type="text" name="nodo" id="edit_nodo" class="form-control">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="modal-footer">
-                              <a href="<?= site_url('routes') ?>" class="btn btn-default">Batal</a>
-                              <input type="submit" name="submit" class="btn btn-primary float-right" value="Simpan">
-                            </div>
-                          </form>
                         </div>
-                      </div>
                     </div>
 
                     <div class="modal fade" id="modalDeleteRitasi">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <form id="formDeleteRitasi" method="post" action="">
-                            <div class="modal-header">
-                              <h4 class="modal-title">Hapus Log Ritasi</h4>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form id="formDeleteRitasi" method="post" action="">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Hapus Log Ritasi</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Yakin ingin menghapus data ini?</p>
+                                        <input type="hidden" name="del" value="1">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="<?= site_url('routes') ?>" class="btn btn-default">Batal</a>
+                                        <input type="submit" name="submit" class="btn btn-danger float-right" value="Hapus">
+                                    </div>
+                                </form>
                             </div>
-                            <div class="modal-body">
-                              <p>Yakin ingin menghapus data ini?</p>
-                              <input type="hidden" name="del" value="1">
-                            </div>
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-danger">Hapus</button>
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            </div>
-                          </form>
                         </div>
-                      </div>
                     </div>
-
                 </section>
                 <!-- /.Main content -->
             </div>
