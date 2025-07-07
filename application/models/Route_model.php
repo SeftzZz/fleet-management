@@ -251,7 +251,7 @@ class Route_model extends CI_Model {
         $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
         $this->db->join('tim_mgmt', 'tim_mgmt.vehicle_id = vehicles.id');
         $this->db->join('drivers', 'drivers.id = tim_mgmt.driver_id');
-        // $this->db->where('ritasi.is_delete', 0);
+        $this->db->where('ritasi.is_delete', 0);
 
         if(!empty($_POST['tgl_ritasi'])) {
             $this->db->where('ritasi.tgl_ritasi', $_POST['tgl_ritasi']);
