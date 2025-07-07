@@ -74,22 +74,22 @@ class Driver_model extends CI_Model {
 
     public function getAllSupirByFilter($carisupir,$cariunit,$caritanggal,$caristatus) {
         $data = array();
-        $this->db->from('drivers');
-        $this->db->join('tim_mgmt', 'tim_mgmt.driver_id=drivers.id');
+        $this->db->from('tim_mgmt');
+        $this->db->join('drivers', 'drivers.id=tim_mgmt.driver_id');
         $this->db->where('drivers.is_delete', 0);
         if ($carisupir) {
-            $this->db->like('name', $carisupir);
+            $this->db->like('drivers.name', $carisupir);
         }
         if ($cariunit) {
-            $this->db->like('no_pintu', $cariunit);
+            $this->db->like('tim_mgmt.no_pintu', $cariunit);
         }
         if ($caritanggal) {
-            $this->db->like('tgl_join', $caritanggal);
+            $this->db->like('drivers.tgl_join', $caritanggal);
         }
         if ($caristatus) {
-            $this->db->where('status', $caristatus);
+            $this->db->where('drivers.status', $caristatus);
         }
-        $this->db->order_by('name', 'ASC');
+        $this->db->order_by('drivers.name', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0)
         {
