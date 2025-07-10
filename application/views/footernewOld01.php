@@ -237,6 +237,25 @@
                     })
                     .buttons().container().appendTo('#tbl_manajemenvehicles_wrapper .col-md-6:eq(0)');
 
+                    $("#tbl_manajemensupir").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [7, 8], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
+
                     $("#tbl_atim").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
                         "buttons": [
@@ -256,12 +275,11 @@
                     })
                     .buttons().container().appendTo('#tbl_atim_wrapper .col-md-6:eq(0)');
 
-                    $("#tbl_manajemenwallet_transactions").DataTable({
+                    $("#tbl_manajemenwallet").DataTable({
                         responsive: true,
                         lengthChange: false,
                         autoWidth: false,
-                        paging: false,
-                        searching: false,
+                        searching: true,
                         buttons: [
                             "excel", 
                             "pdf", 
@@ -269,15 +287,37 @@
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4] // Hanya kolom Nama, Balance, Update At
+                                    columns: [0, 1, 2] // Hanya kolom Nama, Balance, Update At
                                 }
                             }, 
                             "colvis"
                         ],
                         columnDefs: [
-                            { targets: [1,2,3,4], orderable: false }
+                            { targets: [3], orderable: false }
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_manajemenwallet_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_manajemenwallet_transactions").DataTable({
+                        responsive: true,
+                        lengthChange: false,
+                        autoWidth: false,
+                        searching: true,
+                        buttons: [
+                            "excel", 
+                            "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // Hanya kolom Nama, Balance, Update At
+                                }
+                            }, 
+                            "colvis"
                         ],
-                        order: [[0, 'desc']]
+                        columnDefs: [
+                            { targets: [3], orderable: false }
+                        ]
                     })
                     .buttons().container().appendTo('#tbl_manajemenwallet_transactions_wrapper .col-md-6:eq(0)');
 
@@ -512,25 +552,22 @@
 
         <?php if ($nopage==1041) { ?>
             <script>
-                $('#tglEditLahir').datetimepicker({
-                    format: 'DD-MM-YYYY'
-                });
-                $('#tglEditJoin').datetimepicker({
-                    format: 'DD-MM-YYYY'
-                });
-                $('#tglEditOut').datetimepicker({
-                    format: 'DD-MM-YYYY'
-                });
-                $('#tglEditExpSim').datetimepicker({
-                    format: 'DD-MM-YYYY'
-                });
+                <?php foreach ($supirs as $row) { ?>
+                    $('#tglEditSupir<?php echo $row->id ?>').datetimepicker({
+                        format: 'DD-MM-YYYY'
+                    });
+                    $('#tglEditLahir<?php echo $row->id ?>').datetimepicker({
+                        format: 'DD-MM-YYYY'
+                    });
+                    $('#tglEditExpSim<?php echo $row->id ?>').datetimepicker({
+                        format: 'DD-MM-YYYY'
+                    });
+                <?php } ?>
+
                 $('#tglAddLahir').datetimepicker({
                     format: 'DD-MM-YYYY'
                 });
                 $('#tglAddJoin').datetimepicker({
-                    format: 'DD-MM-YYYY'
-                });
-                $('#tglAddOut').datetimepicker({
                     format: 'DD-MM-YYYY'
                 });
                 $('#tglAddExpSim').datetimepicker({
@@ -546,173 +583,26 @@
                 })
             </script>
             <script>
-                var table;
                 $(document).ready(function() {
-                    table = $('#tbl_manajemensupir').DataTable({
-                        "processing": true,
-                        "serverSide": true,
-                        "ajax": {
-                            "url": "<?php echo site_url('drivers/ajax_list') ?>",
-                            "type": "POST",
-                            "data": function ( d ) {
-                                d.nmSupir = $('#nmSupir').val();
-                                d.noPintu = $('#noPintu').val();
-                                d.tglJoin = $('#tglJoin').val();
-                                d.statusSupir = $('#statusSupir').val();
-                            }
-                        },
-                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,"dom": "Bfrtip",
-                        "buttons": [
-                            "excel", "pdf", 
-                            {
-                                extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6, 7] // kolom tertentu yang ikut di print
+                    <?php foreach ($supirs as $row) { ?>
+                        (function() {
+                            var id = <?php echo $row->id ?>;
+                            var statusSelector = '#statusSupir' + id;
+                            var keteranganWrapper = '#keteranganWrapper' + id;
+
+                            function toggleKeterangan() {
+                                var status = $(statusSelector).val();
+                                if (status === 'Non Aktif') {
+                                    $(keteranganWrapper).show();
+                                } else {
+                                    $(keteranganWrapper).hide();
                                 }
-                            }, 
-                            "colvis"
-                        ],
-                        "columnDefs": [
-                            { targets: [7, 8], orderable: false}
-                        ],
-                        "order": [[0, 'asc']]
-                    });
-
-                    $('#btn-filter').click(function(){
-                        table.ajax.reload();
-                    });
-
-                    $('#btn-reset').click(function(){
-                        $('#nmSupir').val('');
-                        $('#noPintu').val('');
-                        $('#tglJoin').val('');
-                        $('#statusSupir').val('');
-                        table.ajax.reload();
-                    });
-
-                    $('#btnSave').click(function() {
-                        var form = $('#form1')[0];           // Ambil elemen DOM form
-                        var formData = new FormData(form);   // Buat FormData dari form
-                        $.ajax({
-                            url: "<?php echo site_url('drivers/ajax_update')?>",
-                            type: "POST",
-                            data: formData,
-                            dataType: "JSON",
-                            processData: false, // Wajib false untuk FormData
-                            contentType: false, // Wajib false untuk FormData
-                            success: function(data) {
-                                $('#mdl_editSupir').modal('hide');
-                                window.location.href = "<?php echo site_url('drivers'); ?>";
                             }
-                        });
-                    });
 
-                    $('#btnDel').click(function() {
-                        $.ajax({
-                            url: "<?php echo site_url('drivers/ajax_delete')?>",
-                            type: "POST",
-                            data: $('#form2').serialize(),
-                            dataType: "JSON",
-                            success: function(data) {
-                                $('#mdl_delSupir').modal('hide');
-                                window.location.href = "<?php echo site_url('drivers'); ?>";
-                            }
-                        });
-                    });
-                });
-
-                function edit_driver(id) {
-                    $.ajax({
-                        url: "<?php echo site_url('drivers/ajax_edit')?>/" + id,
-                        type: "GET",
-                        dataType: "JSON",
-                        success: function(data) {
-                            $('[name="id"]').val(data.id);
-                            $('[name="nmSupir"]').val(data.name);
-                            $('[name="tmpLahir"]').val(data.tempat_lahir);
-                            $('[name="tglLahir"]').val(data.tgl_lahir);
-                            $('[name="noNIK"]').val(data.nik);
-                            $('[name="tglJoin"]').val(data.tgl_join);
-                            $('[name="tglKeluar"]').val(data.tgl_keluar);
-                            $('[name="noHp"]').val(data.phone);
-                            $('[name="noDarurat"]').val(data.nomor_darurat);
-                            $('[name="noSim"]').val(data.license_number);
-                            $('[name="tglExpSim"]').val(data.tgl_exp_sim);
-                            $('[name="alamat"]').val(data.alamat);
-                            $('[name="statusSupir"]').val(data.status);
-                            $('[name="keterangan"]').val(data.keterangan);
-                            $('[name="fileFotoLama"]').val(data.img_profile);
-                            $('[name="fileSimLama"]').val(data.img_sim);
-                            $('[name="fileKtpLama"]').val(data.img_ktp);
-                            $('#mdl_editSupir').modal('show');
-                        }
-                    });
-                }
-
-                function delete_driver(id) {
-                    $.ajax({
-                        url: "<?php echo site_url('drivers/ajax_del')?>/" + id,
-                        type: "GET",
-                        dataType: "JSON",
-                        success: function(data) {
-                            $('[name="id"]').val(data.id);
-                            $('#mdl_delSupir').modal('show');
-                        }
-                    });
-                }
-
-                function view_files(files) {
-                    var html = "";
-                    if (files.length === 0) {
-                        html = "<p class='text-danger'>Tidak ada file terlampir.</p>";
-                    } else {
-                        for (var i = 0; i < files.length; i++) {
-                            var url = files[i];
-                            var extension = url.split('.').pop().toLowerCase();
-                            
-                            html += "<div class='mb-3'>";
-                            if (extension === 'pdf') {
-                                html += "<iframe src='"+url+"' width='100%' height='400px'></iframe>";
-                            } else if (['jpg','jpeg','png','gif'].includes(extension)) {
-                                html += "<img src='"+url+"' class='img-fluid'/>";
-                            } else {
-                                html += "<a href='"+url+"' target='_blank' class='btn btn-primary'>Download File</a>";
-                            }
-                            html += "</div>";
-                            html += "<hr/>";
-                        }
-                    }
-                    $('#filePreview').html(html);
-                    $('#mdl_imgSupir').modal('show');
-                }
-            </script>
-            <script>
-                $(document).ready(function() {
-                    $('#tbl_manajemenwallet').DataTable({
-                        "processing": true,
-                        "serverSide": true,
-                        "ajax": {
-                            "url": "<?php echo site_url('drivers/ajax_listwallet')?>",
-                            "type": "POST"
-                        },
-                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,"dom": "Bfrtip",
-                        "buttons": [
-                            "excel", "pdf", 
-                            {
-                                extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3] // kolom tertentu yang ikut di print
-                                }
-                            }, 
-                            "colvis"
-                        ],
-                        "columnDefs": [
-                            { targets: [4], orderable: false}
-                        ],
-                        "order": [[0, 'asc']]
-                    });
+                            toggleKeterangan(); // Saat load
+                            $(statusSelector).change(toggleKeterangan); // Saat berubah
+                        })();
+                    <?php } ?>
                 });
             </script>
         <?php } ?>

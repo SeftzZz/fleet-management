@@ -5,7 +5,7 @@ class Wallet_model extends CI_Model {
 
     protected $table = 'wallets';
     protected $transaction_table = 'wallet_transactions';
-
+    
     public function get_by_driver($driver_id) {
         return $this->db->get_where($this->table, [
             'driver_id' => $driver_id
@@ -127,4 +127,63 @@ class Wallet_model extends CI_Model {
         return $result->balance ?? 0;
     }
 
+    var $column_order = array('name', 'balance', 'status_wallet', 'updated_at',null);
+    var $column_search = array('name', 'balance', 'status_wallet');
+    var $order = array('name' => 'asc');
+
+    private function _get_datatables_queryWsupir() {
+        $this->db->select('wallets.*, drivers.name');
+        $this->db->from('wallets');
+        $this->db->join('drivers', 'drivers.id = wallets.driver_id');
+        $this->db->where('wallets.is_delete', 0);
+
+        if(!empty($_POST['nmSupir'])) {
+            $this->db->like('name', $_POST['nmSupir']);
+        }
+        if(!empty($_POST['statusWallet'])) {
+            $this->db->where('status_wallet', $_POST['statusWallet']);
+        }
+
+        $i = 0;
+        foreach ($this->column_search as $item) {
+            if (!empty($_POST['search']['value'])) {
+                if ($i === 0) $this->db->group_start();
+                $this->db->like($item, $_POST['search']['value']);
+                if ($i === count($this->column_search) - 1) $this->db->group_end();
+                else $this->db->or_like($item, $_POST['search']['value']);
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) {
+            $this->db->order_by(
+                $this->column_order[$_POST['order']['0']['column']],
+                $_POST['order']['0']['dir']
+            );
+        } else {
+            $this->db->order_by(key($this->order), $this->order[key($this->order)]);
+        }
+    }
+
+    function get_datatablesWSupir() {
+        $this->_get_datatables_queryWsupir();
+        $length = $_POST['length'] ?? -1;
+        $start  = $_POST['start'] ?? 0;
+
+        if ($length != -1) {
+            $this->db->limit($length, $start);
+        }
+        return $this->db->get()->result();
+    }
+
+    function count_filteredWSupir() {
+        $this->_get_datatables_queryWsupir();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_allWSupir() {
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
 }
