@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="tab-content" id="custom-content-below-tabContent">
                                     <div class="tab-pane fade show active" id="mgmt_wallet" role="tabpanel" aria-labelledby="mgmt_wallet_tab">
-                                        <p class="lead2 mb-3">Wallet detail <?php echo $supir->name ?></p>
+                                        <p class="lead2 mb-3">Wallet detail <?php echo $supir->name ?> - <?php echo $this->fppfunction->rupiah_ind($wallet->balance) ?></p>
 
                                         <p>Wallet ID: <?php echo $walletID ?></p>
                                         <p>Jumlah transaksi: <?php echo $jmlTransaksi ?></p>

@@ -882,6 +882,7 @@ class Drivers extends CI_Controller {
         
         $data['walletID'] = $this->uri->segment(3);
         $data['supir'] = $this->Driver_model->get_by_id($SupirID);
+        $data['wallet'] = $this->Wallet_model->get_by_driver($SupirID);
         $data['wallet_transactions'] = $this->Wallet_model->getWalletTransactionsAll($id);
         $data['jmlTransaksi'] = count($data['wallet_transactions']);
         $data['jmltotalsaldo'] = $this->Wallet_model->getAllJmlTotalSaldo();
@@ -889,10 +890,6 @@ class Drivers extends CI_Controller {
 
         $data['jmlhighestsaldo'] = $topSaldo->balance ?? 0;
         $data['nmhighestsaldo']  = $topSaldo->name ?? '-';
-
-        // foreach ($data['wallets'] as $wallet) {
-        //     $data['wallet_transactions'][$wallet->wallet_id] = $this->Wallet_model->getWalletTransactionsAll($wallet->wallet_id);
-        // }
 
         $this->load->view('headernew', $data);
         $this->load->view('driver_walletdetail', $data);
