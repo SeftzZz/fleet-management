@@ -138,10 +138,10 @@ class Wallet_model extends CI_Model {
         $this->db->where('wallets.is_delete', 0);
 
         if(!empty($_POST['nmSupir'])) {
-            $this->db->like('name', $_POST['nmSupir']);
+            $this->db->like('drivers.name', $_POST['nmSupir']);
         }
         if(!empty($_POST['statusWallet'])) {
-            $this->db->where('status_wallet', $_POST['statusWallet']);
+            $this->db->where('wallets.status_wallet', $_POST['statusWallet']);
         }
 
         $i = 0;

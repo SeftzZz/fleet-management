@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <!-- <div class="container-fluid">
+                    <div class="container-fluid">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Filter Wallet Supir</h3>
@@ -98,7 +98,7 @@
                                 </div> 
                             </div>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="container-fluid">
                         <div class="card">
@@ -108,7 +108,7 @@
                                         <a class="nav-link" href="<?php echo site_url('drivers') ?>"/>Manajemen Supir</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="mgmt_wallet_tab" data-toggle="pill" href="#mgmt_wallet" role="tab" aria-controls="mgmt_wallet" aria-selected="false">Manajemen Wallet Supir</a>
+                                        <a class="nav-link active" href="<?php echo site_url('drivers/wallet') ?>" />Manajemen Wallet Supir</a>
                                     </li>
                                 </ul>
                                 <div class="tab-custom-content2">

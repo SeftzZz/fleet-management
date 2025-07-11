@@ -688,15 +688,20 @@
                 }
             </script>
             <script>
+                var table;
                 $(document).ready(function() {
-                    $('#tbl_manajemenwallet').DataTable({
+                    table = $('#tbl_manajemenwallet').DataTable({
                         "processing": true,
                         "serverSide": true,
                         "ajax": {
                             "url": "<?php echo site_url('drivers/ajax_listwallet')?>",
-                            "type": "POST"
+                            "type": "POST",
+                            "data": function ( d ) {
+                                d.nmSupir = $('#nmSupir').val();
+                                d.statusWallet = $('#statusWallet').val();
+                            }
                         },
-                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,"dom": "Bfrtip",
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,"dom": "Bfrtip",
                         "buttons": [
                             "excel", "pdf", 
                             {
@@ -712,6 +717,16 @@
                             { targets: [4], orderable: false}
                         ],
                         "order": [[0, 'asc']]
+                    });
+
+                    $('#btnFilter').click(function(){
+                        table.ajax.reload();
+                    });
+
+                    $('#btnReset').click(function(){
+                        $('#nmSupir').val('');
+                        $('#statusWallet').val('');
+                        table.ajax.reload();
                     });
                 });
             </script>
