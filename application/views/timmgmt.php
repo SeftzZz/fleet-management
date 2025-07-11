@@ -309,6 +309,7 @@
                                                                 }
                                                             ?>
                                                         </select>
+                                                        <input type="hidden" name="nmSupir" value="<?php echo $row->driver_id; ?>">
                                                     </div>
                                                 </div>
                                             </div>
@@ -325,6 +326,7 @@
                                                                 }
                                                             ?>
                                                         </select>
+                                                        <input type="hidden" name="mobil" value="<?php echo $row->vehicle_id; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -374,6 +376,7 @@
                                                     <div class="form-group">
                                                         <label>Yakin menghapus data ini!</label>
                                                         <input type="hidden" name="del" value="1">
+                                                        <input type="hidden" name="nmSupir" value="<?php echo $row->driver_id; ?>">
                                                     </div>
                                                 </div>
                                             </div>

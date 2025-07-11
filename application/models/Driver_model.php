@@ -17,7 +17,7 @@ class Driver_model extends CI_Model {
         return $this->db->insert($this->table, $dataSupir);
     }
 
-    public function updateOld01($id, $dataSupir) {
+    public function update2($id, $dataSupir) {
         return $this->db->where('id', $id)->update($this->table, $dataSupir);
     }
 

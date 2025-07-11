@@ -115,6 +115,15 @@ class Timmgmt extends CI_Controller {
                         'updated_at'        => date('Y-m-d H:i:s')
                     );                              
                     $this->Timmgmt_model->insert($dataAtim); 
+
+                    // update tabel drivers 
+                    $id=$this->input->post('nmSupir');
+                    $dataSupir = array(
+                        'no_pintu'          => $kendaraan->no_pintu,
+                        'updated_at'        => date('Y-m-d H:i:s')
+                    );                              
+                    $this->Driver_model->update2($id,$dataSupir); 
+                    $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
                     redirect('timmgmt');
                 }
             }
@@ -168,11 +177,20 @@ class Timmgmt extends CI_Controller {
                     'no_pol'            => $kendaraan->no_pol,
                     'no_pintu'          => $kendaraan->no_pintu,
                     'status_tim_mgmt'   => $this->input->post('statusAtim'),
-                    'created_at'        => date('Y-m-d H:i:s'),
                     'updated_at'        => date('Y-m-d H:i:s')
                 );                              
                 $this->Timmgmt_model->update($id,$dataAtim);
-                redirect('/timmgmt');
+
+                // update tabel drivers 
+                $id=$this->input->post('nmSupir');
+                $dataSupir = array(
+                    'no_pintu'          => '',
+                    'updated_at'        => date('Y-m-d H:i:s')
+                );                              
+                $this->Driver_model->update2($id,$dataSupir); 
+
+                $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
+                redirect('timmgmt');
             }
         } 
     }
@@ -187,6 +205,16 @@ class Timmgmt extends CI_Controller {
                 'updated_at'        => date('Y-m-d H:i:s')
             );                              
             $this->Timmgmt_model->update($id,$dataAtim);
+
+            // update tabel drivers 
+            $id=$this->input->post('nmSupir');
+            $dataSupir = array(
+                'no_pintu'          => '',
+                'updated_at'        => date('Y-m-d H:i:s')
+            );                              
+            $this->Driver_model->update2($id,$dataSupir); 
+
+            $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
             redirect('/timmgmt');
         } 
     }
