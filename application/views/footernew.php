@@ -688,9 +688,9 @@
                 }
             </script>
             <script>
-                var table;
+                var tableWallet;
                 $(document).ready(function() {
-                    table = $('#tbl_manajemenwallet').DataTable({
+                    tableWallet = $('#tbl_manajemenwallet').DataTable({
                         "processing": true,
                         "serverSide": true,
                         "ajax": {
@@ -720,13 +720,13 @@
                     });
 
                     $('#btnFilter').click(function(){
-                        table.ajax.reload();
+                        tableWallet.ajax.reload();
                     });
 
                     $('#btnReset').click(function(){
                         $('#nmSupir').val('');
                         $('#statusWallet').val('');
-                        table.ajax.reload();
+                        tableWallet.ajax.reload();
                     });
                 });
             </script>
