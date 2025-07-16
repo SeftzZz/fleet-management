@@ -839,8 +839,7 @@ class Drivers extends CI_Controller {
 
         $this->load->view('headernew', $data);
         $this->load->view('driver_wallet', $data);
-        $this->load->view('footernew');
-        
+        $this->load->view('footernew');   
     }
 
     public function ajax_listwallet() {

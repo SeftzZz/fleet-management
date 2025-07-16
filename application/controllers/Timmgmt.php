@@ -164,8 +164,8 @@ class Timmgmt extends CI_Controller {
                 $supir = $this->Driver_model->getSupirById($this->input->post('nmSupir'));
                 $tim = $this->Tim_model->getTimById($this->input->post('nmTim'));
 
-                // 1. Update semua status tim_mgmnt yang aktif untuk no_pol ini jadi Non Aktif
-                $this->Timmgmt_model->nonAktifkanTimByVehicleDanDriver($kendaraan->no_pol, $this->input->post('nmSupir'));
+                // 1. Update semua status tim_mgmnt yang aktif untuk no_pintu ini jadi Non Aktif
+                $this->Timmgmt_model->nonAktifkanTimByVehicleDanDriver($kendaraan->no_pintu, $this->input->post('nmSupir'));
 
                 // update tabel tim_mgmt  
                 $dataAtim = array(

@@ -145,6 +145,20 @@ class Route_model extends CI_Model {
         $this->db->where('ritasi.galian_id', $galian_id);
         $this->db->where('ritasi.tim_id', $tim_id);
         $this->db->where('ritasi.is_delete', 0);
+        $this->db->where('ritasi.nomerdo IS NOT NULL');
+        $this->db->where('ritasi.nomerdo !=', '');
+        return $this->db->get()->result();
+    }
+
+    public function getRitasiByFiltersReumbersment($tanggal, $proyek_id, $galian_id, $tim_id) {
+        $this->db->select('ritasi.*, vehicles.no_pol, vehicles.no_pintu');
+        $this->db->from('ritasi');
+        $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
+        $this->db->where('ritasi.tgl_ritasi', $tanggal);
+        $this->db->where('ritasi.proyek_id', $proyek_id);
+        $this->db->where('ritasi.galian_id', $galian_id);
+        $this->db->where('ritasi.tim_id', $tim_id);
+        $this->db->where('ritasi.is_delete', 1);
         return $this->db->get()->result();
     }
 
@@ -237,20 +251,10 @@ class Route_model extends CI_Model {
     {
         $this->db->select('
             ritasi.*,
-            tim.nama_tim,
-            proyek.nama_proyek,
-            galian.lokasi,
-            vehicles.no_pol,
-            vehicles.no_pintu,
             drivers.name as nama_driver
         ');
         $this->db->from('ritasi');
-        $this->db->join('tim', 'tim.id = ritasi.tim_id');
-        $this->db->join('proyek', 'proyek.id = ritasi.proyek_id');
-        $this->db->join('galian', 'galian.id = ritasi.galian_id');
-        $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
-        $this->db->join('tim_mgmt', 'tim_mgmt.vehicle_id = vehicles.id');
-        $this->db->join('drivers', 'drivers.id = tim_mgmt.driver_id');
+        $this->db->join('drivers', 'drivers.id = ritasi.driver_id');
         $this->db->where('ritasi.is_delete', 0);
 
         if(!empty($_POST['tgl_ritasi'])) {
@@ -259,6 +263,14 @@ class Route_model extends CI_Model {
 
         if(!empty($_POST['nama_tim'])) {
             $this->db->where('ritasi.nama_tim', $_POST['nama_tim']);
+        }
+
+        if(!empty($_POST['nama_driver'])) {
+            $this->db->where('drivers.name', $_POST['nama_driver']);
+        }
+
+        if(!empty($_POST['no_pintu'])) {
+            $this->db->where('ritasi.no_pintu', $_POST['no_pintu']);
         }
 
         if(!empty($_POST['nama_proyek'])) {
@@ -275,11 +287,11 @@ class Route_model extends CI_Model {
         // Search global
         if (!empty($_POST['search']['value'])) {
             $this->db->group_start();
-            $this->db->like('tim.nama_tim', $_POST['search']['value']);
-            $this->db->or_like('proyek.nama_proyek', $_POST['search']['value']);
-            $this->db->or_like('galian.lokasi', $_POST['search']['value']);
+            $this->db->like('ritasi.nama_tim', $_POST['search']['value']);
+            $this->db->or_like('ritasi.nama_proyek', $_POST['search']['value']);
+            $this->db->or_like('ritasi.lokasi', $_POST['search']['value']);
             $this->db->or_like('drivers.name', $_POST['search']['value']);
-            $this->db->or_like('vehicles.no_pol', $_POST['search']['value']);
+            $this->db->or_like('ritasi.no_pol', $_POST['search']['value']);
             $this->db->or_like('ritasi.nomerdo', $_POST['search']['value']);
             $this->db->group_end();
         }
@@ -289,12 +301,12 @@ class Route_model extends CI_Model {
             $columns = [
                 'checkbox',
                 'ritasi.tgl_ritasi',
-                'tim.nama_tim',
-                'proyek.nama_proyek',
-                'galian.lokasi',
+                'ritasi.nama_tim',
+                'ritasi.nama_proyek',
+                'ritasi.lokasi',
                 'drivers.name',
-                'vehicles.no_pol',
-                'vehicles.no_pintu',
+                'ritasi.no_pol',
+                'ritasi.no_pintu',
                 'ritasi.jam_angkut',
                 'ritasi.nomerdo',
                 'ritasi.uang_jalan',
