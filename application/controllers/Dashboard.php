@@ -26,7 +26,7 @@ class Dashboard extends CI_Controller {
 	{
         redirect('routes', 'refresh');
 		// $data = [
-        //     "title" => "Dashboard | Fleet Management",
+        //     "title" => "Dashboard | Fleet Management System",
         //     "nopage" => 1,
         // ];
 

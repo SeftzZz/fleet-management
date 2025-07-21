@@ -44,7 +44,7 @@ class Vehicles extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Kendaraan | Fleet Management",
+            "title" => "Manajemen Kendaraan | Fleet Management System",
             "nopage" => 1051,
         ];
 
@@ -75,10 +75,12 @@ class Vehicles extends CI_Controller {
 	public function vehiclesadd()
     {
         if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('no_pol','Tanggal Bergabung','required');
-            $this->form_validation->set_rules('no_pintu','Nama','required');
-            $this->form_validation->set_rules('type','No. SIM','required');
-            $this->form_validation->set_rules('warna','No. HP','required');
+            $this->form_validation->set_rules('no_pol','No. Polisi','required');
+            $this->form_validation->set_rules('no_pintu','No. Pintu','required');
+            $this->form_validation->set_rules('type','Type','required');
+            $this->form_validation->set_rules('warna','Warna','required');
+            $this->form_validation->set_rules('no_chasis','No. Chasis','required');
+            $this->form_validation->set_rules('no_mesin','No. Mesin','required');
             $this->form_validation->set_rules('status','Status','required');
 
             if ($this->form_validation->run()==FALSE) {     
@@ -98,6 +100,8 @@ class Vehicles extends CI_Controller {
                     'no_pintu'      => $this->input->post('no_pintu'),
                     'type'			=> $this->input->post('type'),
                     'warna'         => $this->input->post('warna'),
+                    'no_chasis'     => $this->input->post('no_chasis'),
+                    'no_mesin'      => $this->input->post('no_mesin'),
                     'status'        => $this->input->post('status'),
                     'created_at'    => date('Y-m-d H:i:s'),
                     'updated_at'    => date('Y-m-d H:i:s')
@@ -116,6 +120,8 @@ class Vehicles extends CI_Controller {
             $this->form_validation->set_rules('no_pintu','Nama','required');
             $this->form_validation->set_rules('type','No. SIM','required');
             $this->form_validation->set_rules('warna','No. HP','required');
+            $this->form_validation->set_rules('no_chasis','No. Chasis','required');
+            $this->form_validation->set_rules('no_mesin','No. Mesin','required');
             $this->form_validation->set_rules('status','Status','required');
 
             if ($this->form_validation->run()==FALSE) {     
@@ -135,6 +141,8 @@ class Vehicles extends CI_Controller {
                     'no_pintu'      => $this->input->post('no_pintu'),
                     'type'          => $this->input->post('type'),
                     'warna'         => $this->input->post('warna'),
+                    'no_chasis'     => $this->input->post('no_chasis'),
+                    'no_mesin'      => $this->input->post('no_mesin'),
                     'status'        => $this->input->post('status'),
                     'updated_at'    => date('Y-m-d H:i:s')
                 );
@@ -162,10 +170,10 @@ class Vehicles extends CI_Controller {
     public function vehiclesdocumentadd()
     {
         if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('vehicle_id','Tanggal Bergabung','required');
-            $this->form_validation->set_rules('doc_type','Nama','required');
-            $this->form_validation->set_rules('expiry_date','No. SIM','required');
-            $this->form_validation->set_rules('doc_number','No. HP','required');
+            $this->form_validation->set_rules('noPintu','Nomor Pintu','required');
+            $this->form_validation->set_rules('doc_type','Type','required');
+            $this->form_validation->set_rules('expiry_date','Tanggal Expired','required');
+            $this->form_validation->set_rules('doc_number','Nomor Dokumen','required');
 
             if ($this->form_validation->run()==FALSE) {     
                 $data = [
@@ -180,7 +188,7 @@ class Vehicles extends CI_Controller {
                 $this->load->view('footernew');
             } else {
                 $dataVehiclesDocument = array(
-                    'vehicle_id'  	=> $this->input->post('vehicle_id'),
+                    'vehicle_id'  	=> $this->input->post('noPintu'),
                     'doc_type'      => $this->input->post('doc_type'),
                     'doc_number'    => $this->input->post('doc_number'),
                     'expiry_date'	=> $this->input->post('expiry_date'),

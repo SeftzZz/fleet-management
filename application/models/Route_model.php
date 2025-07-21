@@ -137,7 +137,7 @@ class Route_model extends CI_Model {
     }
 
     public function getRitasiByFilters($tanggal, $proyek_id, $galian_id, $tim_id) {
-        $this->db->select('ritasi.*, vehicles.no_pol');
+        $this->db->select('ritasi.*, vehicles.no_pol, vehicles.no_pintu');
         $this->db->from('ritasi');
         $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
         $this->db->where('ritasi.tgl_ritasi', $tanggal);
@@ -145,6 +145,20 @@ class Route_model extends CI_Model {
         $this->db->where('ritasi.galian_id', $galian_id);
         $this->db->where('ritasi.tim_id', $tim_id);
         $this->db->where('ritasi.is_delete', 0);
+        $this->db->where('ritasi.nomerdo IS NOT NULL');
+        $this->db->where('ritasi.nomerdo !=', '');
+        return $this->db->get()->result();
+    }
+
+    public function getRitasiByFiltersReumbersment($tanggal, $proyek_id, $galian_id, $tim_id) {
+        $this->db->select('ritasi.*, vehicles.no_pol, vehicles.no_pintu');
+        $this->db->from('ritasi');
+        $this->db->join('vehicles', 'vehicles.id = ritasi.vehicle_id');
+        $this->db->where('ritasi.tgl_ritasi', $tanggal);
+        $this->db->where('ritasi.proyek_id', $proyek_id);
+        $this->db->where('ritasi.galian_id', $galian_id);
+        $this->db->where('ritasi.tim_id', $tim_id);
+        $this->db->where('ritasi.is_delete', 1);
         return $this->db->get()->result();
     }
 
@@ -231,5 +245,98 @@ class Route_model extends CI_Model {
         $data = $query->num_rows();
         $query->free_result();  
         return $data;  
+    }
+
+    private function _get_datatables_query()
+    {
+        $this->db->select('
+            ritasi.*,
+            drivers.name as nama_driver
+        ');
+        $this->db->from('ritasi');
+        $this->db->join('drivers', 'drivers.id = ritasi.driver_id');
+        $this->db->where('ritasi.is_delete', 0);
+
+        if(!empty($_POST['tgl_ritasi'])) {
+            $this->db->where('ritasi.tgl_ritasi', $_POST['tgl_ritasi']);
+        }
+
+        if(!empty($_POST['nama_tim'])) {
+            $this->db->where('ritasi.nama_tim', $_POST['nama_tim']);
+        }
+
+        if(!empty($_POST['nama_driver'])) {
+            $this->db->where('drivers.name', $_POST['nama_driver']);
+        }
+
+        if(!empty($_POST['no_pintu'])) {
+            $this->db->where('ritasi.no_pintu', $_POST['no_pintu']);
+        }
+
+        if(!empty($_POST['nama_proyek'])) {
+            $this->db->where('ritasi.nama_proyek', $_POST['nama_proyek']);
+        }
+
+        if(!empty($_POST['lokasi_gali'])) {
+            $this->db->where('ritasi.lokasi', $_POST['lokasi_gali']);
+        }
+
+        // Hindari duplikasi data jika banyak tim_mgmt
+        $this->db->group_by('ritasi.id');
+
+        // Search global
+        if (!empty($_POST['search']['value'])) {
+            $this->db->group_start();
+            $this->db->like('ritasi.nama_tim', $_POST['search']['value']);
+            $this->db->or_like('ritasi.nama_proyek', $_POST['search']['value']);
+            $this->db->or_like('ritasi.lokasi', $_POST['search']['value']);
+            $this->db->or_like('drivers.name', $_POST['search']['value']);
+            $this->db->or_like('ritasi.no_pol', $_POST['search']['value']);
+            $this->db->or_like('ritasi.nomerdo', $_POST['search']['value']);
+            $this->db->group_end();
+        }
+
+        // Ordering
+        if (isset($_POST['order'])) {
+            $columns = [
+                'checkbox',
+                'ritasi.tgl_ritasi',
+                'ritasi.nama_tim',
+                'ritasi.nama_proyek',
+                'ritasi.lokasi',
+                'drivers.name',
+                'ritasi.no_pol',
+                'ritasi.no_pintu',
+                'ritasi.jam_angkut',
+                'ritasi.nomerdo',
+                'ritasi.uang_jalan',
+                'aksi'
+            ];
+            $order_col = $_POST['order'][0]['column'];
+            $order_dir = $_POST['order'][0]['dir'];
+            $this->db->order_by($columns[$order_col], $order_dir);
+        } else {
+            $this->db->order_by('ritasi.tgl_ritasi', 'desc');
+        }
+    }
+
+    public function get_datatables()
+    {
+        $this->_get_datatables_query();
+        if ($_POST['length'] != -1) {
+            $this->db->limit($_POST['length'], $_POST['start']);
+        }
+        return $this->db->get()->result();
+    }
+
+    public function count_filtered()
+    {
+        $this->_get_datatables_query();
+        return $this->db->get()->num_rows();
+    }
+
+    public function count_all()
+    {
+        return $this->db->count_all('ritasi');
     }
 }

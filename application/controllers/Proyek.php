@@ -27,7 +27,7 @@ class Proyek extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Proyek | Fleet Management",
+            "title" => "Manajemen Proyek | Fleet Management System",
             "nopage" => 1011,
         ];
 

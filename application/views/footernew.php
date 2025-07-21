@@ -63,8 +63,13 @@
         <!-- Script utama (pastikan ini paling akhir agar semua dependensi sudah ter-load) -->
         <script src="<?php echo base_url(); ?>assets/newstyle/dist/js/newtheme.js?v=3.2.0"></script>
 
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081||$nopage==1091||$nopage==1100||$nopage==1200) { ?>
             <script>
+                function getQueryParam(param) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    return urlParams.get(param);
+                }
+
                 $(function () {
                     $("#tbl_daftarrute").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -75,30 +80,112 @@
                     })
                     .buttons().container().appendTo('#tbl_daftarrute_wrapper .col-md-6:eq(0)');
 
-                    var table = $("#tbl_logritasi").DataTable({
-                        "responsive": true,
-                        "lengthChange": false,
-                        "autoWidth": false,
-                        "searching": false,
+                    // Prefill filter
+                    $('#tgl_ritasi').val(getQueryParam('tgl'));
+                    $('#nama_tim').val(getQueryParam('nama_tim'));
+                    $('#nama_driver').val(getQueryParam('nama_driver'));
+                    $('#no_pintu').val(getQueryParam('no_pintu'));
+                    $('#nama_proyek').val(getQueryParam('nama_proyek'));
+                    $('#lokasi_gali').val(getQueryParam('lokasi_gali'));
+
+                    $('#nama_tim').trigger('change');
+                    $('#nama_proyek').trigger('change');
+                    $('#lokasi_gali').trigger('change');
+
+                    // Bersihkan URL dari parameter tak perlu
+                    window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/&?(jam|submit|ritasi_id|kendaraan)=[^&]*/g, ''));
+                    
+                    var table = $('#tbl_logritasi').DataTable({
+                        "processing": true,
+                        "serverSide": true,
+                        "order": [[1, 'desc']],
+                        "ajax": {
+                            "url": "<?php echo site_url('routes/ajax_list'); ?>",
+                            "type": "POST",
+                            "data": function ( d ) {
+                                d.tgl_ritasi = $('#tgl_ritasi').val();
+                                d.nama_tim = $('#nama_tim').val();
+                                d.nama_driver = $('#nama_driver').val();
+                                d.no_pintu = $('#no_pintu').val();
+                                d.nama_proyek = $('#nama_proyek').val();
+                                d.lokasi_gali = $('#lokasi_gali').val();
+                            }
+                        },
+                        "columns": [
+                            { "data": "checkbox", "orderable": false, "className": "text-center" },
+                            { "data": "tgl_ritasi" },
+                            { "data": "nama_tim" },
+                            { "data": "nama_proyek" },
+                            { "data": "lokasi" },
+                            { "data": "nama_driver" },
+                            { "data": "no_pol" },
+                            { "data": "no_pintu" },
+                            { "data": "jam_angkut" },
+                            { "data": "nomerdo" },
+                            { "data": "uang_jalan", "className": "text-right" },
+                            { "data": "aksi", "orderable": false }
+                        ],
+                        "responsive": true, "lengthChange": false, "searching": false,
+                        "dom": "Bfrtip",
                         "buttons": [
                             "excel", "pdf", 
                             {
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9] // kolom tertentu yang ikut di print
+                                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // kolom tertentu yang ikut di print
                                 }
                             }, 
                             "colvis"
                         ],
-                        "columnDefs": [
-                            { targets: [0, 10], orderable: false },
-                            { targets: 0, className: 'text-center' }
-                        ],
-                        "order": [[8, 'desc']]
+                        drawCallback: function(settings) {
+                            var api = this.api();
+                            var data = api.rows({ page: 'current' }).data();
+
+                            if (data.length === 0) {
+                                Swal.fire({
+                                    title: "Error",
+                                    text: "Data tidak tersedia",
+                                    icon: "error",
+                                    confirmButtonText: "Tutup"
+                                });
+                            }
+                        }
+
+                    });
+                    table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
+
+                    $('#btn-filter').click(function(){
+                        table.ajax.reload();
                     });
 
-                    table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
+                    $('#btn-reset').click(function(){
+                        $('#tgl_ritasi').val('');
+                        $('#nama_tim').val('');
+                        $('#nama_driver').val('');
+                        $('#no_pintu').val('');
+                        $('#nama_proyek').val('');
+                        $('#lokasi_gali').val('');
+                        table.ajax.reload();
+                    });
+                    
+                    $(document).on('click', '.btn-edit-ritasi', function () {
+                      const id = $(this).data('id');
+                      $('#formEditRitasi').attr('action', `<?= site_url('routes/ritasiedit/') ?>${id}`);
+
+                      $('#edit_ritasi_id').val(id);
+                      $('#edit_tgl').val($(this).data('tgl'));
+                      $('#edit_tim').val($(this).data('tim')).trigger('change');
+                      $('#edit_proyek').val($(this).data('proyek')).trigger('change');
+                      $('#edit_galian').val($(this).data('galian')).trigger('change');
+                      $('#edit_kendaraan').val($(this).data('vehicle')).trigger('change');
+                      $('#edit_jam').val($(this).data('jam'));
+                      $('#edit_nodo').val($(this).data('nodo'));
+                    });
+                    $(document).on('click', '.btn-del-ritasi', function () {
+                      const id = $(this).data('id');
+                      $('#formDeleteRitasi').attr('action', `<?= site_url('routes/ritasidel/') ?>${id}`);
+                    });
 
                     $("#tbl_ujalan").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -127,6 +214,44 @@
                     })
                     .buttons().container().appendTo('#tbl_galian_wrapper .col-md-6:eq(0)');
 
+                    $("#tbl_tim").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [2], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_tim_wrapper .col-md-6:eq(0)');
+
+                    $("#tbl_user").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [3], orderable: false}
+                        ]
+                    })
+                    .buttons().container().appendTo('#tbl_user_wrapper .col-md-6:eq(0)');
+
                     $("#tbl_manajemenvehicles").DataTable({
                         "responsive": true,
                         "lengthChange": false,
@@ -150,25 +275,6 @@
                     })
                     .buttons().container().appendTo('#tbl_manajemenvehicles_wrapper .col-md-6:eq(0)');
 
-                    $("#tbl_manajemensupir").DataTable({
-                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
-                        "buttons": [
-                            "excel", "pdf", 
-                            {
-                                extend: "print",
-                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] // kolom tertentu yang ikut di print
-                                }
-                            }, 
-                            "colvis"
-                        ],
-                        "columnDefs": [
-                            { targets: [7], orderable: false}
-                        ]
-                    })
-                    .buttons().container().appendTo('#tbl_manajemensupir_wrapper .col-md-6:eq(0)');
-
                     $("#tbl_atim").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
                         "buttons": [
@@ -188,11 +294,12 @@
                     })
                     .buttons().container().appendTo('#tbl_atim_wrapper .col-md-6:eq(0)');
 
-                    $("#tbl_manajemenwallet").DataTable({
+                    $("#tbl_manajemenwallet_transactions").DataTable({
                         responsive: true,
                         lengthChange: false,
                         autoWidth: false,
-                        searching: true,
+                        paging: false,
+                        searching: false,
                         buttons: [
                             "excel", 
                             "pdf", 
@@ -200,16 +307,17 @@
                                 extend: "print",
                                 footer: true, // ✅ memastikan <tfoot> ikut dicetak
                                 exportOptions: {
-                                    columns: [0, 1, 2] // Hanya kolom Nama, Balance, Update At
+                                    columns: [0, 1, 2, 3, 4] // Hanya kolom Nama, Balance, Update At
                                 }
                             }, 
                             "colvis"
                         ],
                         columnDefs: [
-                            { targets: [3], orderable: false }
-                        ]
+                            { targets: [1,2,3,4], orderable: false }
+                        ],
+                        order: [[0, 'desc']]
                     })
-                    .buttons().container().appendTo('#tbl_manajemenwallet_wrapper .col-md-6:eq(0)');
+                    .buttons().container().appendTo('#tbl_manajemenwallet_transactions_wrapper .col-md-6:eq(0)');
 
                     $("#tbl_reimburse_done").DataTable({
                         responsive: true,
@@ -251,6 +359,10 @@
 
                     $('#waktu').datetimepicker({
                         format: 'HH:mm'
+                    });
+
+                    $('#expiry_date').datetimepicker({
+                        format: 'DD-MM-YYYY'
                     });
 
                     //Select2
@@ -305,21 +417,36 @@
                     // Set ulang posisi kursor
                     input.setSelectionRange(start + offset, end + offset);
                 }
+
+                function autoFormatJam(input) {
+                    // Ambil hanya angka, maksimum 4 digit (HHMM)
+                    const angka = input.value.replace(/\D/g, '').substring(0, 4);
+                    let formatted = '';
+
+                    // Simpan posisi kursor sebelum format
+                    const oldPos = input.selectionStart;
+
+                    if (angka.length <= 2) {
+                        formatted = angka;
+                    } else {
+                        formatted = angka.substring(0, 2) + ':' + angka.substring(2, 4);
+                    }
+
+                    // Hitung selisih panjang input sebelum dan sesudah format
+                    const diff = formatted.length - input.value.length;
+
+                    // Masukkan hasil format
+                    input.value = formatted;
+
+                    // Set ulang posisi kursor (hindari error jika di akhir)
+                    const newPos = Math.min(oldPos + diff, formatted.length);
+                    input.setSelectionRange(newPos, newPos);
+                }
             </script>
         <?php } ?>
 
         <?php if ($nopage == 4) { ?>
             <script>
-                <?php foreach ($ritasis as $row) { ?>
-                    $('#tgl_edit<?php echo $row->id ?>').datetimepicker({
-                        format: 'DD-MM-YYYY'
-                    });
-
-                    $('#waktu_angkut<?php echo $row->id ?>').datetimepicker({
-                        format: 'HH:mm'
-                    });
-                <?php } ?>
-
                 /**
                  * Ambil kendaraan berdasarkan tim_id lalu isi <select> mobil.
                  * @param {Number|String} timId        – ID tim.
@@ -351,9 +478,9 @@
                                         </td>
                                         <td>
                                             <div class="input-group date" id="jam-picker${value.vehicle_id}" data-target-input="nearest">
-                                                <input type="text" name="jam[]" class="form-control datetimepicker-input" data-target="#jam-picker${value.vehicle_id}" data-toggle="datetimepicker"/>
+                                                <input type="text" name="jam[]" class="form-control" oninput="autoFormatJam(this)" maxlength="5" placeholder="HH:MM"/>
                                                 <div class="input-group-append">
-                                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                    <div class="input-group-text datetimepicker-input" data-target="#jam-picker${value.vehicle_id}" data-toggle="datetimepicker"><i class="far fa-clock"></i></div>
                                                 </div>
                                             </div>
                                         </td>
@@ -395,50 +522,53 @@
                 <?php endforeach; ?>
             </script>
             <script>
-                $(document).ready(function() {
-                    $('select[name="tim"]').on('change', function() {
-                        var timId = $(this).val();
-                        if (timId) {
-                            $.ajax({
-                                url: "<?php echo site_url('routes/get_kendaraan_by_tim'); ?>",
-                                type: "POST",
-                                data: { tim_id: timId },
-                                dataType: "json",
-                                success: function(data) {
-                                    var kendaraanSelect = $('select[name="kendaraan"]');
-                                    kendaraanSelect.empty();
-                                    kendaraanSelect.append('<option value="">--- Pilih Kendaraan ---</option>');
-                                    $.each(data, function(key, value) {
-                                        kendaraanSelect.append('<option value="' + value.vehicle_id + '">' + value.no_pol + '</option>');
-                                    });
-                                }
-                            });
-                        } else {
-                            $('select[name="kendaraan"]').html('<option value="">--- Pilih Kendaraan ---</option>');
-                        }
-                    });
-                });
+                // $(document).ready(function() {
+                //     $('select[name="tim"]').on('change', function() {
+                //         var timId = $(this).val();
+                //         if (timId) {
+                //             $.ajax({
+                //                 url: "<?php echo site_url('routes/get_kendaraan_by_tim'); ?>",
+                //                 type: "POST",
+                //                 data: { tim_id: timId },
+                //                 dataType: "json",
+                //                 success: function(data) {
+                //                     var kendaraanSelect = $('select[name="kendaraan"]');
+                //                     kendaraanSelect.empty();
+                //                     kendaraanSelect.append('<option value="">--- Pilih Kendaraan ---</option>');
+                //                     $.each(data, function(key, value) {
+                //                         kendaraanSelect.append('<option value="' + value.vehicle_id + '">' + value.no_pol + '</option>');
+                //                     });
+                //                 }
+                //             });
+                //         } else {
+                //             $('select[name="kendaraan"]').html('<option value="">--- Pilih Kendaraan ---</option>');
+                //         }
+                //     });
+                // });
             </script>
         <?php } ?>
 
         <?php if ($nopage==1041) { ?>
             <script>
-                <?php foreach ($supirs as $row) { ?>
-                    $('#tglEditSupir<?php echo $row->id ?>').datetimepicker({
-                        format: 'DD-MM-YYYY'
-                    });
-                    $('#tglEditLahir<?php echo $row->id ?>').datetimepicker({
-                        format: 'DD-MM-YYYY'
-                    });
-                    $('#tglEditExpSim<?php echo $row->id ?>').datetimepicker({
-                        format: 'DD-MM-YYYY'
-                    });
-                <?php } ?>
-
+                $('#tglEditLahir').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
+                $('#tglEditJoin').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
+                $('#tglEditOut').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
+                $('#tglEditExpSim').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
                 $('#tglAddLahir').datetimepicker({
                     format: 'DD-MM-YYYY'
                 });
                 $('#tglAddJoin').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
+                $('#tglAddOut').datetimepicker({
                     format: 'DD-MM-YYYY'
                 });
                 $('#tglAddExpSim').datetimepicker({
@@ -454,26 +584,188 @@
                 })
             </script>
             <script>
+                var table;
                 $(document).ready(function() {
-                    <?php foreach ($supirs as $row) { ?>
-                        (function() {
-                            var id = <?php echo $row->id ?>;
-                            var statusSelector = '#statusSupir' + id;
-                            var keteranganWrapper = '#keteranganWrapper' + id;
-
-                            function toggleKeterangan() {
-                                var status = $(statusSelector).val();
-                                if (status === 'Non Aktif') {
-                                    $(keteranganWrapper).show();
-                                } else {
-                                    $(keteranganWrapper).hide();
-                                }
+                    table = $('#tbl_manajemensupir').DataTable({
+                        "processing": true,
+                        "serverSide": true,
+                        "ajax": {
+                            "url": "<?php echo site_url('drivers/ajax_list') ?>",
+                            "type": "POST",
+                            "data": function ( d ) {
+                                d.nmSupir = $('#nmSupir').val();
+                                d.noPintu = $('#noPintu').val();
+                                d.tglJoin = $('#tglJoin').val();
+                                d.statusSupir = $('#statusSupir').val();
                             }
+                        },
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,"dom": "Bfrtip",
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [7, 8], orderable: false}
+                        ],
+                        "order": [[0, 'asc']]
+                    });
 
-                            toggleKeterangan(); // Saat load
-                            $(statusSelector).change(toggleKeterangan); // Saat berubah
-                        })();
-                    <?php } ?>
+                    $('#btn-filter').click(function(){
+                        table.ajax.reload();
+                    });
+
+                    $('#btn-reset').click(function(){
+                        $('#nmSupir').val('');
+                        $('#noPintu').val('');
+                        $('#tglJoin').val('');
+                        $('#statusSupir').val('');
+                        table.ajax.reload();
+                    });
+
+                    $('#btnSave').click(function() {
+                        var form = $('#form1')[0];           // Ambil elemen DOM form
+                        var formData = new FormData(form);   // Buat FormData dari form
+                        $.ajax({
+                            url: "<?php echo site_url('drivers/ajax_update')?>",
+                            type: "POST",
+                            data: formData,
+                            dataType: "JSON",
+                            processData: false, // Wajib false untuk FormData
+                            contentType: false, // Wajib false untuk FormData
+                            success: function(data) {
+                                $('#mdl_editSupir').modal('hide');
+                                window.location.href = "<?php echo site_url('drivers'); ?>";
+                            }
+                        });
+                    });
+
+                    $('#btnDel').click(function() {
+                        $.ajax({
+                            url: "<?php echo site_url('drivers/ajax_delete')?>",
+                            type: "POST",
+                            data: $('#form2').serialize(),
+                            dataType: "JSON",
+                            success: function(data) {
+                                $('#mdl_delSupir').modal('hide');
+                                window.location.href = "<?php echo site_url('drivers'); ?>";
+                            }
+                        });
+                    });
+                });
+
+                function edit_driver(id) {
+                    $.ajax({
+                        url: "<?php echo site_url('drivers/ajax_edit')?>/" + id,
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function(data) {
+                            $('[name="id"]').val(data.id);
+                            $('[name="nmSupir"]').val(data.name);
+                            $('[name="tmpLahir"]').val(data.tempat_lahir);
+                            $('[name="tglLahir"]').val(data.tgl_lahir);
+                            $('[name="noNIK"]').val(data.nik);
+                            $('[name="tglJoin"]').val(data.tgl_join);
+                            $('[name="tglKeluar"]').val(data.tgl_keluar);
+                            $('[name="noHp"]').val(data.phone);
+                            $('[name="noDarurat"]').val(data.nomor_darurat);
+                            $('[name="noSim"]').val(data.license_number);
+                            $('[name="tglExpSim"]').val(data.tgl_exp_sim);
+                            $('[name="alamat"]').val(data.alamat);
+                            $('[name="statusSupir"]').val(data.status);
+                            $('[name="keterangan"]').val(data.keterangan);
+                            $('[name="fileFotoLama"]').val(data.img_profile);
+                            $('[name="fileSimLama"]').val(data.img_sim);
+                            $('[name="fileKtpLama"]').val(data.img_ktp);
+                            $('#mdl_editSupir').modal('show');
+                        }
+                    });
+                }
+
+                function delete_driver(id) {
+                    $.ajax({
+                        url: "<?php echo site_url('drivers/ajax_del')?>/" + id,
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function(data) {
+                            $('[name="id"]').val(data.id);
+                            $('#mdl_delSupir').modal('show');
+                        }
+                    });
+                }
+
+                function view_files(files) {
+                    var html = "";
+                    if (files.length === 0) {
+                        html = "<p class='text-danger'>Tidak ada file terlampir.</p>";
+                    } else {
+                        for (var i = 0; i < files.length; i++) {
+                            var url = files[i];
+                            var extension = url.split('.').pop().toLowerCase();
+                            
+                            html += "<div class='mb-3'>";
+                            if (extension === 'pdf') {
+                                html += "<iframe src='"+url+"' width='100%' height='400px'></iframe>";
+                            } else if (['jpg','jpeg','png','gif'].includes(extension)) {
+                                html += "<img src='"+url+"' class='img-fluid'/>";
+                            } else {
+                                html += "<a href='"+url+"' target='_blank' class='btn btn-primary'>Download File</a>";
+                            }
+                            html += "</div>";
+                            html += "<hr/>";
+                        }
+                    }
+                    $('#filePreview').html(html);
+                    $('#mdl_imgSupir').modal('show');
+                }
+            </script>
+            <script>
+                var tableWallet;
+                $(document).ready(function() {
+                    tableWallet = $('#tbl_manajemenwallet').DataTable({
+                        "processing": true,
+                        "serverSide": true,
+                        "ajax": {
+                            "url": "<?php echo site_url('drivers/ajax_listwallet')?>",
+                            "type": "POST",
+                            "data": function ( d ) {
+                                d.nmSupir = $('#nmSupir').val();
+                                d.statusWallet = $('#statusWallet').val();
+                            }
+                        },
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,"dom": "Bfrtip",
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // ✅ memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [4], orderable: false}
+                        ],
+                        "order": [[0, 'asc']]
+                    });
+
+                    $('#btnFilter').click(function(){
+                        tableWallet.ajax.reload();
+                    });
+
+                    $('#btnReset').click(function(){
+                        $('#nmSupir').val('');
+                        $('#statusWallet').val('');
+                        tableWallet.ajax.reload();
+                    });
                 });
             </script>
         <?php } ?>
@@ -528,36 +820,43 @@
                 $('.datepicker').datetimepicker({ format: 'DD-MM-YYYY' });
                 $('.select2').select2();
             </script>
+            <?php if ($this->session->flashdata('pdf_url')): ?>
+            <script>
+                window.open("<?= $this->session->flashdata('pdf_url') ?>", "_blank");
+            </script>
+            <?php endif; ?>
         <?php } ?>
 
         <?php if ($nopage == 1041) { ?>
             <script>
-                <?php foreach ($wallets as $row): ?>
-                    $(document).ready(function () {
-                        var tableId = "#tbl_manajemenwallet_transactions<?php echo $row->wallet_id ?>";
-                        var wrapperSelector = tableId + "_wrapper .col-md-6:eq(0)";
+                $(document).ready(function () {
+                    $('div[id^="mdl_wallet"]').on('shown.bs.modal', function () {
+                        const table = $(this).find('table.table');
 
-                        var jumlahTransaksi = <?php echo count($wallet_transactions[$row->wallet_id] ?? []); ?>;
-
-                        $(tableId).DataTable({
-                            responsive: true,
-                            paging: false,
-                            lengthChange: false,
-                            autoWidth: false,
-                            searching: false,
-                            buttons: [
-                                "excel",
-                                "pdf",
-                                {
-                                    extend: "print",
-                                    footer: true,
-                                    title: '<?php echo "[Wallet] " . $row->name . "<br>Jumlah transaksi: " . count($wallet_transactions[$row->wallet_id] ?? []); ?>'
-                                },
-                                "colvis"
-                            ]
-                        }).buttons().container().appendTo(wrapperSelector);
+                        // Jika belum diinisialisasi DataTable, inisialisasi
+                        if (!$.fn.DataTable.isDataTable(table)) {
+                            table.DataTable({
+                                responsive: true,
+                                paging: false,
+                                lengthChange: false,
+                                autoWidth: false,
+                                searching: false,
+                                columnDefs: [{ targets: [0,1,2,3,4,5], orderable: false}],
+                                buttons: [
+                                    "excel",
+                                    "pdf",
+                                    {
+                                        extend: "print",
+                                        footer: true,
+                                        title: table.closest('.modal').find('.modal-title').text()
+                                    },
+                                    "colvis"
+                                ]
+                            }).buttons().container()
+                              .appendTo(table.closest('.dataTables_wrapper').find('.col-md-6:eq(0)'));
+                        }
                     });
-                <?php endforeach; ?>
+                });
             </script>
         <?php } ?>
 

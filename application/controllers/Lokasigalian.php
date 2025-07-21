@@ -29,7 +29,7 @@ class Lokasigalian extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Lokasi Galian | Fleet Management",
+            "title" => "Manajemen Lokasi Galian | Fleet Management System",
             "nopage" => 1021,
         ];
 

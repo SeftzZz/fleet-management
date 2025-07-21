@@ -29,7 +29,7 @@ class Uangjalan extends CI_Controller {
 	public function index()
 	{
 		$data = [
-            "title" => "Manajemen Uang Jalan | Fleet Management",
+            "title" => "Manajemen Uang Jalan | Fleet Management System",
             "nopage" => 1001,
         ];
 

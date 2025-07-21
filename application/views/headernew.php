@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Fleet Management System">
+        <meta name="keywords" content="Fleet Management System, KMP, Karya Majujaya Perkasa">
         <title><?php echo $title ?></title>
         <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="<?php echo base_url(); ?>assets/newstyle/dist/img/icons-192.png" sizes="192x192"/> 
@@ -15,7 +17,7 @@
         <!-- iCheck -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
         
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081||$nopage==1091||$nopage==1100||$nopage==1200) { ?>
         <!-- Select2 -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/select2/css/select2.min.css">
         
@@ -123,9 +125,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="<?php echo site_url('maintenance') ?>" class="nav-link <?php if ($nopage==1200) echo('active') ?>" />
                                     <i class="nav-icon fas fa-wrench"></i>
-                                    <p>Pemeliharaan & BBM</p>
+                                    <p>Maintenance</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -140,12 +142,12 @@
                                     <p>Reimbursement</p>
                                 </a>
                             </li>
-                            <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081) { ?>
+                            <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081||$nopage==1091) { ?>
                             <li class="nav-item menu-open">
                             <?php } else { ?>
                             <li class="nav-item">
                             <?php } ?>
-                                <a href="#" class="nav-link <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081) echo ('active') ?>">
+                                <a href="#" class="nav-link <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081||$nopage==1091) echo ('active') ?>">
                                     <i class="nav-icon fas fa-database"></i>
                                     <p>Master Data<i class="fas fa-angle-left right"></i></p>
                                 </a>
@@ -169,9 +171,21 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="<?php echo site_url('tim') ?>" class="nav-link <?php if ($nopage==1091) echo('active') ?>" />
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Tim</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="<?php echo site_url('pengguna') ?>" class="nav-link <?php if ($nopage==1081) echo('active') ?>" />
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Users</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?php echo site_url('inventori') ?>" class="nav-link <?php if ($nopage==1100) echo('active') ?>" />
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Inventory</p>
                                         </a>
                                     </li>
                                 </ul>

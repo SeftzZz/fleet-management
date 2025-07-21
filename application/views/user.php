@@ -119,6 +119,21 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Groups</label>
+                                                    <select name="group_id" class="custom-select <?php if (form_error('group_id')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                        <option value=""/>--- Pilih Groups ---</option>
+                                                        <?php 
+                                                            foreach ($groups as $row) { 
+                                                        ?>
+                                                            <option value='<?php echo $row->id; ?>' <?php echo set_select('group_id', $row->id);?> /><?php echo $row->name; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
                                                 <div>
                                                     <a href="<?php echo site_url('pengguna') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 
@@ -185,6 +200,21 @@
                                                                     }
                                                                 }
                                                             ?> 
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Groups</label>
+                                                        <select name="group_id" class="custom-select <?php if (form_error('group_id')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                            <option value=""/>--- Pilih Groups ---</option>
+                                                            <?php 
+                                                                foreach ($groups as $row) { 
+                                                            ?>
+                                                                <option value='<?php echo $row->id; ?>' <?php echo set_select('group_id', $row->id);?> /><?php echo $row->name; ?></option>
+                                                            <?php } ?>
                                                         </select>
                                                     </div>
                                                 </div>

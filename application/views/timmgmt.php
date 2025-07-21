@@ -34,7 +34,7 @@
                             <div class="card-body">
                                 <form id="form1" name="form1" action="<?php echo site_url('timmgmt')?>" method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Nama Tim</label>
                                                 <select name="nmTim" class="form-control" style="width:100%;">
@@ -45,7 +45,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Nama Supir</label>
                                                 <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control" />
@@ -54,10 +54,26 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>No. Polisi</label>
-                                                <input type="text" name="noPol" value="<?php echo set_value('noPol')?>" class="form-control" />
+                                                <select name="noPol" class="form-control select_rute" style="width:100%;">
+                                                    <option value=""></option>
+                                                    <?php foreach ($mobils as $value) { ?>
+                                                        <option value='<?php echo $value->no_pol; ?>' <?php echo set_select('noPol', $value->no_pol );?> ><?php echo $value->no_pol; ?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>No. Pintu/Bak/Unit</label>
+                                                <select name="noPintu" class="form-control select_rute" style="width:100%;">
+                                                    <option value=""></option>
+                                                    <?php foreach ($mobils as $value) { ?>
+                                                        <option value='<?php echo $value->no_pintu; ?>' <?php echo set_select('noPintu', $value->no_pintu );?> ><?php echo $value->no_pintu; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Status</label>
                                                 <select name="statusAtim" class="custom-select" style="width:100%;">
@@ -133,7 +149,7 @@
                                                             $supir = $query->row();
                                                         } 
                                                         $query->free_result();
-                                                        echo $supir->name;  
+                                                        echo $supir->name ?? '-';  
                                                     ?>
                                                 </td>
                                                 <td>
@@ -146,10 +162,10 @@
                                                             $mobil = $query->row();
                                                         } 
                                                         $query->free_result();
-                                                        echo $mobil->no_pol;  
+                                                        echo $mobil->no_pol ?? '-';  
                                                     ?>
                                                 </td>
-                                                <td><?php echo $mobil->no_pintu; ?></td>
+                                                <td><?php echo $mobil->no_pintu ?? '-'; ?></td>
                                                 <td><?php echo $row->status_tim_mgmt; ?></td>
                                                 <td><?php echo $this->fppfunction->tglangkajam_ind($row->updated_at); ?></td>
                                                 <td width="8%">
@@ -219,7 +235,7 @@
                                                     <select name="mobil" class="form-control select_rute <?php if (form_error('mobil')) {echo "is-invalid";} ?>" style="width:100%;">
                                                         <option value="">--- Pilih Kendaraan ---</option>
                                                         <?php foreach ($mobils as $value) { ?>
-                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('mobil', $value->id );?> ><?php echo $value->no_pol; ?></option>
+                                                            <option value='<?php echo $value->id; ?>' <?php echo set_select('mobil', $value->id );?> ><?php echo $value->no_pintu; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -293,6 +309,7 @@
                                                                 }
                                                             ?>
                                                         </select>
+                                                        <input type="hidden" name="nmSupir" value="<?php echo $row->driver_id; ?>">
                                                     </div>
                                                 </div>
                                             </div>
@@ -305,10 +322,11 @@
                                                             <?php
                                                                 foreach ($mobils as $value) {
                                                                   $selected=($value->id == $row->vehicle_id) ? "selected" : "";
-                                                                  echo " <option value='$value->id' $selected>$value->no_pol</option>";
+                                                                  echo " <option value='$value->id' $selected>$value->no_pintu</option>";
                                                                 }
                                                             ?>
                                                         </select>
+                                                        <input type="hidden" name="mobil" value="<?php echo $row->vehicle_id; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -358,6 +376,7 @@
                                                     <div class="form-group">
                                                         <label>Yakin menghapus data ini!</label>
                                                         <input type="hidden" name="del" value="1">
+                                                        <input type="hidden" name="nmSupir" value="<?php echo $row->driver_id; ?>">
                                                     </div>
                                                 </div>
                                             </div>

@@ -48,7 +48,7 @@ class Timmgmt_model extends CI_Model {
         return $data;    
     }
 
-    public function getAllTimMgmtByFilter($caritim,$carisupir,$carimobil,$caristatus) {
+    public function getAllTimMgmtByFilter($caritim,$carisupir,$carinopol,$carinopintu,$caristatus) {
         $data = array();
         $this->db->from('tim_mgmt'); 
         $this->db->where('is_delete', 0);
@@ -58,8 +58,11 @@ class Timmgmt_model extends CI_Model {
         if ($carisupir) {
             $this->db->like('nama_supir', $carisupir);
         }
-        if ($carimobil) {
-            $this->db->like('no_pol', $carimobil);
+        if ($carinopol) {
+            $this->db->like('no_pol', $carinopol);
+        }
+        if ($carinopintu) {
+            $this->db->like('no_pintu', $carinopintu);
         }
         if ($caristatus) {
             $this->db->where('status_tim_mgmt', $caristatus);
@@ -79,7 +82,7 @@ class Timmgmt_model extends CI_Model {
 
     public function getKendaraanTimByIdMobil($id) {
         $data = array();
-        $this->db->select('drivers.id, drivers.name, tim.nama_tim'); 
+        $this->db->select('drivers.id, drivers.name, tim.nama_tim, tim_mgmt.no_pintu'); 
         $this->db->from('tim_mgmt');    
         $this->db->join('drivers', 'drivers.id = tim_mgmt.driver_id');
         $this->db->join('tim', 'tim.id = tim_mgmt.tim_id');
@@ -111,10 +114,10 @@ class Timmgmt_model extends CI_Model {
         return $query->result_array();
     }
 
-    public function nonAktifkanTimByVehicleDanDriver($no_pol, $driver_id)
+    public function nonAktifkanTimByVehicleDanDriver($no_pintu, $driver_id)
     {
         // Nonaktifkan semua tim_mgmt aktif dengan kendaraan ini
-        $this->db->where('no_pol', $no_pol);
+        $this->db->where('no_pintu', $no_pintu);
         $this->db->where('status_tim_mgmt', 'Aktif');
         $this->db->where('is_delete', 0);
         $this->db->update('tim_mgmt', [

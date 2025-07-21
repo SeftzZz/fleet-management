@@ -24,10 +24,10 @@
                                 <div class="small-box callout callout-info">
                                     <div class="inner">
                                         <span>Total Saldo Wallet</span>
-                                        <h3>150</h3>
+                                        <h3><?php echo $this->fppfunction->rupiah_ind($jmltotalsaldo) ?></h3>
                                     </div>
                                     <div class="icon">
-                                        <i class="ion ion-trophy"></i>
+                                        <i class="fas fa-wallet"></i>
                                     </div>
                                     <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> <span class="text-success">14%</span> dari kemarin </p>
                                 </div>
@@ -36,19 +36,22 @@
                                 <div class="small-box callout callout-success">
                                     <div class="inner">
                                         <span>Top Saldo Tertinggi</span>
-                                        <h3>1248</h3>
+                                        <h3><?php echo $this->fppfunction->rupiah_ind($jmlhighestsaldo) ?></h3>
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-trophy"></i>
                                     </div>
-                                    <p class="small-box-footer2">&nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> <span class="text-success">12.7%</span> dari bulan lalu </p>
+                                    <p class="small-box-footer2">
+                                        &nbsp;&nbsp;&nbsp;<i class="fas fa-arrow-up text-success"></i> 
+                                        <span class="text-success"><?php echo $nmhighestsaldo ?></span> 
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="container-fluid">
-                        <div class="card" style="z-index:2;">
+                        <div class="card" style="z-index:99;">
                             <div class="card-header">
                                 <h3 class="card-title">Filter Manajemen Supir</h3>
                                 <div class="card-tools">
@@ -61,29 +64,35 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form id="form1" name="form1" action="<?php echo site_url('drivers')?>" method="post" enctype="multipart/form-data">
+                                
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Nama Supir</label>
-                                                <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control" />
+                                                <input type="text" name="nmSupir" id="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>No. Pintu/Bak/Unit</label>
+                                                <input type="text" name="noPintu" id="noPintu" value="<?php echo set_value('noPintu')?>" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Tanggal Bergabung</label>
                                                 <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
-                                                    <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                    <input type="text" name="tglJoin" id="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text" data-target="#tglCariJoin" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Status</label>
-                                                <select name="statusSupir" class="custom-select" style="width:100%;">
+                                                <select name="statusSupir" id="statusSupir" class="custom-select" style="width:100%;">
                                                     <option value=""/>--- Pilih Status ---</option>
                                                     <?php 
                                                         $pilihanstatus=array("Aktif","Non Aktif");
@@ -98,13 +107,13 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <center>
-                                                <a href="<?php echo site_url('drivers') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                <button id="btn-reset" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;</button>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="submit" name="submit" class="btn btn-primary" value="&nbsp;&nbsp;&nbsp;&nbsp;Filter&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                <button id="btn-filter" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;Filter&nbsp;&nbsp;&nbsp;&nbsp;</button>
                                             </center>
                                         </div>
                                     </div>  
-                                </form>
+                                
                             </div>
                         </div>
                     </div>
@@ -114,10 +123,10 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="mgmt_supir_tab" data-toggle="pill" href="#mgmt_supir" role="tab" aria-controls="mgmt_supir" aria-selected="false">Manajemen Supir</a>
+                                        <a class="nav-link active" href="<?php echo site_url('drivers') ?>"/>Manajemen Supir</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="mgmt_wallet_tab" data-toggle="pill" href="#mgmt_wallet" role="tab" aria-controls="mgmt_wallet" aria-selected="false">Manajemen Wallet Supir</a>
+                                        <a class="nav-link" href="<?php echo site_url('drivers/wallet') ?>"/>Manajemen Wallet Supir</a>
                                     </li>
                                 </ul>
                                 <div class="tab-custom-content2">
@@ -135,95 +144,28 @@
                                             <thead>
                                                 <tr>
                                                     <th>Nama</th>
-                                                    <th>Tanggal Bergabung</th>
+                                                    <th>Tgl. Gabung</th>
                                                     <th>No. HP</th>
                                                     <th>No. Darurat</th>
                                                     <th>No. SIM</th>
+                                                    <th>No. Pintu/Bak/Unit</th>
                                                     <th>Status</th>
                                                     <th>Keterangan</th>
-                                                    <th width="8%">Aksi</th>
+                                                    <th width="11%">Aksi</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <?php foreach ($supirs as $row) { ?>
-                                                    <tr>
-                                                        <td><?php echo $row->name ?></td>
-                                                        <td><?php echo $row->tgl_join; ?></td>
-                                                        <td><?php echo $row->phone ?></td>
-                                                        <td><?php echo $row->nomor_darurat ?></td>
-                                                        <td><?php echo $row->license_number ?></td>
-                                                        <td
-                                                            <?php if ($row->status == 'Non Aktif'): ?>
-                                                                data-toggle="tooltip"
-                                                                data-placement="top"
-                                                                title="<?php echo htmlspecialchars($row->keterangan) ?>"
-                                                            <?php endif; ?>
-                                                        >
-                                                            <?php echo $row->status ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php if ($row->status == 'Non Aktif'): ?>
-                                                                <?php echo $row->keterangan ?>
-                                                            <?php endif; ?>
-                                                        </td>
-                                                        <td width="11%">
-                                                            <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#mdl_imgSupir<?php echo $row->id ?>"><i class="fas fa-file-image"></i></button>
-
-                                                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editSupir<?php echo $row->id ?>"><i class="fas fa-pencil-alt"></i></button>
-
-                                                            <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delSupir<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
+                                            <tbody></tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th>Nama</th>
-                                                    <th>Tanggal Bergabung</th>
+                                                    <th>Tgl. Gabung</th>
                                                     <th>No. HP</th>
                                                     <th>No. Darurat</th>
                                                     <th>No. SIM</th>
+                                                    <th>No. Pintu/Bak/Unit</th>
                                                     <th>Status</th>
                                                     <th>Keterangan</th>
-                                                    <th width="8%">Aksi</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane fade" id="mgmt_wallet" role="tabpanel" aria-labelledby="mgmt_wallet_tab">
-                                        <p class="lead2 mb-3">
-                                            Manajemen Wallet Supir
-                                        </p>
-                                        <table id="tbl_manajemenwallet" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nama</th>
-                                                    <th>Balance</th>
-                                                    <th>Status</th>
-                                                    <th>Update At</th>
-                                                    <th width="8%">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($wallets as $row) { ?>
-                                                    <tr>
-                                                        <td><?php echo $row->name ?></td>
-                                                        <td><?php echo $this->fppfunction->rupiah_ind($row->balance) ?></td>
-                                                        <td><?php echo $row->status_wallet ?></td>
-                                                        <td><?php echo $this->fppfunction->tglangkajam_ind($row->updated_at) ?></td>
-                                                        <td width="8%">
-                                                            <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#mdl_wallet<?php echo $row->wallet_id ?>"><i class="fas fa-eye"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Nama</th>
-                                                    <th>Balance</th>
-                                                    <th>Status</th>
-                                                    <th>Update At</th>
-                                                    <th width="8%">Aksi</th>
+                                                    <th width="11%">Aksi</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -254,22 +196,47 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
+                                                    <label>Tempat Lahir</label>
+                                                    <input type="text" name="tmpLahir" value="<?php echo set_value('tmpLahir')?>" class="form-control <?php if (form_error('tmpLahir')) {echo "is-invalid";} ?>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
                                                     <label>Tgl. Lahir</label>
                                                     <div class="input-group date" id="tglAddLahir" data-target-input="nearest">
-                                                        <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control <?php if (form_error('tglLahir')) {echo "is-invalid";} ?>" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                         <div class="input-group-append">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            <div class="input-group-text" data-target="#tglAddLahir" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>NIK</label>
+                                                    <input type="text" name="noNIK" value="<?php echo set_value('noNIK')?>" class="form-control <?php if (form_error('noNIK')) {echo "is-invalid";} ?>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Tanggal Bergabung</label>
+                                                    <div class="input-group date" id="tglAddJoin" data-target-input="nearest">
+                                                        <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control <?php if (form_error('tglJoin')) {echo "is-invalid";} ?>" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text" data-target="#tglAddJoin" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label>Tanggal Bergabung</label>
-                                                    <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
-                                                        <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                    <label>Tanggal Keluar</label>
+                                                    <div class="input-group date" id="tglAddOut" data-target-input="nearest">
+                                                        <input type="text" name="tglKeluar" value="<?php echo set_value('tglKeluar')?>" class="form-control <?php if (form_error('tglKeluar')) {echo "is-invalid";} ?>" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                         <div class="input-group-append">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            <div class="input-group-text" data-target="#tglAddOut" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -312,9 +279,9 @@
                                                 <div class="form-group">
                                                     <label>Tgl. Exp. SIM</label>
                                                     <div class="input-group date" id="tglAddExpSim" data-target-input="nearest">
-                                                        <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" />
+                                                        <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control <?php if (form_error('tglExpSim')) {echo "is-invalid";} ?>" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
                                                         <div class="input-group-append">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            <div class="input-group-text" data-target="#tglAddExpSim" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -327,17 +294,19 @@
                                                     <input type="file" name="fotoKtp" />
                                                 </div>
                                             </div>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-8">
                                                  <div class="form-group">
                                                     <label>Alamat</label>
-                                                    <textarea rows="3" name="alamat" value="<?php echo set_value('alamat')?>" class="form-control <?php if (form_error('alamat')) {echo "is-invalid";} ?>"></textarea>
+                                                    <textarea rows="3" name="alamat" class="form-control <?php if (form_error('alamat')) {echo "is-invalid";} ?>" placeholder="Alamat"></textarea>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Status Supir</label>
                                                     <select name="statusSupir" class="custom-select <?php if (form_error('statusSupir')) {echo "is-invalid";} ?>" style="width:100%;">
-                                                        <option value=""/>--- Pilih Status Supir ---</option>
+                                                        <option value=""/>--- Pilih Status ---</option>
                                                         <?php 
                                                             $pilihanstatus=array("Aktif","Non Aktif");
                                                             foreach ($pilihanstatus as $value) { 
@@ -345,6 +314,12 @@
                                                             <option value='<?php echo $value; ?>' <?php echo set_select('statusSupir', $value);?> /><?php echo $value; ?></option>
                                                         <?php } ?>
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label>Keterangan</label>
+                                                    <textarea rows="3" name="keterangan" class="form-control <?php if (form_error('keterangan')) {echo "is-invalid";} ?>" placeholder="Keterangan"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -362,34 +337,26 @@
                         </div>
                     </div>
 
-                    <?php foreach ($supirs as $row) { ?>
-                        <div class="modal fade" id="mdl_imgSupir<?php echo $row->id ?>">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Foto | SIM | KTP</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <?php if ($row->img_profile) { ?>
-                                            <img class="img-fluid mb-3" src="<?php echo base_url('uploads/foto/'.$row->img_profile); ?>" alt="Foto">
-                                        <?php } ?>
-                                        <?php if ($row->img_sim) { ?>
-                                            <img class="img-fluid mb-3" src="<?php echo base_url('uploads/sim/'.$row->img_sim); ?>" alt="SIM">
-                                        <?php } ?>
-                                        <?php if ($row->img_ktp) { ?>
-                                            <img class="img-fluid mb-3" src="<?php echo base_url('uploads/ktp/'.$row->img_ktp); ?>" alt="KTP">
-                                        <?php } ?>
-                                    </div>
+                    <div class="modal fade" id="mdl_imgSupir">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Foto | SIM | KTP</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="filePreview">
+                                    <!-- konten file muncul di sini -->
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="modal fade" id="mdl_editSupir<?php echo $row->id ?>">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
+                    <div class="modal fade" id="mdl_editSupir">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <form id="form1" enctype="multipart/form-data">
                                     <div class="modal-header">
                                         <h4 class="modal-title">Edit Supir</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -397,227 +364,193 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="form2" name="form2" action="<?php echo site_url('drivers/supiredit/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>Nama</label>
-                                                        <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir',$row->name)?>" class="form-control <?php if (form_error('nmSupir')) {echo "is-invalid";} ?>" />
-                                                    </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Nama</label>
+                                                    <input type="text" name="nmSupir" value="<?php echo set_value('nmSupir')?>" class="form-control <?php if (form_error('nmSupir')) {echo "is-invalid";} ?>" />
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>Tgl. Lahir</label>
-                                                        <div class="input-group date" id="tglEditLahir<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir',$row->tgl_lahir)?>" class="form-control datetimepicker-input" data-target="#tglEditLahir<?php echo $row->id ?>" data-toggle="datetimepicker" />
-                                                            <div class="input-group-append">
-                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Tempat Lahir</label>
+                                                    <input type="text" name="tmpLahir" value="<?php echo set_value('tmpLahir')?>" class="form-control <?php if (form_error('tmpLahir')) {echo "is-invalid";} ?>" />
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>Tanggal Bergabung</label>
-                                                        <div class="input-group date" id="tglEditSupir<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="tglJoin" value="<?php echo set_value('tgl',$row->tgl_join)?>" class="form-control datetimepicker-input" data-target="#tglEditSupir<?php echo $row->id ?>" data-toggle="datetimepicker" />
-                                                            <div class="input-group-append">
-                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                            </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Tgl. Lahir</label>
+                                                    <div class="input-group date" id="tglEditLahir" data-target-input="nearest">
+                                                        <input type="text" name="tglLahir" value="<?php echo set_value('tglLahir')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text" data-target="#tglEditLahir" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>Foto Supir</label>
-                                                        <input type="file" name="fotoSupir" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>No. HP</label>
-                                                        <input type="text" name="noHp" value="<?php echo set_value('noHp',$row->phone)?>" class="form-control <?php if (form_error('noHp')) {echo "is-invalid";} ?>" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>No. HP Darurat</label>
-                                                        <input type="text" name="noDarurat" value="<?php echo set_value('noDarurat',$row->nomor_darurat)?>" class="form-control <?php if (form_error('noDarurat')) {echo "is-invalid";} ?>" />
-                                                    </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>NIK</label>
+                                                    <input type="text" name="noNIK" value="<?php echo set_value('noNIK')?>" class="form-control <?php if (form_error('noNIK')) {echo "is-invalid";} ?>" />
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>Foto SIM</label>
-                                                        <input type="file" name="fotoSim" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>No. SIM</label>
-                                                        <input type="text" name="noSim" value="<?php echo set_value('noSim',$row->license_number)?>" class="form-control <?php if (form_error('noSim')) {echo "is-invalid";} ?>" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>Tgl. Exp. SIM</label>
-                                                        <div class="input-group date" id="tglEditExpSim<?php echo $row->id ?>" data-target-input="nearest">
-                                                            <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim',$row->tgl_exp_sim)?>" class="form-control datetimepicker-input" data-target="#tglEditExpSim<?php echo $row->id ?>" data-toggle="datetimepicker" />
-                                                            <div class="input-group-append">
-                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Tanggal Bergabung</label>
+                                                    <div class="input-group date" id="tglEditJoin" data-target-input="nearest">
+                                                        <input type="text" name="tglJoin" value="<?php echo set_value('tglJoin')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text" data-target="#tglEditJoin" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                     <div class="form-group">
-                                                        <label>Foto KTP</label>
-                                                        <input type="file" name="fotoKtp" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                     <div class="form-group">
-                                                        <label>Alamat</label>
-                                                        <textarea rows="3" name="alamat" value="<?php echo set_value('alamat')?>" class="form-control <?php if (form_error('alamat')) {echo "is-invalid";} ?>"><?php echo $row->alamat ?></textarea>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Tanggal Keluar</label>
+                                                    <div class="input-group date" id="tglEditOut" data-target-input="nearest">
+                                                        <input type="text" name="tglKeluar" value="<?php echo set_value('tglKeluar')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text" data-target="#tglEditOut" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label>Status Supir</label>
-                                                        <select id="statusSupir<?php echo $row->id ?>" name="statusSupir" class="form-control <?php if (form_error('statusSupir')) {echo "is-invalid";} ?>" style="width:100%;">
-                                                            <option value="">--- Pilih Status ---</option>
-                                                            <?php
-                                                                $pilihanstatus = array("Aktif","Non Aktif");
-                                                                foreach ($pilihanstatus as $value) {
-                                                                    $selected = ($value == $row->status) ? "selected" : "";
-                                                                    echo "<option value='$value' $selected>$value</option>";
-                                                                }
-                                                            ?>
-                                                        </select>
-                                                    </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Foto Supir</label>
+                                                    <input type="file" name="fotoSupir" />
                                                 </div>
-                                                <div class="col-sm-8" id="keteranganWrapper<?php echo $row->id ?>">
-                                                    <div class="form-group">
-                                                        <label>Keterangan</label>
-                                                        <textarea rows="3" name="keterangan" class="form-control <?php if (form_error('keterangan')) {echo "is-invalid";} ?>" placeholder="Resign/Bermasalah"><?php echo $row->keterangan ?></textarea>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>No. HP</label>
+                                                    <input type="text" name="noHp" value="<?php echo set_value('noHp')?>" class="form-control <?php if (form_error('noHp')) {echo "is-invalid";} ?>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>No. HP Darurat</label>
+                                                    <input type="text" name="noDarurat" value="<?php echo set_value('noDarurat')?>" class="form-control <?php if (form_error('noDarurat')) {echo "is-invalid";} ?>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Foto SIM</label>
+                                                    <input type="file" name="fotoSim" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>No. SIM</label>
+                                                    <input type="text" name="noSim" value="<?php echo set_value('noSim')?>" class="form-control <?php if (form_error('noSim')) {echo "is-invalid";} ?>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Tgl. Exp. SIM</label>
+                                                    <div class="input-group date" id="tglEditExpSim" data-target-input="nearest">
+                                                        <input type="text" name="tglExpSim" value="<?php echo set_value('tglExpSim')?>" class="form-control" oninput="autoFormatTanggal(this)" maxlength="10" placeholder="DD-MM-YYYY" />
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text" data-target="#tglEditExpSim" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div>
-                                                        <input type="hidden" name="fileFotoLama" value="<?php echo $row->img_profile; ?>">
-                                                        <input type="hidden" name="fileSimLama" value="<?php echo $row->img_sim; ?>">
-                                                        <input type="hidden" name="fileKtpLama" value="<?php echo $row->img_ktp; ?>">
-
-                                                        <a href="<?php echo site_url('drivers') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                    </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                 <div class="form-group">
+                                                    <label>Foto KTP</label>
+                                                    <input type="file" name="fotoKtp" />
                                                 </div>
                                             </div>
-                                        </form>
+                                            <div class="col-sm-8">
+                                                 <div class="form-group">
+                                                    <label>Alamat</label>
+                                                    <textarea rows="3" name="alamat" value="<?php echo set_value('alamat')?>" class="form-control <?php if (form_error('alamat')) {echo "is-invalid";} ?>"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Status Supir</label>
+                                                    <select id="statusSupir" name="statusSupir" class="form-control <?php if (form_error('statusSupir')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                        <option value="">--- Pilih Status ---</option>
+                                                        <?php
+                                                            $pilihanstatus = array("Aktif","Non Aktif");
+                                                            foreach ($pilihanstatus as $value) {
+                                                                $selected = ($value == $row->status) ? "selected" : "";
+                                                                echo "<option value='$value' $selected>$value</option>";
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label>Keterangan</label>
+                                                    <textarea rows="3" name="keterangan" class="form-control <?php if (form_error('keterangan')) {echo "is-invalid";} ?>" placeholder="Keterangan"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div>
+                                                    <input type="hidden" name="id" />
+                                                    <input type="hidden" name="fileFotoLama" />
+                                                    <input type="hidden" name="fileSimLama" />
+                                                    <input type="hidden" name="fileKtpLama" />
+                                                    <a href="<?php echo site_url('drivers') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                    <button type="button" id="btnSave" class="btn btn-primary float-right">&nbsp;&nbsp;&nbsp;&nbsp;Simpan&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="mdl_delSupir">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Hapus Supir</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="form2">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Yakin ingin menghapus data ini?</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div>
+                                                    <input type="hidden" name="id" />
+                                                    <a href="<?php echo site_url('drivers') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                    <button type="button" id="btnDel" class="btn btn-primary float-right">&nbsp;&nbsp;&nbsp;&nbsp;Ya, Hapus&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="modal fade" id="mdl_delSupir<?php echo $row->id ?>">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Hapus Supir</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="form3" name="form3" action="<?php echo site_url('drivers/supirdel/'.$row->id)?>" method="post" enctype="multipart/form-data">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <label>Yakin menghapus data ini!</label>
-                                                        <input type="hidden" name="del" value="1">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                                                        <input type="submit" name="submit" class="btn btn-primary float-right" value="&nbsp;&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-
-                    <?php foreach ($wallets as $row) { ?>
-                        <div class="modal fade" id="mdl_wallet<?php echo $row->wallet_id ?>">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Wallet detail <?php echo $row->name ?></h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Wallet ID: <?php echo $row->wallet_id ?></p>
-                                        <p>Jumlah transaksi: <?php echo count($wallet_transactions[$row->wallet_id] ?? []) ?></p>
-
-                                        <table id="tbl_manajemenwallet_transactions<?php echo $row->wallet_id ?>" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Tipe transaksi</th>
-                                                    <th>Amount</th>
-                                                    <th>Keterangan</th>
-                                                    <th>Create At</th>
-                                                    <th>Update At</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php 
-                                                    $no = 1;
-                                                    foreach ($wallet_transactions[$row->wallet_id] ?? [] as $trans) { 
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $no++ ?></td>
-                                                        <td><?php echo $trans->transaction_type ?></td>
-                                                        <td><?php echo $this->fppfunction->rupiah_ind($trans->amount) ?></td>
-                                                        <td><?php echo $trans->description ?></td>
-                                                        <td><?php echo $this->fppfunction->tglangkajam_ind($trans->created_at) ?></td>
-                                                        <td><?php echo $this->fppfunction->tglangkajam_ind($trans->updated_at) ?></td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="1">Balance</th>
-                                                    <th></th>
-                                                    <th colspan="1"><?php echo $this->fppfunction->rupiah_ind($row->balance) ?></th>
-                                                    <th></th>                                                    
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
+                    </div>
                 </section>
                 <!-- /.Main content -->
             </div>

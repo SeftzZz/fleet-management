@@ -24,7 +24,7 @@ class Home extends CI_Controller {
 		redirect('auth/login', 'refresh');
         
         // $data = [
-        //     "title" => "Dashboard Utama | Fleet Management",
+        //     "title" => "Dashboard Utama | Fleet Management System",
         //     "nopage" => 1,
         // ];
 

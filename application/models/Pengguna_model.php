@@ -31,6 +31,22 @@ class Pengguna_model extends CI_Model {
         return $data;    
     }
 
+    public function getAllGroup() {
+        $data = array();
+        $this->db->from('groups');
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $data[] = $row;
+            }
+        }
+        $query->free_result();  
+        return $data;    
+    }
+
     public function insert($dataUser) {
         $this->db->insert('users', $dataUser); 
     }
@@ -43,5 +59,7 @@ class Pengguna_model extends CI_Model {
         return $this->db->where('id', $id)->update($this->table, $dataUser);
     }
 
-    
+    public function updateUserG($id, $dataUser) {
+        return $this->db->where('id', $id)->update('users_groups', $dataUser);
+    }
 }
