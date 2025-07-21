@@ -120,6 +120,12 @@ class Reimbursement extends CI_Controller {
                         'status' => 'sudah',
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
+
+                    $this->db->where('id', $ritasi_id);
+                    $this->db->update('ritasi', [
+                        'is_delete'     => 1,
+                        'updated_at'    => date('Y-m-d H:i:s')
+                    ]);
                 }
             }
 
@@ -145,7 +151,7 @@ class Reimbursement extends CI_Controller {
         $tim     = $this->input->get('tim');
 
         // Ambil data ritasi dengan filter yang sama seperti di index()
-        $ritasi_list = $this->Route_model->getRitasiByFilters($tanggal, $proyek, $galian, $tim);
+        $ritasi_list = $this->Route_model->getRitasiByFiltersReumbersment($tanggal, $proyek, $galian, $tim);
 
         $total = 0;
         foreach ($ritasi_list as $r) {

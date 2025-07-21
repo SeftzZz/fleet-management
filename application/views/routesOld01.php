@@ -1076,5 +1076,5 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadDropdownOptions();
-        });       
+        });   
     </script>    

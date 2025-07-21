@@ -1,3 +1,4 @@
+<<<<<<< HEAD
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header -->
@@ -691,3 +692,4 @@
                 <!-- /.Main content -->
             </div>
             <!-- /.content-wrapper -->
+

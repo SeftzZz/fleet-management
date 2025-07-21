@@ -63,7 +63,7 @@
         <!-- Script utama (pastikan ini paling akhir agar semua dependensi sudah ter-load) -->
         <script src="<?php echo base_url(); ?>assets/newstyle/dist/js/newtheme.js?v=3.2.0"></script>
 
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081||$nopage==1091) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081||$nopage==1091||$nopage==1100||$nopage==1200) { ?>
             <script>
                 function getQueryParam(param) {
                     const urlParams = new URLSearchParams(window.location.search);
@@ -94,7 +94,7 @@
 
                     // Bersihkan URL dari parameter tak perlu
                     window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/&?(jam|submit|ritasi_id|kendaraan)=[^&]*/g, ''));
-
+                    
                     var table = $('#tbl_logritasi').DataTable({
                         "processing": true,
                         "serverSide": true,
@@ -151,6 +151,7 @@
                                 });
                             }
                         }
+
                     });
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
 
