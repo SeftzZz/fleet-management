@@ -115,6 +115,15 @@ class Timmgmt extends CI_Controller {
                         'updated_at'        => date('Y-m-d H:i:s')
                     );                              
                     $this->Timmgmt_model->insert($dataAtim); 
+
+                    // update tabel drivers 
+                    $id=$this->input->post('nmSupir');
+                    $dataSupir = array(
+                        'no_pintu'          => $kendaraan->no_pintu,
+                        'updated_at'        => date('Y-m-d H:i:s')
+                    );                              
+                    $this->Driver_model->update2($id,$dataSupir); 
+                    $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
                     redirect('timmgmt');
                 }
             }
@@ -155,8 +164,8 @@ class Timmgmt extends CI_Controller {
                 $supir = $this->Driver_model->getSupirById($this->input->post('nmSupir'));
                 $tim = $this->Tim_model->getTimById($this->input->post('nmTim'));
 
-                // 1. Update semua status tim_mgmnt yang aktif untuk no_pol ini jadi Non Aktif
-                $this->Timmgmt_model->nonAktifkanTimByVehicleDanDriver($kendaraan->no_pol, $this->input->post('nmSupir'));
+                // 1. Update semua status tim_mgmnt yang aktif untuk no_pintu ini jadi Non Aktif
+                $this->Timmgmt_model->nonAktifkanTimByVehicleDanDriver($kendaraan->no_pintu, $this->input->post('nmSupir'));
 
                 // update tabel tim_mgmt  
                 $dataAtim = array(
@@ -168,11 +177,20 @@ class Timmgmt extends CI_Controller {
                     'no_pol'            => $kendaraan->no_pol,
                     'no_pintu'          => $kendaraan->no_pintu,
                     'status_tim_mgmt'   => $this->input->post('statusAtim'),
-                    'created_at'        => date('Y-m-d H:i:s'),
                     'updated_at'        => date('Y-m-d H:i:s')
                 );                              
                 $this->Timmgmt_model->update($id,$dataAtim);
-                redirect('/timmgmt');
+
+                // update tabel drivers 
+                $id=$this->input->post('nmSupir');
+                $dataSupir = array(
+                    'no_pintu'          => '',
+                    'updated_at'        => date('Y-m-d H:i:s')
+                );                              
+                $this->Driver_model->update2($id,$dataSupir); 
+
+                $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
+                redirect('timmgmt');
             }
         } 
     }
@@ -187,6 +205,16 @@ class Timmgmt extends CI_Controller {
                 'updated_at'        => date('Y-m-d H:i:s')
             );                              
             $this->Timmgmt_model->update($id,$dataAtim);
+
+            // update tabel drivers 
+            $id=$this->input->post('nmSupir');
+            $dataSupir = array(
+                'no_pintu'          => '',
+                'updated_at'        => date('Y-m-d H:i:s')
+            );                              
+            $this->Driver_model->update2($id,$dataSupir); 
+
+            $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
             redirect('/timmgmt');
         } 
     }

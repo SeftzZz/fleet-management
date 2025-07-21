@@ -382,6 +382,8 @@ class Routes extends CI_Controller {
                         'lokasi'        => $galian->lokasi,
                         'vehicle_id'    => $kendaraan->id,
                         'no_pol'        => $kendaraan->no_pol,
+                        'driver_id'     => $tim_mgmnt->id,
+                        'no_pintu'      => $tim_mgmnt->no_pintu,
                         'jam_angkut'    => $jam_list[$i],
                         'nomerdo'       => $nodo_list[$i],
                         'uang_jalan'    => $uangjalan->uang_jalan,
@@ -447,6 +449,8 @@ class Routes extends CI_Controller {
                     'lokasi'        => $galian->lokasi,
                     'vehicle_id'    => $kendaraan->id,
                     'no_pol'        => $kendaraan->no_pol,
+                    'driver_id'     => $tim_mgmnt->id,
+                    'no_pintu'      => $tim_mgmnt->no_pintu,
                     'jam_angkut'    => $jam_list[$i],
                     'nomerdo'       => $nodo_list[$i],
                     'uang_jalan'    => $uangjalan->uang_jalan,
@@ -585,6 +589,8 @@ class Routes extends CI_Controller {
                 'lokasi'        => $galian->lokasi,
                 'vehicle_id'    => $kendaraan->id,
                 'no_pol'        => $kendaraan->no_pol,
+                'driver_id'     => $tim_mgmnt->id,
+                'no_pintu'      => $tim_mgmnt->no_pintu,
                 'jam_angkut'    => $this->input->post('jam'),
                 'nomerdo'       => $this->input->post('nodo'),
                 'updated_at'    => date('Y-m-d H:i:s')
@@ -601,7 +607,20 @@ class Routes extends CI_Controller {
             }
 
             $this->session->set_flashdata('pesansukses', 'Data berhasil disimpan');
-            redirect('/routes');
+            $params = array_merge(
+                ['id' => $id],
+                array_filter($this->input->post(), fn($v) => $v !== null && $v !== ''),
+                array_filter([
+                    'nama_tim'     => $tim->nama_tim ?? null,
+                    'nama_driver'  => $tim_mgmnt->name ?? null,
+                    'no_pintu'     => $tim_mgmnt->no_pintu ?? null,
+                    'nama_proyek'  => $proyek->nama_proyek ?? null,
+                    'lokasi_gali'  => $galian->lokasi ?? null,
+                ])
+            );
+            $query = http_build_query($params);
+            redirect('/routes?' . $query);
+
         }
     }
 
@@ -789,12 +808,22 @@ class Routes extends CI_Controller {
             ];
         }
 
-        $output = [
-            "draw" => intval($this->input->post('draw')),
-            "recordsTotal" => $this->Route_model->count_all(),
-            "recordsFiltered" => $this->Route_model->count_filtered(),
-            "data" => $data,
-        ];
-        echo json_encode($output);
+        if($data == []) {
+            $output = [
+                "draw" => intval($this->input->post('draw')),
+                "recordsTotal" => 0,
+                "recordsFiltered" => 0,
+                "data" => [],
+            ];
+            echo json_encode($output);
+        } else {
+            $output = [
+                "draw" => intval($this->input->post('draw')),
+                "recordsTotal" => $this->Route_model->count_all(),
+                "recordsFiltered" => $this->Route_model->count_filtered(),
+                "data" => $data,
+            ];
+            echo json_encode($output);
+        }
     }
 }
