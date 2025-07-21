@@ -123,7 +123,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Tanggal</label>
                                             <div class="input-group date" id="tglan_ritasi" data-target-input="nearest">
@@ -134,7 +134,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Nama Tim</label>
                                             <select name="nama_tim" id="nama_tim" class="form-control" style="width:100%;">
@@ -145,7 +145,29 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Supir</label>
+                                            <select name="nama_driver" id="nama_driver" class="form-control select_rute" style="width:100%;">
+                                                    <option value=""></option>
+                                                    <?php foreach ($supirs as $value) { ?>
+                                                        <option value='<?php echo $value->name; ?>' <?php echo set_select('nama_driver', $value->name );?> ><?php echo $value->name; ?></option>
+                                                    <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>No. Pintu</label>
+                                            <select name="no_pintu" id="no_pintu" class="form-control select_rute" style="width:100%;">
+                                                    <option value=""></option>
+                                                    <?php foreach ($kendaraans as $value) { ?>
+                                                        <option value='<?php echo $value->no_pintu; ?>' <?php echo set_select('no_pintu', $value->no_pintu );?> ><?php echo $value->no_pintu; ?></option>
+                                                    <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Nama Proyek</label>
                                             <select name="nama_proyek" id="nama_proyek" class="form-control" style="width:100%;">
@@ -156,7 +178,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Lokasi Galian</label>
                                             <select name="lokasi_gali" id="lokasi_gali" class="form-control select_rute" style="width:100%;">

@@ -739,14 +739,23 @@ class Drivers extends CI_Controller {
         if (!empty($_FILES['fotoSupir']['name'])) {
             if (!$this->upload->do_upload('fotoSupir')) {
                 $this->session->set_flashdata('pesanerror','File berukuran lebih besar dari 3MB atau formatnya bukan jpg/png');
-                echo json_encode(array("status" => TRUE));
             } else {
-                unlink('./uploads/foto/'.$this->input->post('fileFotoLama'));
-                $unggahFoto = $this->upload->data();
-                $data = array(
-                    'img_profile'       => $unggahFoto['file_name']
-                );
-                $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                if ($this->input->post('fileFotoLama')) {
+                    unlink('./uploads/foto/'.$this->input->post('fileFotoLama'));
+                    $unggahFoto = $this->upload->data();
+                    $data = array(
+                        'img_profile'       => $unggahFoto['file_name']
+                    );
+                    $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                    $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+                } else {
+                    $unggahFoto = $this->upload->data();
+                    $data = array(
+                        'img_profile'       => $unggahFoto['file_name']
+                    );
+                    $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                    $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+                }
             }
         }
 
@@ -757,14 +766,23 @@ class Drivers extends CI_Controller {
         if (!empty($_FILES['fotoSim']['name'])) {
             if (!$this->upload->do_upload('fotoSim')) {
                 $this->session->set_flashdata('pesanerror','File berukuran lebih besar dari 3MB atau formatnya bukan jpg/png');
-                echo json_encode(array("status" => TRUE));
             } else {
-                unlink('./uploads/sim/'.$this->input->post('fileSimLama'));
-                $unggahSim = $this->upload->data();
-                $data = array(
-                    'img_sim'       => $unggahSim['file_name']
-                );
-                $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                if ($this->input->post('fileSimLama')) {
+                    unlink('./uploads/sim/'.$this->input->post('fileSimLama'));
+                    $unggahSim = $this->upload->data();
+                    $data = array(
+                        'img_sim'       => $unggahSim['file_name']
+                    );
+                    $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                    $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+                } else {
+                    $unggahSim = $this->upload->data();
+                    $data = array(
+                        'img_sim'       => $unggahSim['file_name']
+                    );
+                    $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                    $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+                }
             }
         }
 
@@ -775,14 +793,23 @@ class Drivers extends CI_Controller {
         if (!empty($_FILES['fotoKtp']['name'])) {
             if (!$this->upload->do_upload('fotoKtp')) {
                 $this->session->set_flashdata('pesanerror','File berukuran lebih besar dari 3MB atau formatnya bukan jpg/png');
-                echo json_encode(array("status" => TRUE));
             } else {
-                unlink('./uploads/ktp/'.$this->input->post('fileKtpLama'));
-                $unggahKtp = $this->upload->data();
-                $data = array(
-                    'img_ktp'       => $unggahKtp['file_name']
-                );
-                $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                if ($this->input->post('fileKtpLama')) {
+                    unlink('./uploads/ktp/'.$this->input->post('fileKtpLama'));
+                    $unggahKtp = $this->upload->data();
+                    $data = array(
+                        'img_ktp'       => $unggahKtp['file_name']
+                    );
+                    $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                    $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+                } else {
+                    $unggahKtp = $this->upload->data();
+                    $data = array(
+                        'img_ktp'       => $unggahKtp['file_name']
+                    );
+                    $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+                    $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+                }
             }
         }
 
@@ -803,7 +830,7 @@ class Drivers extends CI_Controller {
             'updated_at'        => date('Y-m-d H:i:s')
         );
         $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
-        $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+        
         echo json_encode(array("status" => TRUE));
     }
 
