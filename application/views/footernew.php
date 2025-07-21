@@ -65,6 +65,11 @@
 
         <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081||$nopage==1091) { ?>
             <script>
+                function getQueryParam(param) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    return urlParams.get(param);
+                }
+
                 $(function () {
                     $("#tbl_daftarrute").DataTable({
                         "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -74,6 +79,21 @@
                         ]
                     })
                     .buttons().container().appendTo('#tbl_daftarrute_wrapper .col-md-6:eq(0)');
+
+                    // Prefill filter
+                    $('#tgl_ritasi').val(getQueryParam('tgl'));
+                    $('#nama_tim').val(getQueryParam('nama_tim'));
+                    $('#nama_driver').val(getQueryParam('nama_driver'));
+                    $('#no_pintu').val(getQueryParam('no_pintu'));
+                    $('#nama_proyek').val(getQueryParam('nama_proyek'));
+                    $('#lokasi_gali').val(getQueryParam('lokasi_gali'));
+
+                    $('#nama_tim').trigger('change');
+                    $('#nama_proyek').trigger('change');
+                    $('#lokasi_gali').trigger('change');
+
+                    // Bersihkan URL dari parameter tak perlu
+                    window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/&?(jam|submit|ritasi_id|kendaraan)=[^&]*/g, ''));
 
                     var table = $('#tbl_logritasi').DataTable({
                         "processing": true,
@@ -85,6 +105,8 @@
                             "data": function ( d ) {
                                 d.tgl_ritasi = $('#tgl_ritasi').val();
                                 d.nama_tim = $('#nama_tim').val();
+                                d.nama_driver = $('#nama_driver').val();
+                                d.no_pintu = $('#no_pintu').val();
                                 d.nama_proyek = $('#nama_proyek').val();
                                 d.lokasi_gali = $('#lokasi_gali').val();
                             }
@@ -116,6 +138,19 @@
                             }, 
                             "colvis"
                         ],
+                        drawCallback: function(settings) {
+                            var api = this.api();
+                            var data = api.rows({ page: 'current' }).data();
+
+                            if (data.length === 0) {
+                                Swal.fire({
+                                    title: "Error",
+                                    text: "Data tidak tersedia",
+                                    icon: "error",
+                                    confirmButtonText: "Tutup"
+                                });
+                            }
+                        }
                     });
                     table.buttons().container().appendTo('#tbl_logritasi_wrapper .col-md-6:eq(0)');
 
@@ -126,6 +161,8 @@
                     $('#btn-reset').click(function(){
                         $('#tgl_ritasi').val('');
                         $('#nama_tim').val('');
+                        $('#nama_driver').val('');
+                        $('#no_pintu').val('');
                         $('#nama_proyek').val('');
                         $('#lokasi_gali').val('');
                         table.ajax.reload();
