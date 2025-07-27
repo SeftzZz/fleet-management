@@ -168,7 +168,7 @@
 
                         <button type="submit" class="btn btn-primary">Simpan</button>
                       </form> 
-                      <!-- <form id="sparepartForm">
+                      <form id="sparepartForm">
                         <div class="form-row">
                           <div class="form-group col-md-4">
                             <label>Kendaraan Tujuan</label>
@@ -230,7 +230,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary mt-3">Simpan</button>
-                      </form> -->                   
+                      </form>                   
                     </div>
                   </div>
                 </div>
