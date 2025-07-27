@@ -78,6 +78,7 @@
                         <table id="tbl_inventory" class="table table-bordered table-striped">
                           <thead>
                             <tr>
+                              <th>No</th>
                               <th>Tanggal PO</th>
                               <th>No PO</th>
                               <th>Nama Barang</th>
@@ -88,6 +89,7 @@
                           </thead>
                           <tbody>
                             <tr>
+                              <td>1</td>
                               <td>2025-07-10</td>
                               <td>KMJP-DT/MS/0725-0001</td>
                               <td>Oli Mesin</td>
@@ -100,6 +102,7 @@
                               </td>
                             </tr>
                             <tr>
+                              <td>2</td>
                               <td>2025-07-10</td>
                               <td>KMJP-DT/MS/0725-0001</td>
                               <td>Baut nomor 20</td>

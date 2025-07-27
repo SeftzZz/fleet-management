@@ -19,13 +19,13 @@ class Vehicles extends CI_Controller {
         $this->load->model('Driver_model');
         $this->load->model('Wallet_model');
         $this->load->model('Vehicle_model');
+        $this->load->model('Inventori_model');
         $this->load->database();
 
         if(!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
     }
-
 	/**
 	 * Index Page for this controller.
 	 *
@@ -58,6 +58,9 @@ class Vehicles extends CI_Controller {
             $caristatus = $this->input->post('statusCariMobil');
 
             $data['vehicles'] = $this->Vehicle_model->getAllVehiclesByFilter($carinopol,$carinopintu,$caristatus);
+            $data['vehicle_inventori'] = $this->Inventori_model->get_by_vehicle($carinopol,$carinopintu);
+            $data['filter_applied'] = true; // Tambahkan flag ini
+            $data['filter_no_pintu'] = $carinopintu;
             
             $this->load->view('headernew', $data);
             $this->load->view('vehicles', $data);
@@ -65,6 +68,7 @@ class Vehicles extends CI_Controller {
         } else {
             $data['vehicles'] = $this->Vehicle_model->getAllVehicles();
             $data['v_doc_detail'] = $this->Vehicle_model->getAllVDocDetail();
+            $data['inventori'] = $this->Inventori_model->get_all_inventori();
             
             $this->load->view('headernew', $data);
             $this->load->view('vehicles', $data);
@@ -201,5 +205,110 @@ class Vehicles extends CI_Controller {
                 redirect('/vehicles');
             }
         } 
+    }
+
+    public function vehiclessparepartadd() {
+        // Validasi input
+        $this->form_validation->set_rules('no_pintu', 'No. Pintu', 'required');
+        
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            $no_pintu = $this->input->post('no_pintu');
+            $qtys = $this->input->post('qty');
+            
+            $this->db->trans_start();
+            
+            try {
+                foreach ($qtys as $inventori_id => $new_qty) {
+                    $new_qty = (int)$new_qty;
+                    $current_data = $this->get_vehicle_inventory($inventori_id, $no_pintu);
+                    $current_qty = $current_data ? $current_data->qty : 0;
+                    
+                    // Hitung selisih jumlah
+                    $qty_diff = $new_qty - $current_qty;
+                    
+                    if ($new_qty > 0) {
+                        // Update atau insert data inventori kendaraan
+                        $this->db->where('inventori_id', $inventori_id);
+                        $this->db->where('no_pintu', $no_pintu);
+                        
+                        $inventory_data = [
+                            'qty' => $new_qty,
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ];
+                        
+                        if ($this->db->count_all_results('inventori_vehicles') > 0) {
+                            $this->db->where('inventori_id', $inventori_id);
+                            $this->db->where('no_pintu', $no_pintu);
+                            $this->db->update('inventori_vehicles', $inventory_data);
+                        } else {
+                            $inventory_data['inventori_id'] = $inventori_id;
+                            $inventory_data['no_pintu'] = $no_pintu;
+                            $this->db->insert('inventori_vehicles', $inventory_data);
+                        }
+                        
+                        // Update stok inventori (boleh minus)
+                        if ($qty_diff != 0) {
+                            $this->db->set('qty', "qty-{$qty_diff}", false);
+                            $this->db->where('id', $inventori_id);
+                            $this->db->update('inventori');
+                        }
+                    } else {
+                        // Jika qty = 0, hapus dari inventori kendaraan
+                        $this->db->where('inventori_id', $inventori_id);
+                        $this->db->where('no_pintu', $no_pintu);
+                        $this->db->delete('inventori_vehicles');
+                        
+                        // Kembalikan stok ke inventori
+                        if ($current_qty > 0) {
+                            $this->db->set('qty', "qty+{$current_qty}", false);
+                            $this->db->where('id', $inventori_id);
+                            $this->db->update('inventori');
+                        }
+                    }
+                }
+                
+                $this->db->trans_complete();
+                
+                if ($this->db->trans_status() === FALSE) {
+                    throw new Exception('Gagal menyimpan data sparepart');
+                }
+                
+                $this->session->set_flashdata('success', 'Data sparepart kendaraan berhasil diperbarui');
+                redirect('vehicles');
+                
+            } catch (Exception $e) {
+                $this->db->trans_rollback();
+                $this->session->set_flashdata('error', $e->getMessage());
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        }
+    }
+
+    private function get_vehicle_inventory($inventori_id, $no_pintu) {
+        $this->db->where('inventori_id', $inventori_id);
+        $this->db->where('no_pintu', $no_pintu);
+        return $this->db->get('inventori_vehicles')->row();
+    }
+
+    public function sparepart($no_pintu)
+    {
+        $data = [
+            "title" => "Manajemen Kendaraan | Fleet Management System",
+            "nopage" => 1051,
+        ];
+
+        $data['vehicles'] = $this->Vehicle_model->getAllVehicles();
+        $data['v_doc_detail'] = $this->Vehicle_model->getAllVDocDetail();
+        $data['inventori'] = $this->Inventori_model->get_all_inventori();
+        $data['vehicle_inventori'] = $this->Inventori_model->get_by_vehicle($no_pintu);
+        $data['filter_applied'] = true; // Tambahkan flag ini
+        $data['filter_no_pintu'] = $no_pintu;
+        
+        $this->load->view('headernew', $data);
+        $this->load->view('vehicles_sparepart', $data);
+        $this->load->view('footernew');
     }
 }

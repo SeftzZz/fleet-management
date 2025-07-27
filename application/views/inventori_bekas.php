@@ -78,21 +78,23 @@
                         <table id="tbl_inventory" class="table table-bordered table-striped">
                           <thead>
                             <tr>
+                              <th>No</th>
                               <th>Tanggal PO</th>
                               <th>No PO</th>
                               <th>Nama Barang</th>
                               <th>Qty</th>
-                              <th>Jumlah</th>
+                              <th>Sumber No Pintu</th>
                               <th>Aksi</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td>2025-07-10</td>
-                              <td>KMJP-DT/MS/0725-0001</td>
-                              <td>Oli Mesin</td>
-                              <td>10</td>
-                              <td>Rp 10.000.000</td>
+                              <td>1</td>
+                              <td>2025-06-10</td>
+                              <td>KMJP-DT/MS/0625-0001</td>
+                              <td>Kampas Kopling</td>
+                              <td>2</td>
+                              <td>601</td>
                               <td>
                                 <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
                                 <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
@@ -100,11 +102,12 @@
                               </td>
                             </tr>
                             <tr>
-                              <td>2025-07-10</td>
-                              <td>KMJP-DT/MS/0725-0001</td>
+                              <td>2</td>
+                              <td>2025-06-10</td>
+                              <td>KMJP-DT/MS/0625-0001</td>
                               <td>Baut nomor 20</td>
-                              <td>10</td>
-                              <td>Rp 4.500.000</td>
+                              <td>2</td>
+                              <td>503</td>
                               <td>
                                 <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
                                 <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
