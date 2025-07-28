@@ -130,6 +130,8 @@
                                                             <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#mdl_editvehicles<?php echo $row->id ?>"><i class="fas fa-pencil-alt"></i></button>
 
                                                             <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delvehicles<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
+
+                                                            <a href="<?php echo base_url('vehicles/sparepart/'.$row->no_pintu.'/') ?>" class="btn btn-sm btn-outline-success"><i class="fas fa-list"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -206,6 +208,43 @@
                                                 </div>
                                             </div>
                                         </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="sparepart" role="tabpanel" aria-labelledby="sparepart_tab">
+                                        <?php if(isset($filter_applied) && $filter_applied): ?>
+                                            <form id="form1" name="form1" action="<?php echo site_url('vehicles/vehiclessparepartadd/')?>" method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="no_pintu" value="<?php echo $filter_no_pintu ?>">
+                                                <div class="row g-3">
+                                                    <?php foreach($vehicle_inventori as $row): ?>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label><?php echo htmlspecialchars($row['name']) ?></label>
+                                                            <p>Stok Inventori: <strong><?php echo $row['inventory_qty'] ?></strong></p>
+                                                            <div class="input-group date" id="tglCariJoin" data-target-input="nearest">
+                                                                <div class="input-group-append">
+                                                                    <div class="input-group-text">Owned: <strong><?php echo $row['vehicle_qty'] ?></strong></div>
+                                                                </div>
+                                                                <input type="number" name="qty[<?php echo $row['id'] ?>]" 
+                                                                       placeholder="0"                                                                    
+                                                                       class="form-control <?php if (form_error('qty['.$row['id'].']')) {echo "is-invalid";} ?>" 
+                                                                       max="<?php echo $row['inventory_qty'] ?>" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <?php endforeach; ?>
+                                                    <div class="col-md-12 d-flex align-items-end">
+                                                        <center>
+                                                            <a href="<?php echo site_url('vehicles') ?>" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <input type="submit" name="submit" class="btn btn-primary" value="&nbsp;&nbsp;&nbsp;&nbsp;Submit&nbsp;&nbsp;&nbsp;&nbsp;">
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        <?php else: ?>
+                                            <div class="alert alert-info">
+                                                Silakan terapkan filter terlebih dahulu untuk melihat dan mengelola sparepart kendaraan.
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>

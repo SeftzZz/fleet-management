@@ -65,6 +65,154 @@
 
         <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1081||$nopage==1091||$nopage==1100||$nopage==1200) { ?>
             <script>
+                $(document).ready(function () {
+                    // Sembunyikan tabel saat pertama kali load
+                    $('#barangTable').hide();
+                    $('#button-form').hide();
+
+                    // Tampilkan tabel saat no_pintu dipilih
+                    $('#no_pintu').on('change', function () {
+                        const val = $(this).val();
+                        if (val) {
+                            $('#barangTable').show();
+                            $('#button-form').show();
+                        } else {
+                            $('#barangTable').hide();
+                            $('#button-form').hide();
+                        }
+                    });
+
+                    $('#addRowBtn').on('click', function () {
+                        let isValid = true;
+
+                        $('#barangTable tbody tr').each(function () {
+                            const sparepartVal = $(this).find('.sparepart-select').val();
+                            const kondisiVal = $(this).find('.kondisi-select').val();
+                            const qtyVal = $(this).find('input[name="qty[]"]').val();
+                            const sumberSelect = $(this).find('.sumber-select');
+                            const sumberVal = sumberSelect.is(':disabled') ? 'valid' : sumberSelect.val();
+
+                            if (!sparepartVal || !kondisiVal || !qtyVal || parseInt(qtyVal) <= 0 || !sumberVal || sumberVal === '') {
+                                isValid = false;
+                                return false; // break loop
+                            }
+                        });
+
+                        if (!isValid) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Peringatan',
+                                text: 'Harap isi dengan lengkap sebelum menambahkan baris baru.'
+                            });
+                            return; // stop here
+                        }
+
+                        const $newRow = $('#rowTemplate tr').clone();
+                        $('#barangTable tbody').append($newRow);
+
+                        // Re-inisialisasi select2 setelah append
+                        $newRow.find('.sparepart-select').select2({
+                            width: '100%',
+                            dropdownParent: $newRow
+                        });
+
+                        $newRow.find('.sumber-select').select2({
+                            width: '100%',
+                            dropdownParent: $newRow
+                        });
+
+                        updateRowNumbers();
+                        bindEvents($newRow);
+                    });
+
+                    function bindEvents($row) {
+                        $row.find('.sparepart-select').on('change', function () {
+                            const qty = parseInt($(this).find(':selected').data('qty')) || 0;
+                            const $sumberWrapper = $(this).closest('tr').find('.sumber-wrapper');
+                            const $sumberCol = $(this).closest('tr').find('.sumber_kolom');
+
+                            if (qty <= 0) {
+                                const selectElement = $(`
+                                    <select name="no_pintu_sumber[]" class="form-control sumber-select">
+                                        <option value="">Pilih...</option>
+                                        <?php foreach ($kendaraans as $value) { ?>
+                                            <option value='<?php echo $value->no_pintu; ?>'>
+                                                Oli Mesin - 10 - <?php echo $value->no_pintu; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                `);
+                                $sumberWrapper.html(selectElement);
+                                selectElement.select2({
+                                    width: '100%',
+                                    dropdownParent: $row
+                                });
+                            } else {
+                                const selectDisabled = $(`
+                                    <select name="no_pintu_sumber[]" class="form-control sumber-select" disabled>
+                                        <option value="">Pilih...</option>
+                                        <?php foreach ($kendaraans as $value) { ?>
+                                            <option value='<?php echo $value->no_pintu; ?>'>
+                                                Oli Mesin - 10 - <?php echo $value->no_pintu; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                `);
+                                $sumberWrapper.html(selectDisabled);
+                                selectDisabled.select2({
+                                    width: '100%',
+                                    dropdownParent: $row
+                                });
+                            }
+
+                            evaluateHeaderSumberVisibility();
+                        });
+
+                        $row.find('.hapusRow').on('click', function () {
+                            $(this).closest('tr').remove();
+                            updateRowNumbers();
+                            evaluateHeaderSumberVisibility();
+                        });
+                    }
+
+                    function updateRowNumbers() {
+                        $('#barangTable tbody tr').each(function (i) {
+                            $(this).find('.no_urut').text(i + 1);
+                        });
+                    }
+
+                    function evaluateHeaderSumberVisibility() {
+                        let show = false;
+
+                        $('#barangTable tbody tr').each(function () {
+                            const qty = parseInt($(this).find('.sparepart-select option:selected').data('qty')) || 0;
+                            if (qty <= 0) {
+                                show = true;
+                            }
+                        });
+
+                        // Hanya evaluasi header, jangan re-render konten row lagi
+                        if (show) {
+                            $('#th_sumber').show();
+                        } else {
+                            $('#th_sumber').show();
+                        }
+                    }
+
+                    // Jika ada row default dari server, inisialisasi select2 dan event-nya
+                    $('#barangTable tbody tr').each(function () {
+                        const $row = $(this);
+                        $row.find('.sparepart-select').select2({
+                            width: '100%',
+                            dropdownParent: $row
+                        });
+                        bindEvents($row);
+                    });
+
+                    evaluateHeaderSumberVisibility();
+                });
+            </script>
+            <script>
                 function getQueryParam(param) {
                     const urlParams = new URLSearchParams(window.location.search);
                     return urlParams.get(param);

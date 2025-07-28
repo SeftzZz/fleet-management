@@ -125,12 +125,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?php echo site_url('maintenance') ?>" class="nav-link <?php if ($nopage==1200) echo('active') ?>" />
-                                    <i class="nav-icon fas fa-wrench"></i>
-                                    <p>Maintenance</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="<?php echo site_url('wallet') ?>" class="nav-link <?php if ($nopage==1071) echo('active') ?>" />
                                     <i class="nav-icon fas fa-wallet"></i>
                                     <p>Form Wallet</p>
@@ -142,6 +136,36 @@
                                     <p>Reimbursement</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="<?php echo site_url('maintenance') ?>" class="nav-link <?php if ($nopage==1200) echo('active') ?>" />
+                                    <i class="nav-icon fas fa-wrench"></i>
+                                    <p>Maintenance</p>
+                                </a>
+                            </li>
+                            <?php if ($nopage==1100||$nopage==1101) { ?>
+                            <li class="nav-item menu-open">
+                            <?php } else { ?>
+                            <li class="nav-item">
+                            <?php } ?>
+                                    <a href="#" class="nav-link <?php if ($nopage==1100) echo ('active') ?>">
+                                    <i class="nav-icon fas fa-building"></i>
+                                    <p>Inventory<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?php echo site_url('inventori/baru') ?>" class="nav-link <?php if ($nopage==1100) echo('active') ?>" />
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Inventori Barang Baru</p>
+                                        </a>
+                                    </li> 
+                                    <li class="nav-item">
+                                        <a href="<?php echo site_url('inventori/bekas') ?>" class="nav-link <?php if ($nopage==1101) echo('active') ?>" />
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Inventori Barang Bekas</p>
+                                        </a>
+                                    </li> 
+                                </ul>
+                            </li>   
                             <?php if ($nopage==1001||$nopage==1011||$nopage==1021||$nopage==1081||$nopage==1091) { ?>
                             <li class="nav-item menu-open">
                             <?php } else { ?>
@@ -180,12 +204,6 @@
                                         <a href="<?php echo site_url('pengguna') ?>" class="nav-link <?php if ($nopage==1081) echo('active') ?>" />
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Users</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="<?php echo site_url('inventori') ?>" class="nav-link <?php if ($nopage==1100) echo('active') ?>" />
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Inventory</p>
                                         </a>
                                     </li>
                                 </ul>

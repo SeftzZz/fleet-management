@@ -15,19 +15,31 @@ class Inventori extends CI_Controller {
         $this->load->library("recaptcha");
         $this->load->library("user_agent");
         date_default_timezone_set("Asia/Jakarta");
-        $this->load->model('Api_m');
+        $this->load->model('Inventori_model');
         $this->load->database();
     }
 
-	public function index()
-	{
+    public function baru()
+    {
         $data = [
             "title" => "Dashboard Utama | Fleet Management System",
             "nopage" => 1100,
         ];
 
-		$this->load->view('headernew', $data);
-		$this->load->view('inventori');
-		$this->load->view('footernew');
-	}
+        $this->load->view('headernew', $data);
+        $this->load->view('inventori_baru');
+        $this->load->view('footernew');
+    }
+
+    public function bekas()
+    {
+        $data = [
+            "title" => "Dashboard Utama | Fleet Management System",
+            "nopage" => 1101,
+        ];
+
+        $this->load->view('headernew', $data);
+        $this->load->view('inventori_bekas');
+        $this->load->view('footernew');
+    }
 }

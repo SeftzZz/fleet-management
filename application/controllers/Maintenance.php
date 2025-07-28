@@ -15,7 +15,8 @@ class Maintenance extends CI_Controller {
         $this->load->library("recaptcha");
         $this->load->library("user_agent");
         date_default_timezone_set("Asia/Jakarta");
-        $this->load->model('Api_m');
+        $this->load->model('Timmgmt_model');
+        $this->load->model('Inventori_model');
         $this->load->database();
     }
 
@@ -30,4 +31,19 @@ class Maintenance extends CI_Controller {
 		$this->load->view('maintenance');
 		$this->load->view('footernew');
 	}
+
+    public function addmaintenance()
+    {
+        $data = [
+            "title" => "Dashboard Utama | Fleet Management System",
+            "nopage" => 1200,
+        ];
+
+        $data['kendaraans'] = $this->Timmgmt_model->getAllTimMgmtAktif();
+        $data['inventori'] = $this->Inventori_model->get_all_inventori();
+
+        $this->load->view('headernew', $data);
+        $this->load->view('maintenance_add');
+        $this->load->view('footernew');
+    }
 }
