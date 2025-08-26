@@ -18,6 +18,7 @@ class Wallet extends CI_Controller {
         date_default_timezone_set("Asia/Jakarta");
         $this->load->model('Driver_model');
         $this->load->model('Wallet_model');
+        $this->load->model('Log_model');
         $this->load->database();
 
         if(!$this->ion_auth->logged_in()) {
@@ -68,9 +69,11 @@ class Wallet extends CI_Controller {
 
         // Ambil data transaksi wallet yang sudah diklaim
         $data['klaim_done'] = $this->db
-            ->where('transaction_type', 'credit')
+            ->where('transaction_type', 'debit')
             ->where('status', 'sudah')
-            ->order_by('updated_at', 'DESC')
+            ->where('is_delete', 0)
+            ->not_like('description', 'Uang Jalan DO -', 'after')
+            ->order_by('tgl_klaim', 'DESC')
             ->get('wallet_transactions')
             ->result();
 
@@ -111,6 +114,7 @@ class Wallet extends CI_Controller {
                 'wallet_id'         => $wallet_id,
                 'transaction_type'  => $this->input->post('transaksiTipe'),
                 'amount'            => $amount,
+                'tgl_klaim'         => $this->input->post('tgl_klaim'),
                 'description'       => $this->input->post('utk'),
                 'status'            => 'sudah',
                 'created_at'        => date('Y-m-d H:i:s'),
@@ -120,11 +124,29 @@ class Wallet extends CI_Controller {
             // Kurangi saldo berdasarkan balance dari DB, bukan dari input form
             $new_balance = $current_balance - $amount;
 
-            $this->db->where('driver_id', $driver_id);
+            $this->db->where('id', $wallet_id);
             $this->db->update('wallets', [
                 'balance'    => $new_balance,
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
+
+            // insert tabel log  
+            $this->db->select('name'); 
+            $this->db->from('drivers'); 
+            $this->db->where('id', $wallet_id);
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                $supir = $query->row();
+            } 
+            $query->free_result();
+
+            $dataLog = array(
+                'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                'aktifitas'     => 'Membuat form klaim wallet '.$supir->name.' sebesar '.$amount,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Log_model->insert($dataLog); 
 
             $this->session->set_flashdata('pesansukses', 'Form wallet berhasil diproses.');
         } else {
@@ -132,6 +154,40 @@ class Wallet extends CI_Controller {
         }
         
         redirect('wallet');
+    }
+
+    public function walletlog() {
+        $data = [
+            "title"  => "Data Klaim Wallet | Fleet Management System",
+            "nopage" => 1072,
+        ];
+
+        $this->load->view('headernew', $data);
+        $this->load->view('wallet_claimlog', $data);
+        $this->load->view('footernew');
+    }
+
+    public function ajax_listklaimwallet() {
+        $list = $this->Wallet_model->get_datatablesKlaimWallet();
+        $data = array();
+        $no = $_POST['start'] ?? 0;
+        foreach ($list as $klaimwallet) {
+            $no++;
+            $row = array();
+            $row[] = $klaimwallet->tgl_klaim;
+            $row[] = $klaimwallet->name;
+            $row[] = $this->fppfunction->rupiah_ind($klaimwallet->amount);
+            $row[] = $klaimwallet->description;
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => intval($_POST['draw'] ?? 1),
+            "recordsTotal" => $this->Wallet_model->count_allKlaimWallet(),
+            "recordsFiltered" => $this->Wallet_model->count_filteredKlaimWallet(),
+            "data" => $data,
+        );
+        echo json_encode($output);
     }
 
 }

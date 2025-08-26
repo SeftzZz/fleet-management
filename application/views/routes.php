@@ -223,7 +223,7 @@
                                         <p class="lead2 mb-3">
                                             Rekapitulasi Ritasi Harian
                                             <a href="<?php echo base_url('routes/multi_ritasi') ?>" class="btn btn-primary float-right ml-2">
-                                                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Tambah Log
+                                                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Tambah Ritasi
                                             </a>
                                             <button id="btn-copy-checked" class="btn btn-success float-right">
                                                 <i class="fas fa-copy"></i>&nbsp;&nbsp;Copy Data
@@ -278,7 +278,7 @@
                             <div class="modal-content">
                                 <form id="formEditRitasi" method="post" action="">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Edit Log Ritasi</h4>
+                                        <h4 class="modal-title">Edit Ritasi</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
@@ -374,7 +374,7 @@
                             <div class="modal-content">
                                 <form id="formDeleteRitasi" method="post" action="">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Hapus Log Ritasi</h4>
+                                        <h4 class="modal-title">Hapus Ritasi</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">

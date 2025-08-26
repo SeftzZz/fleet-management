@@ -84,21 +84,26 @@
                           <tr>
                             <th>#</th>
                             <th>No Pintu</th>
-                            <th>No Polisi</th>
-                            <th>Tanggal</th>
-                            <th>Jenis</th>
-                            <th>Keterangan</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Selesai</th>
+                            <th>Type</th>
+                            <th>Diajukan Oleh</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>601</td>
-                            <td>B 9123 XY</td>
-                            <td>2025-07-10</td>
-                            <td>Service Berkala</td>
-                            <td>(Oli Mesin - 2 - 509), (Baut nomor 20 - 2 - 302)</td>
-                          </tr>
+                          <?php
+                            $no = 1;
+                            foreach($maintenances as $row) {
+                          ?>
+                            <tr>
+                              <td><?php echo $no++ ?></td>
+                              <td><?php echo $row->no_pintu ?></td>
+                              <td><?php echo $row->tgl_order ?></td>
+                              <td><?php echo $row->tgl_selesai ?></td>
+                              <td><?php echo $row->type ?></td>
+                              <td><?php echo $row->requester ?></td>
+                            </tr>
+                          <?php } ?>
                         </tbody>
                       </table>
                     </div>

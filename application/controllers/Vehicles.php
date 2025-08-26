@@ -20,6 +20,7 @@ class Vehicles extends CI_Controller {
         $this->load->model('Wallet_model');
         $this->load->model('Vehicle_model');
         $this->load->model('Inventori_model');
+        $this->load->model('Log_model');
         $this->load->database();
 
         if(!$this->ion_auth->logged_in()) {
@@ -76,8 +77,7 @@ class Vehicles extends CI_Controller {
         }
 	}
 
-	public function vehiclesadd()
-    {
+	public function vehiclesadd() {
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('no_pol','No. Polisi','required');
             $this->form_validation->set_rules('no_pintu','No. Pintu','required');
@@ -111,14 +111,24 @@ class Vehicles extends CI_Controller {
                     'updated_at'    => date('Y-m-d H:i:s')
                 );
                 $this->Vehicle_model->insert($dataVehicles);
+                $vehicle_id = $this->db->insert_id();
+
+                // insert tabel log
+                $dataLog = array(
+                    'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                    'aktifitas'     => 'Tambah kendaraan nomer polisi '.$this->input->post('no_pol').', nomer pintu '.$this->input->post('no_pintu').', vehicle_id '.$vehicle_id,
+                    'created_at'    => date('Y-m-d H:i:s'),
+                    'updated_at'    => date('Y-m-d H:i:s')
+                );                              
+                $this->Log_model->insert($dataLog);
+
                 $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                 redirect('/vehicles');
             }
         } 
     }
 
-    public function vehiclesedit($id)
-    {
+    public function vehiclesedit($id) {
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('no_pol','No. Polisi','required');
             $this->form_validation->set_rules('no_pintu','Nama','required');
@@ -151,14 +161,32 @@ class Vehicles extends CI_Controller {
                     'updated_at'    => date('Y-m-d H:i:s')
                 );
                 $this->Vehicle_model->update($id, $dataVehicles);
+
+                // insert tabel log  
+                $this->db->select('no_pol, no_pintu'); 
+                $this->db->from('vehicles'); 
+                $this->db->where('id', $id);
+                $query = $this->db->get();
+                if ($query->num_rows() > 0) {
+                    $mobil = $query->row();
+                } 
+                $query->free_result();
+
+                $dataLog = array(
+                    'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                    'aktifitas'     => 'Edit kendaraan nomer polisi '.$mobil->no_pol.', nomer pintu '.$mobil->no_pintu.', vehicle_id '.$id,
+                    'created_at'    => date('Y-m-d H:i:s'),
+                    'updated_at'    => date('Y-m-d H:i:s')
+                );                              
+                $this->Log_model->insert($dataLog);
+
                 $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                 redirect('/vehicles');
             }
         }
     }
 
-    public function vehiclesdel($id)
-    {
+    public function vehiclesdel($id) {
         if ($post = $this->input->post('submit')) {
             // update tabel vehicles  
             $dataVehicles = array(
@@ -166,6 +194,25 @@ class Vehicles extends CI_Controller {
                 'updated_at'    => date('Y-m-d H:i:s')
             );                              
             $this->Vehicle_model->update($id,$dataVehicles);
+
+            // insert tabel log  
+            $this->db->select('no_pol, no_pintu'); 
+            $this->db->from('vehicles'); 
+            $this->db->where('id', $id);
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                $mobil = $query->row();
+            } 
+            $query->free_result();
+
+            $dataLog = array(
+                'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                'aktifitas'     => 'Hapus kendaraan nomer polisi '.$mobil->no_pol.', nomer pintu '.$mobil->no_pintu.', vehicle_id '.$id,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Log_model->insert($dataLog);
+
             $this->session->set_flashdata('pesansukses','Data berhasil dihapus');
             redirect('/vehicles');
         } 

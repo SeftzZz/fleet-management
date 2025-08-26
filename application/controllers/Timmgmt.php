@@ -20,6 +20,7 @@ class Timmgmt extends CI_Controller {
         $this->load->model('Tim_model');
         $this->load->model('Driver_model');
         $this->load->model('Vehicle_model');
+        $this->load->model('Log_model');
         $this->load->database();
 
         if(!$this->ion_auth->logged_in()) {
@@ -67,8 +68,7 @@ class Timmgmt extends CI_Controller {
         }
 	}
 
-    public function add()
-    {
+    public function add() {
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('nmTim','Nama Tim','required');
             $this->form_validation->set_rules('nmSupir','Nama Supir','required');
@@ -115,14 +115,34 @@ class Timmgmt extends CI_Controller {
                         'updated_at'        => date('Y-m-d H:i:s')
                     );                              
                     $this->Timmgmt_model->insert($dataAtim); 
+                    $anggotatim_id = $this->db->insert_id();
 
                     // update tabel drivers 
-                    $id=$this->input->post('nmSupir');
+                    $driver_id=$this->input->post('nmSupir');
                     $dataSupir = array(
                         'no_pintu'          => $kendaraan->no_pintu,
                         'updated_at'        => date('Y-m-d H:i:s')
                     );                              
-                    $this->Driver_model->update2($id,$dataSupir); 
+                    $this->Driver_model->update2($driver_id,$dataSupir); 
+
+                    // insert tabel log  
+                    $this->db->select('nama_tim, nama_supir, no_pol, no_pintu'); 
+                    $this->db->from('tim_mgmt'); 
+                    $this->db->where('id', $anggotatim_id);
+                    $query = $this->db->get();
+                    if ($query->num_rows() > 0) {
+                        $anggota_tim = $query->row();
+                    } 
+                    $query->free_result();
+
+                    $dataLog = array(
+                        'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                        'aktifitas'     => 'Tambah anggota tim '.$anggota_tim->nama_tim.', supir '.$anggota_tim->nama_supir.', nomer polisi '.$anggota_tim->no_pol.', nomer pintu '.$anggota_tim->no_pintu.', anggotatim_id '.$anggotatim_id,
+                        'created_at'    => date('Y-m-d H:i:s'),
+                        'updated_at'    => date('Y-m-d H:i:s')
+                    );                              
+                    $this->Log_model->insert($dataLog);
+
                     $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
                     redirect('timmgmt');
                 }
@@ -130,8 +150,7 @@ class Timmgmt extends CI_Controller {
         } 
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('nmTim','Nama Tim','');
             $this->form_validation->set_rules('nmSupir','Nama Supir','');
@@ -171,23 +190,41 @@ class Timmgmt extends CI_Controller {
                 $dataAtim = array(
                     // 'tim_id'            => $this->input->post('nmTim'),
                     // 'nama_tim'          => $tim->nama_tim,
-                    'driver_id'         => $this->input->post('nmSupir'),
-                    'nama_supir'        => $supir->name,
-                    'vehicle_id'        => $this->input->post('mobil'),
-                    'no_pol'            => $kendaraan->no_pol,
-                    'no_pintu'          => $kendaraan->no_pintu,
+                    // 'driver_id'         => $this->input->post('nmSupir'),
+                    // 'nama_supir'        => $supir->name,
+                    // 'vehicle_id'        => $this->input->post('mobil'),
+                    // 'no_pol'            => $kendaraan->no_pol,
+                    // 'no_pintu'          => $kendaraan->no_pintu,
                     'status_tim_mgmt'   => $this->input->post('statusAtim'),
                     'updated_at'        => date('Y-m-d H:i:s')
                 );                              
                 $this->Timmgmt_model->update($id,$dataAtim);
 
                 // update tabel drivers 
-                $id=$this->input->post('nmSupir');
+                $driver_id=$this->input->post('nmSupir');
                 $dataSupir = array(
                     'no_pintu'          => '',
                     'updated_at'        => date('Y-m-d H:i:s')
                 );                              
-                $this->Driver_model->update2($id,$dataSupir); 
+                $this->Driver_model->update2($driver_id,$dataSupir); 
+
+                // insert tabel log  
+                $this->db->select('nama_tim, nama_supir, no_pol, no_pintu'); 
+                $this->db->from('tim_mgmt'); 
+                $this->db->where('id', $id);
+                $query = $this->db->get();
+                if ($query->num_rows() > 0) {
+                    $anggota_tim = $query->row();
+                } 
+                $query->free_result();
+
+                $dataLog = array(
+                    'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                    'aktifitas'     => 'Edit anggota tim '.$anggota_tim->nama_tim.', supir '.$anggota_tim->nama_supir.', nomer polisi '.$anggota_tim->no_pol.', nomer pintu '.$anggota_tim->no_pintu.', anggotatim_id '.$id,
+                    'created_at'    => date('Y-m-d H:i:s'),
+                    'updated_at'    => date('Y-m-d H:i:s')
+                );                              
+                $this->Log_model->insert($dataLog);
 
                 $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
                 redirect('timmgmt');
@@ -195,24 +232,40 @@ class Timmgmt extends CI_Controller {
         } 
     }
 
-    public function del($id)
-    {
+    public function del($id) {
         if ($post = $this->input->post('submit')) {
             // update tabel tim_mgmt  
             $dataAtim = array(
                 'is_delete'         => $this->input->post('del'),
-                'status_tim_mgmt'   => 'Non Aktif',
                 'updated_at'        => date('Y-m-d H:i:s')
             );                              
             $this->Timmgmt_model->update($id,$dataAtim);
 
             // update tabel drivers 
-            $id=$this->input->post('nmSupir');
+            $driver_id=$this->input->post('nmSupir');
             $dataSupir = array(
                 'no_pintu'          => '',
                 'updated_at'        => date('Y-m-d H:i:s')
             );                              
-            $this->Driver_model->update2($id,$dataSupir); 
+            $this->Driver_model->update2($driver_id,$dataSupir); 
+
+            // insert tabel log  
+            $this->db->select('nama_tim, nama_supir, no_pol, no_pintu'); 
+            $this->db->from('tim_mgmt'); 
+            $this->db->where('id', $id);
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                $anggota_tim = $query->row();
+            } 
+            $query->free_result();
+
+            $dataLog = array(
+                'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                'aktifitas'     => 'Hapus anggota tim '.$anggota_tim->nama_tim.', supir '.$anggota_tim->nama_supir.', nomer polisi '.$anggota_tim->no_pol.', nomer pintu '.$anggota_tim->no_pintu.', anggotatim_id '.$id,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Log_model->insert($dataLog);
 
             $this->session->set_flashdata('pesansukses','Data berhasil disimpan'); 
             redirect('/timmgmt');

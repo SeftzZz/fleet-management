@@ -24,4 +24,19 @@ class Maintenance_model extends CI_Model {
     public function delete($id) {
         return $this->db->delete($this->table, ['id' => $id]);
     }
+
+    public function get_all_maintenances() {
+        $data = array();
+        $this->db->from('maintenances');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $data[] = $row;
+            } 
+        }
+        $query->free_result();  
+        return $data;  
+    }
 }

@@ -244,13 +244,16 @@
                                                 <div class="form-group">
                                                     <label>Status</label>
                                                     <select name="statusAtim" class="custom-select <?php if (form_error('statusAtim')) {echo "is-invalid";} ?>" style="width:100%;">
+                                                        
+
                                                         <option value=""/>--- Pilih Status ---</option>
-                                                        <?php 
+                                                        <?php
                                                             $pilihanstatus=array("Aktif","Non Aktif");
-                                                            foreach ($pilihanstatus as $value) { 
+                                                            foreach ($pilihanstatus as $value) {
+                                                                $selected=($value == 'Aktif') ? "selected" : "";
+                                                                echo "<option value='$value' $selected>$value</option>";
+                                                            }
                                                         ?>
-                                                            <option value='<?php echo $value; ?>' <?php echo set_select('statusAtim', $value);?> /><?php echo $value; ?></option>
-                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                             </div>

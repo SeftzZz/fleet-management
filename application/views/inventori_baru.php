@@ -8,7 +8,8 @@
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="<?php echo site_url('dashboard') ?>">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Inventori</li>
+                                    <li class="breadcrumb-item"><a href="<?php echo site_url('inventori/baru') ?>">Inventori</a></li>
+                                    <li class="breadcrumb-item active">Inventori Barang Baru</li>
                                 </ol>
                             </div>
                         </div>
@@ -16,210 +17,106 @@
                 </div>
                 <!-- /.content-header -->
 
-                <!-- Kartu Statistik -->
+                <!-- Main content -->
                 <section class="content">
-                    <div class="row">
-                      <div class="col-lg-4 col-6">
-                        <div class="small-box bg-info">
-                          <div class="inner">
-                            <h3>125</h3>
-                            <p>Total Barang</p>
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-boxes"></i>
-                          </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 col-6">
+                                <div class="small-box callout callout-info">
+                                    <div class="inner">
+                                        <span>Total Barang</span>
+                                        <h3><?php echo $total_barang ?></h3>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-boxes"></i>
+                                    </div>
+                                    <p class="small-box-footer2">
+                                        &nbsp;&nbsp;&nbsp;
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-6">
+                                <div class="small-box callout callout-success" id="stokHabisBox" style="cursor:pointer;">
+                                    <div class="inner">
+                                        <span>Stok Habis</span>
+                                        <h3><?php echo $stok_habis ?></h3>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <p class="small-box-footer2">
+                                        &nbsp;&nbsp;&nbsp;
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-lg-4 col-6">
-                        <div class="small-box bg-warning">
-                          <div class="inner">
-                            <h3>18</h3>
-                            <p>Stok Habis</p>
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                          </div>
-                        </div>
-                      </div>
                     </div>
 
-                    <!-- Filter -->
-                    <div class="card card-outline card-primary">
-                      <div class="card-header">
-                        <h3 class="card-title">Filter Inventory</h3>
-                      </div>
-                      <div class="card-body">
-                        <form class="form-row">
-                          <div class="form-group col-md-4">
-                            <label>No PO</label>
-                            <input type="text" class="form-control" placeholder="Contoh: Nomor PO">
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label>Nama Barang</label>
-                            <input type="text" class="form-control" placeholder="Contoh: Oli Mesin">
-                          </div>
-                          <div class="form-group col-md-12 mt-2">
-                            <button type="submit" class="btn btn-primary">Filter</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
-                          </div>
-                        </form>
-                      </div>
+                    <div class="container-fluid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Filter Inventori Barang Baru</h3>
+                                <div class="card-tools">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                  </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Nama Barang</label>
+                                            <input type="text" name="nmBarang" id="nmBarang" value="<?php echo set_value('nmBarang')?>" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>   
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <center>
+                                            <button id="btnReset" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button id="btnFilter" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;Filter&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                        </center>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Tabel Data -->
-                    <div class="card">
-                      <div class="card-header">
-                        <h3 class="card-title">Data Barang</h3>
-                        <div class="card-tools">
-                          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalFormPO"><i class="fas fa-plus"></i> Tambah PO</button>
+                    <div class="container-fluid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Inventori Barang Baru</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="tbl_inventoryBaru" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Barang</th>
+                                            <th>Qty</th>
+                                            <th>Terpakai</th>
+                                            <th width="15%">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Nama Barang</th>
+                                            <th>Qty</th>
+                                            <th>Terpakai</th>
+                                            <th width="15%">Aksi</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
-                      </div>
-                      <div class="card-body table-responsive">
-                        <table id="tbl_inventory" class="table table-bordered table-striped">
-                          <thead>
-                            <tr>
-                              <th>No</th>
-                              <th>Tanggal PO</th>
-                              <th>No PO</th>
-                              <th>Nama Barang</th>
-                              <th>Qty</th>
-                              <th>Jumlah</th>
-                              <th>Aksi</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>1</td>
-                              <td>2025-07-10</td>
-                              <td>KMJP-DT/MS/0725-0001</td>
-                              <td>Oli Mesin</td>
-                              <td>10</td>
-                              <td>Rp 10.000.000</td>
-                              <td>
-                                <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
-                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>2025-07-10</td>
-                              <td>KMJP-DT/MS/0725-0001</td>
-                              <td>Baut nomor 20</td>
-                              <td>10</td>
-                              <td>Rp 4.500.000</td>
-                              <td>
-                                <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
-                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
-                              </td>
-                            </tr>
-                            <!-- Tambahkan data dummy lainnya jika perlu -->
-                          </tbody>
-                        </table>
-                      </div>
                     </div>
+                    <div class="container-fluid">&nbsp;</div>
                 </section>
-              </div>
-
-              <!-- Modal Form PO -->
-              <div class="modal fade" id="modalFormPO" tabindex="-1" role="dialog" aria-labelledby="modalFormPOLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl" role="document">
-                  <div class="modal-content">
-                    <form id="formPO">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Formulir Pengajuan Pembelian Barang</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
-                      </div>
-                      <div class="modal-body">
-
-                        <!-- Header Form -->
-                        <table class="table">
-                          <tr><td>Nama</td><td><input type="text" name="nama" class="form-control"></td>
-                              <td>Vendor</td><td><input type="text" name="vendor" class="form-control"></td></tr>
-                          <tr><td>Jabatan</td><td><input type="text" name="jabatan" class="form-control"></td>
-                              <td>Nama PIC</td><td><input type="text" name="pic" class="form-control"></td></tr>
-                          <tr><td>Divisi</td><td><input type="text" name="divisi" class="form-control"></td>
-                              <td>No Telp</td><td><input type="text" name="telp" class="form-control"></td></tr>
-                          <tr><td>Tanggal</td><td><input type="date" name="tanggal" class="form-control"></td>
-                              <td>No PO</td><td><input type="text" name="no_po" class="form-control"></td></tr>
-                        </table>
-
-                        <!-- Tabel Barang -->
-                        <table class="table table-bordered" id="barangTable">
-                          <thead class="thead-light">
-                            <tr><th>No</th><th>Nama Barang</th><th>Qty</th><th>Harga</th><th>Jumlah</th><th>Aksi</th></tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td class="text-center">1</td>
-                              <td><input name="nama_barang[]" class="form-control"></td>
-                              <td><input type="number" name="qty[]" class="form-control" oninput="updateJumlah(this)"></td>
-                              <td><input type="number" name="harga[]" class="form-control" oninput="updateJumlah(this)"></td>
-                              <td><input type="text" name="jumlah[]" class="form-control" readonly></td>
-                              <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Hapus</button></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <button type="button" class="btn btn-success btn-sm" onclick="addRow()">+ Tambah Barang</button>
-
-                        <div class="text-right mt-3">
-                          <strong>Grand Total:</strong> <span id="grandTotal">Rp 0</span>
-                        </div>
-
-                      </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Simpan PO</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-
-              <script>
-                function addRow() {
-                  const table = document.getElementById("barangTable").getElementsByTagName('tbody')[0];
-                  const rowCount = table.rows.length;
-                  const newRow = table.insertRow();
-                  newRow.innerHTML = `
-                    <td class="text-center">${rowCount + 1}</td>
-                    <td><textarea name="nama_barang[]" class="form-control"></textarea></td>
-                    <td><input type="number" name="qty[]" class="form-control" oninput="updateJumlah(this)"></td>
-                    <td><input type="number" name="harga[]" class="form-control" oninput="updateJumlah(this)"></td>
-                    <td><input type="text" name="jumlah[]" class="form-control" readonly></td>
-                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Hapus</button></td>
-                  `;
-                }
-
-                function removeRow(button) {
-                  const row = button.closest('tr');
-                  row.remove();
-                  updateGrandTotal();
-                  updateRowNumbers();
-                }
-
-                function updateJumlah(input) {
-                  const row = input.closest('tr');
-                  const qty = parseFloat(row.querySelector('[name="qty[]"]').value) || 0;
-                  const harga = parseFloat(row.querySelector('[name="harga[]"]').value) || 0;
-                  const jumlah = qty * harga;
-                  row.querySelector('[name="jumlah[]"]').value = jumlah.toLocaleString('id-ID');
-                  updateGrandTotal();
-                }
-
-                function updateGrandTotal() {
-                  let total = 0;
-                  document.querySelectorAll('[name="jumlah[]"]').forEach(input => {
-                    total += parseInt(input.value.replace(/\./g, '').replace(/[^0-9]/g, '')) || 0;
-                  });
-                  document.getElementById("grandTotal").innerText = "Rp " + total.toLocaleString('id-ID');
-                }
-
-                function updateRowNumbers() {
-                  const rows = document.querySelectorAll('#barangTable tbody tr');
-                  rows.forEach((row, index) => {
-                    row.querySelector('td').innerText = index + 1;
-                  });
-                }
-              </script>
+                <!-- /.Main content -->
+            </div>
+            <!-- /.content-wrapper -->

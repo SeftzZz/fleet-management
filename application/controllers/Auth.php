@@ -81,6 +81,24 @@ class Auth extends CI_Controller
 				//if the login is successful
 				//redirect them back to the home page
 				// $this->session->set_flashdata('message', $this->ion_auth->messages());
+
+				// tambah session first_name, last_name ke sistem (FPP)
+				$iduser = $this->session->userdata('user_id');
+				
+				$this->db->select('first_name, last_name'); 
+	            $this->db->from('users'); 
+	            $this->db->where('id', $iduser);
+	            $query = $this->db->get();
+	            if ($query->num_rows() > 0) {
+	                $user = $query->row();
+	            } 
+
+				$dataSess = array(
+		            'user_firstname'  	=> $user->first_name,
+		            'user_lastname'  	=> $user->last_name
+		    	);
+				$this->session->set_userdata($dataSess);
+
 				redirect('dashboard', 'refresh');
 			}
 			else
@@ -124,6 +142,12 @@ class Auth extends CI_Controller
 
 		// log the user out
 		$this->ion_auth->logout();
+
+		// hapus session (FPP)
+		$this->session->unset_userdata('user_id');
+		$this->session->unset_userdata('identity');
+		$this->session->unset_userdata('user_firstname');
+		$this->session->unset_userdata('user_lastname');
 
 		// redirect them to the login page
 		redirect('auth/login', 'refresh');

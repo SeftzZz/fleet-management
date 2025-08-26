@@ -207,7 +207,8 @@ class Route_model extends CI_Model {
     public function getAllJmlRitasiTanpaNodo() {
         $data = array();
         $this->db->from('ritasi');
-        $this->db->where('nomerdo', ' '); 
+        $this->db->where('nomerdo', ' ');
+        $this->db->where('is_delete', 0);
         $query = $this->db->get();
         $data = $query->num_rows();
         $query->free_result();  

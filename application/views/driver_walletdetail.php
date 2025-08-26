@@ -77,6 +77,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Tgl. Ritasi</th>
+                                                    <th>Tgl. Klaim</th>
                                                     <th>Tipe transaksi</th>
                                                     <th>Amount</th>
                                                     <th>Keterangan</th>
@@ -107,6 +108,7 @@
                                                                 <?php echo date('d/m/Y', strtotime($ritasi->tgl_ritasi)); ?>
                                                             </td>
                                                         <?php } ?>
+                                                        <td><?php echo $row->tgl_klaim ?></td>
                                                         <td><?php echo $row->transaction_type ?></td>
                                                         <td><?php echo $this->fppfunction->rupiah_ind($row->amount) ?></td>
                                                         <td><?php echo $row->description ?></td>

@@ -17,8 +17,8 @@ class Driver_model extends CI_Model {
         return $this->db->insert($this->table, $dataSupir);
     }
 
-    public function update2($id, $dataSupir) {
-        return $this->db->where('id', $id)->update($this->table, $dataSupir);
+    public function update2($driver_id, $dataSupir) {
+        return $this->db->where('id', $driver_id)->update($this->table, $dataSupir);
     }
 
     public function delete($id) {

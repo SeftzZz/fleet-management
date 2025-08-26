@@ -19,6 +19,7 @@ class Drivers extends CI_Controller {
         $this->load->model('Driver_model');
         $this->load->model('Vehicle_model');
         $this->load->model('Wallet_model');
+        $this->load->model('Log_model');
         $this->load->database();
 
         if(!$this->ion_auth->logged_in()) {
@@ -95,8 +96,7 @@ class Drivers extends CI_Controller {
         }
     }
 
-    public function supiradd()
-    {
+    public function supiradd() {
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('nmSupir','Nama Supir','required');
             $this->form_validation->set_rules('tmpLahir','Tempat Lahir','required');
@@ -224,6 +224,15 @@ class Drivers extends CI_Controller {
                         );
                         $this->Wallet_model->insert_transaction($dataWalletTransaction);
 
+                        // insert tabel log  
+                        $dataLog = array(
+                            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                            'aktifitas'     => 'Tambah supir '.$this->input->post('nmSupir').' dengan driver_id '.$driver_id,
+                            'created_at'    => date('Y-m-d H:i:s'),
+                            'updated_at'    => date('Y-m-d H:i:s')
+                        );                              
+                        $this->Log_model->insert($dataLog);
+
                         $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                         redirect('/drivers');
                     }
@@ -298,6 +307,15 @@ class Drivers extends CI_Controller {
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Wallet_model->insert_transaction($dataWalletTransaction);
+
+                        // insert tabel log  
+                        $dataLog = array(
+                            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                            'aktifitas'     => 'Tambah supir '.$this->input->post('nmSupir').' dengan driver_id '.$driver_id,
+                            'created_at'    => date('Y-m-d H:i:s'),
+                            'updated_at'    => date('Y-m-d H:i:s')
+                        );                              
+                        $this->Log_model->insert($dataLog);
 
                         $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                         redirect('/drivers');
@@ -374,6 +392,15 @@ class Drivers extends CI_Controller {
                         );
                         $this->Wallet_model->insert_transaction($dataWalletTransaction);
 
+                        // insert tabel log  
+                        $dataLog = array(
+                            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                            'aktifitas'     => 'Tambah supir '.$this->input->post('nmSupir').' dengan driver_id '.$driver_id,
+                            'created_at'    => date('Y-m-d H:i:s'),
+                            'updated_at'    => date('Y-m-d H:i:s')
+                        );                              
+                        $this->Log_model->insert($dataLog);
+
                         $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                         redirect('/drivers');
                     }
@@ -449,6 +476,15 @@ class Drivers extends CI_Controller {
                         );
                         $this->Wallet_model->insert_transaction($dataWalletTransaction);
 
+                        // insert tabel log  
+                        $dataLog = array(
+                            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                            'aktifitas'     => 'Tambah supir '.$this->input->post('nmSupir').' dengan driver_id '.$driver_id,
+                            'created_at'    => date('Y-m-d H:i:s'),
+                            'updated_at'    => date('Y-m-d H:i:s')
+                        );                              
+                        $this->Log_model->insert($dataLog);
+
                         $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                         redirect('/drivers');
                     }
@@ -509,6 +545,15 @@ class Drivers extends CI_Controller {
                             'updated_at'        => date('Y-m-d H:i:s')
                         );
                         $this->Wallet_model->insert_transaction($dataWalletTransaction);
+
+                        // insert tabel log  
+                        $dataLog = array(
+                            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                            'aktifitas'     => 'Tambah supir '.$this->input->post('nmSupir').' dengan driver_id '.$driver_id,
+                            'created_at'    => date('Y-m-d H:i:s'),
+                            'updated_at'    => date('Y-m-d H:i:s')
+                        );                              
+                        $this->Log_model->insert($dataLog);
 
                         $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                         redirect('/drivers');
@@ -571,6 +616,15 @@ class Drivers extends CI_Controller {
                         );
                         $this->Wallet_model->insert_transaction($dataWalletTransaction);
 
+                        // insert tabel log  
+                        $dataLog = array(
+                            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                            'aktifitas'     => 'Tambah supir '.$this->input->post('nmSupir').' dengan driver_id '.$driver_id,
+                            'created_at'    => date('Y-m-d H:i:s'),
+                            'updated_at'    => date('Y-m-d H:i:s')
+                        );                              
+                        $this->Log_model->insert($dataLog);
+
                         $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                         redirect('/drivers');
                     }
@@ -632,6 +686,15 @@ class Drivers extends CI_Controller {
                         );
                         $this->Wallet_model->insert_transaction($dataWalletTransaction);
 
+                        // insert tabel log  
+                        $dataLog = array(
+                            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                            'aktifitas'     => 'Tambah supir '.$this->input->post('nmSupir').' dengan driver_id '.$driver_id,
+                            'created_at'    => date('Y-m-d H:i:s'),
+                            'updated_at'    => date('Y-m-d H:i:s')
+                        );                              
+                        $this->Log_model->insert($dataLog);
+
                         $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                         redirect('/drivers');
                     }
@@ -676,6 +739,15 @@ class Drivers extends CI_Controller {
                         'updated_at'        => date('Y-m-d H:i:s')
                     );
                     $this->Wallet_model->insert_transaction($dataWalletTransaction);
+
+                    // insert tabel log  
+                    $dataLog = array(
+                        'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                        'aktifitas'     => 'Tambah supir '.$this->input->post('nmSupir').' dengan driver_id '.$driver_id,
+                        'created_at'    => date('Y-m-d H:i:s'),
+                        'updated_at'    => date('Y-m-d H:i:s')
+                    );                              
+                    $this->Log_model->insert($dataLog);
 
                     $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
                     redirect('/drivers');
@@ -730,10 +802,10 @@ class Drivers extends CI_Controller {
         echo json_encode($data);
     }
 
-    public function ajax_update()
-    {
+    public function ajax_update() {
         $config1['upload_path'] = './uploads/foto/';
-        $config1['allowed_types'] = 'jpg|png';
+        $config1['allowed_types'] = 'jpg|jpeg|png';
+        $config['detect_mime'] = TRUE;
         $config1['max_size'] = 3072; // 3MB
         $this->upload->initialize($config1);
         if (!empty($_FILES['fotoSupir']['name'])) {
@@ -751,7 +823,8 @@ class Drivers extends CI_Controller {
         }
 
         $config2['upload_path'] = './uploads/sim/';
-        $config2['allowed_types'] = 'jpg|png';
+        $config2['allowed_types'] = 'jpg|jpeg|png';
+        $config['detect_mime'] = TRUE;
         $config2['max_size'] = 3072; // 3MB
         $this->upload->initialize($config2);
         if (!empty($_FILES['fotoSim']['name'])) {
@@ -769,7 +842,8 @@ class Drivers extends CI_Controller {
         }
 
         $config3['upload_path'] = './uploads/ktp/';
-        $config3['allowed_types'] = 'jpg|png';
+        $config3['allowed_types'] = 'jpg|jpeg|png';
+        $config['detect_mime'] = TRUE;
         $config3['max_size'] = 3072; // 3MB
         $this->upload->initialize($config3);
         if (!empty($_FILES['fotoKtp']['name'])) {
@@ -803,23 +877,74 @@ class Drivers extends CI_Controller {
             'updated_at'        => date('Y-m-d H:i:s')
         );
         $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+
+        // insert tabel log  
+        $this->db->select('name'); 
+        $this->db->from('drivers'); 
+        $this->db->where('id', $this->input->post('id'));
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $supir = $query->row();
+        } 
+        $query->free_result();
+
+        $dataLog = array(
+            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+            'aktifitas'     => 'Edit supir '.$supir->name.' dengan driver_id '.$this->input->post('id'),
+            'created_at'    => date('Y-m-d H:i:s'),
+            'updated_at'    => date('Y-m-d H:i:s')
+        );                              
+        $this->Log_model->insert($dataLog);
+
         $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
         echo json_encode(array("status" => TRUE));
     }
 
-    public function ajax_del($id)
-    {
+    public function ajax_del($id) {
         $data = $this->Driver_model->get_by_id($id);
         echo json_encode($data);
     }
 
-    public function ajax_delete()
-    {
+    public function ajax_delete() {
+        // update tabel drivers
         $data = array(
             'is_delete'         => 1,
             'updated_at'        => date('Y-m-d H:i:s')
         );
         $this->Driver_model->update(array('id' => $this->input->post('id')), $data);
+
+        // update tabel wallet_transactions
+        $data = array(
+            'is_delete'         => 1,
+            'updated_at'        => date('Y-m-d H:i:s')
+        );
+        $this->Wallet_model->updateWalletTransactionByIdWallets(array('wallet_id' => $this->input->post('id')), $data);
+
+        // update tabel wallets
+        $data = array(
+            'is_delete'         => 1,
+            'updated_at'        => date('Y-m-d H:i:s')
+        );
+        $this->Wallet_model->updateWalletByIdDriver(array('driver_id' => $this->input->post('id')), $data);
+
+        // insert tabel log  
+        $this->db->select('name'); 
+        $this->db->from('drivers'); 
+        $this->db->where('id', $this->input->post('id'));
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $supir = $query->row();
+        } 
+        $query->free_result();
+
+        $dataLog = array(
+            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+            'aktifitas'     => 'Hapus supir '.$supir->name.' dengan driver_id '.$this->input->post('id'),
+            'created_at'    => date('Y-m-d H:i:s'),
+            'updated_at'    => date('Y-m-d H:i:s')
+        );                              
+        $this->Log_model->insert($dataLog);
+
         $this->session->set_flashdata('pesansukses','Data berhasil dihapus');
         echo json_encode(array("status" => TRUE));
     }

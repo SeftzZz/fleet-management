@@ -22,6 +22,21 @@ class Wallet_model extends CI_Model {
         return $this->db->update($this->table, $data);
     }
 
+    public function update_by_ritasi_id($id_ritasi, $data) {
+        $this->db->where('id_ritasi', $id_ritasi);
+        return $this->db->update($this->transaction_table, $data);
+    }
+
+    public function updateWalletTransactionByIdWallets($id, $data) {
+        $this->db->update($this->transaction_table, $data, $id);
+        return $this->db->affected_rows();
+    }
+
+    public function updateWalletByIdDriver($id, $data) {
+        $this->db->update($this->table, $data, $id);
+        return $this->db->affected_rows();
+    }
+
     public function update_nodo($id, $data) {
         $this->db->where('id', $id);
         return $this->db->update($this->transaction_table, $data);
@@ -42,13 +57,13 @@ class Wallet_model extends CI_Model {
         return $query->result();
     }
 
-    public function getWalletTransactionsByWalletId($wallet_id)
+    public function getWalletTransactionsByWalletId($id)
     {
         return $this->db
-            ->where('wallet_id', $wallet_id)
+            ->where('id', $id)
             ->where('is_delete', 0)
             ->order_by('id', 'DESC')
-            ->get('wallet_transactions')
+            ->get('wallets')
             ->result();
     }
 
@@ -184,6 +199,83 @@ class Wallet_model extends CI_Model {
 
     public function count_allWSupir() {
         $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    var $column_order2 = array('updated_at', 'name', 'amount','description',null);
+    var $column_search2 = array('updated_at', 'name', 'amount','description');
+    var $order2 = array('tgl_klaim' => 'desc');
+
+    private function _get_datatables_queryKlaimWallet() {
+        $this->db->select('wallet_transactions.*, drivers.name');
+        $this->db->from($this->transaction_table);
+        $this->db->join('drivers', 'drivers.id = wallet_transactions.wallet_id');
+        $this->db->where('wallet_transactions.transaction_type', 'debit');
+        $this->db->where('wallet_transactions.is_delete', 0);
+        $this->db->where('wallet_transactions.status', 'sudah');
+        $this->db->not_like('wallet_transactions.description', 'Uang Jalan DO -', 'after');
+        
+        if (!empty($_POST['nmSupir'])) {
+            $this->db->like('drivers.name', $_POST['nmSupir']);
+        }
+        if (!empty($_POST['blnKlaim'])) {
+            $this->db->where('MID(wallet_transactions.tgl_klaim, 4, 2) =', $_POST['blnKlaim']);
+        }
+        if (!empty($_POST['thnKlaim'])) {
+            $this->db->where('RIGHT(wallet_transactions.tgl_klaim, 4) =', $_POST['thnKlaim']);
+        }
+
+        $i = 0;
+        if (!empty($_POST['search']['value'])) {
+            foreach ($this->column_search2 as $item) {
+                if ($i === 0) {
+                    $this->db->group_start();
+                }
+                $this->db->like($item, $_POST['search']['value']);
+                if ($i === count($this->column_search2) - 1) {
+                    $this->db->group_end();
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+                $i++;
+            }
+        }
+
+        $dtOrderMap = [
+          0 => "STR_TO_DATE(wallet_transactions.tgl_klaim, '%d-%m-%Y')", // Tanggal
+          1 => "drivers.name",                                            // Nama
+          2 => "wallet_transactions.amount",                              // Jumlah
+          3 => "wallet_transactions.description"                          // Keperluan
+        ];
+
+        if (isset($_POST['order'])) {
+            $colIndex = (int) $_POST['order'][0]['column'];
+            $dir      = $_POST['order'][0]['dir'] === 'asc' ? 'ASC' : 'DESC';
+            $orderCol = $dtOrderMap[$colIndex] ?? $dtOrderMap[0];
+            $this->db->order_by($orderCol, $dir, false); // false = jangan escape ekspresi
+        } else {
+            $this->db->order_by("STR_TO_DATE(wallet_transactions.tgl_klaim, '%d-%m-%Y')", 'DESC', false);
+        }
+    }
+
+    function get_datatablesKlaimWallet() {
+        $this->_get_datatables_queryKlaimWallet();
+        $length = $_POST['length'] ?? -1;
+        $start  = $_POST['start'] ?? 0;
+
+        if ($length != -1) {
+            $this->db->limit($length, $start);
+        }
+        return $this->db->get()->result();
+    }
+
+    function count_filteredKlaimWallet() {
+        $this->_get_datatables_queryKlaimWallet();
+        return $this->db->get()->num_rows();
+    }
+
+    public function count_allKlaimWallet() {
+        $this->db->from($this->transaction_table);
         return $this->db->count_all_results();
     }
 }

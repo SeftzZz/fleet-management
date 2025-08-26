@@ -26,6 +26,7 @@ class Routes extends CI_Controller {
         $this->load->model('Vehicle_model');
         $this->load->model('Uangjalan_model');
         $this->load->model('Wallet_model');
+        $this->load->model('Log_model');
         $this->load->database();
     }
 
@@ -254,8 +255,7 @@ class Routes extends CI_Controller {
         } 
     }
 
-    public function ritasiadd()
-    {
+    public function ritasiadd() {
         if ($this->input->post('submit')) {
             $this->form_validation->set_rules('tgl', 'Tanggal', 'required');
             $this->form_validation->set_rules('tim', 'Tim', 'required');
@@ -493,13 +493,31 @@ class Routes extends CI_Controller {
                 ]);
             }
 
+            // insert tabel log  
+            $this->db->select('ritasi.driver_id, ritasi.tgl_ritasi, drivers.name'); 
+            $this->db->from('ritasi'); 
+            $this->db->join('drivers', 'drivers.id=ritasi.driver_id'); 
+            $this->db->where('ritasi.id', $id_ritasi);
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                $ritasi = $query->row();
+            } 
+            $query->free_result();
+
+            $dataLog = array(
+                'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                'aktifitas'     => 'Tambah ritasi tanggal '.$ritasi->tgl_ritasi.', supir '.$ritasi->name.', proyek '.$proyek->nama_proyek.', lokasi galian '.$galian->lokasi.', nomer pintu '.$tim_mgmnt->no_pintu,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Log_model->insert($dataLog);
+
             $this->session->set_flashdata('pesansukses', 'Data berhasil disimpan');
             redirect('/routes');
         }
     }
 
-    public function ritasiedit($id)
-    {
+    public function ritasiedit($id) {
         if ($this->input->post('submit')) {
             $this->form_validation->set_rules('tgl','Tanggal','required');
             $this->form_validation->set_rules('tim','Tim','required');
@@ -606,6 +624,25 @@ class Routes extends CI_Controller {
                 ]);
             }
 
+            // insert tabel log
+            $this->db->select('ritasi.driver_id, ritasi.tgl_ritasi, drivers.name'); 
+            $this->db->from('ritasi'); 
+            $this->db->join('drivers', 'drivers.id=ritasi.driver_id'); 
+            $this->db->where('ritasi.id', $id);
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                $ritasi = $query->row();
+            } 
+            $query->free_result();
+
+            $dataLog = array(
+                'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                'aktifitas'     => 'Edit ritasi tanggal '.$ritasi->tgl_ritasi.', supir '.$ritasi->name.', proyek '.$proyek->nama_proyek.', lokasi '.$galian->lokasi.', nomer pintu '.$tim_mgmnt->no_pintu.', nomer do '.$this->input->post('nodo'),
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Log_model->insert($dataLog); 
+
             $this->session->set_flashdata('pesansukses', 'Data berhasil disimpan');
             $params = array_merge(
                 ['id' => $id],
@@ -624,22 +661,61 @@ class Routes extends CI_Controller {
         }
     }
 
-    public function ritasidel($id)
-    {
+    public function ritasidel($id) {
         if ($post = $this->input->post('submit')) {
             // update tabel ritasi  
             $dataRitasi = array(
                 'is_delete'     => $this->input->post('del'),
                 'updated_at'    => date('Y-m-d H:i:s')
             );                              
-            $this->Route_model->updateRitasi($id,$dataRitasi);
-            $this->session->set_flashdata('pesansukses','Data berhasil dihapus');
+            $this->Route_model->updateRitasi($id, $dataRitasi);
+
+            // update wallet_transactions (hapus)
+            $dataWalletTransaction = array(
+                'is_delete'     => $this->input->post('del'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Wallet_model->update_by_ritasi_id($id, $dataWalletTransaction);
+
+            // update balance wallet SESUDAH transaksi dihapus
+            $this->db->query("
+                UPDATE wallets w
+                LEFT JOIN (
+                    SELECT 
+                        wallet_id,
+                        SUM(CASE WHEN transaction_type = 'credit' AND is_delete = 0 THEN amount ELSE 0 END) AS total_credit
+                    FROM wallet_transactions
+                    GROUP BY wallet_id
+                ) t ON t.wallet_id = w.id
+                SET 
+                    w.balance = COALESCE(t.total_credit, 0)                    
+            ");
+
+            // insert tabel log  
+            $this->db->select('ritasi.driver_id, ritasi.tgl_ritasi, drivers.name'); 
+            $this->db->from('ritasi'); 
+            $this->db->join('drivers', 'drivers.id=ritasi.driver_id'); 
+            $this->db->where('ritasi.id', $id);
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                $ritasi = $query->row();
+            } 
+            $query->free_result();
+
+            $dataLog = array(
+                'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                'aktifitas'     => 'Hapus ritasi tanggal '.$ritasi->tgl_ritasi.', supir '.$ritasi->name.', ritasi_id '.$id,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Log_model->insert($dataLog);
+
+            $this->session->set_flashdata('pesansukses', 'Data berhasil dihapus');
             redirect('/routes');
         } 
     }
 
-    public function oldpage()
-    {
+    public function oldpage() {
         $data = [
             "title" => "Manajemen Rute / Ritasi | Fleet Management",
             "nopage" => 4,
@@ -671,8 +747,7 @@ class Routes extends CI_Controller {
         }
     }
 
-    public function multi_ritasi()
-    {
+    public function multi_ritasi() {
         $data = [
             "title" => "Manajemen Rute / Ritasi | Fleet Management",
             "nopage" => 4,

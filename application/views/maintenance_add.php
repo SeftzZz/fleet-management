@@ -23,7 +23,9 @@
           <h3 class="card-title">Filter Maintenance</h3>
         </div>
         <div class="card-body">
-          <form id="maintenanceForm">
+          <form id="maintenanceForm" method="post" action="<?php echo site_url('maintenance/simpan') ?>">
+            <input type="hidden" name="driver_id" id="driver_id" />
+            <input type="hidden" name="vehicle_id" id="vehicle_id" />
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>Nama Mekanik</label>
@@ -34,16 +36,23 @@
                 <select name="no_pintu" id="no_pintu" class="form-control select_rute" style="width:100%;" required>
                   <option value=""></option>
                   <?php foreach ($kendaraans as $value) { ?>
-                      <option value='<?php echo $value->no_pintu; ?>' <?php echo set_select('no_pintu', $value->no_pintu );?> ><?php echo $value->no_pintu; ?></option>
+                      <option 
+                          value="<?= $value->no_pintu ?>" 
+                          data-driver-id="<?= $value->driver_id ?>"
+                          data-vehicle-id="<?= $value->vehicle_id ?>"
+                          <?= set_select('no_pintu', $value->no_pintu) ?>
+                      >
+                          <?= $value->no_pintu ?>
+                      </option>
                   <?php } ?>
                 </select>
               </div>
               <div class="form-group col-md-12">
                 <label>Jenis Maintenance</label>
-                <select name="jenis" class="form-control" required>
+                <select name="type" class="form-control" required>
                   <option value="">Pilih...</option>
-                  <option>Service Berkala</option>
-                  <option>Penggantian Sparepart</option>
+                  <option value="Service Berkala">Service Berkala</option>
+                  <option value="Penggantian Sparepart">Penggantian Sparepart</option>
                 </select>
               </div>
             </div>
@@ -62,7 +71,7 @@
                   <div class="form-group col-md-12">
                     <label>Waktu</label>
                     <div class="input-group date" id="jam-picker${value.vehicle_id}" data-target-input="nearest">
-                        <input type="text" name="jam[]" class="form-control" oninput="autoFormatJam(this)" maxlength="5" placeholder="HH:MM" required/>
+                        <input type="text" name="jam_order" class="form-control" oninput="autoFormatJam(this)" maxlength="5" placeholder="HH:MM" required/>
                         <div class="input-group-append">
                             <div class="input-group-text datetimepicker-input" data-target="#jam-picker${value.vehicle_id}" data-toggle="datetimepicker"><i class="far fa-clock"></i></div>
                         </div>
@@ -84,7 +93,7 @@
                   <div class="form-group col-md-12">
                     <label>Waktu</label>
                     <div class="input-group date" id="jam-picker${value.vehicle_id}" data-target-input="nearest">
-                        <input type="text" name="jam[]" class="form-control" oninput="autoFormatJam(this)" maxlength="5" placeholder="HH:MM" required/>
+                        <input type="text" name="jam_selesai" class="form-control" oninput="autoFormatJam(this)" maxlength="5" placeholder="HH:MM" required/>
                         <div class="input-group-append">
                             <div class="input-group-text datetimepicker-input" data-target="#jam-picker${value.vehicle_id}" data-toggle="datetimepicker"><i class="far fa-clock"></i></div>
                         </div>
@@ -100,8 +109,8 @@
                   <th>Permintaan Perbaikan</th>
                   <th>Kondisi</th>
                   <th>Sparepart</th>
-                  <th id="th_sumber" style="display:none;">Sumber (Barang-Stok-Unit)</th>
                   <th>Qty</th>
+                  <th id="th_posisi" style="display:none;">Posisi</th>
                   <th>Keterangan</th>
                   <th>Aksi</th>
                 </tr>
@@ -134,28 +143,38 @@
                     <select name="sparepart[]" class="form-control sparepart-select">
                       <option value="">Pilih barang</option>
                       <?php foreach ($inventori as $value) { ?>
-                        <option value='<?php echo $value->name; ?>'
+                        <option value='<?php echo $value->sparepart; ?>'
+                                data-sparepart="<?php echo $value->sparepart; ?>"
                                 data-qty="<?php echo $value->qty; ?>"
-                                <?php echo set_select('sparepart[]', $value->name); ?>>
-                          <?php echo $value->name; ?> : <?php echo $value->qty; ?>
+                                <?php echo set_select('sparepart[]', $value->sparepart); ?>>
+                          <?php echo $value->sparepart; ?> : <?php echo $value->qty; ?>
                         </option>
                       <?php } ?>
                     </select>
                   </td>
-                  <td class="sumber_kolom">
-                    <div class="sumber-wrapper">
-                      <select name="no_pintu_sumber[]" class="form-control sumber-select">
-                        <option value="">Pilih...</option>
-                        <?php foreach ($kendaraans as $value) { ?>
-                          <option value='<?php echo $value->no_pintu; ?>'>
-                            Oli Mesin - 10 - <?php echo $value->no_pintu; ?>
-                          </option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                  </td>
+                  <td><input type="number" name="qty[]" min="1" class="form-control" placeholder="0" /></td>
                   <td>
-                    <input type="number" name="qty[]" min="1" class="form-control" placeholder="0" />
+                    <select name="posisi[]" id="posisi" class="form-control posisi-select" style="width:100%;">
+                        <option value="">--- Pilih Posisi ---</option>
+                        <?php 
+                            $pilihanposisi = array(
+                              "R1 (kanan depan)",
+                              "R2 (kanan tengah luar)",
+                              "R3 (kanan tengah dalem)",
+                              "R4 (kanan belakang luar)",
+                              "R5 (kanan belakang dalem)",
+                              "L1 (kiri depan)",
+                              "L2 (kiri tengah luar)",
+                              "L3 (kiri tengah dalem)",
+                              "L4 (kiri belakang luar)",
+                              "L5 (kiri belakang dalem)",
+
+                            );
+                            foreach ($pilihanposisi as $value) { 
+                        ?>
+                            <option value="<?php echo $value ?>" <?php echo set_select('posisi', $value) ?>><?php echo $value ?></option>
+                        <?php } ?>
+                    </select>
                   </td>
                   <td><textarea name="keterangan[]" id="keterangan" rows="1" class="form-control"></textarea></td>
                   <td>
@@ -164,7 +183,6 @@
                 </tr>
               </tbody>
             </table>
-
           </form>
         </div>
       </div>

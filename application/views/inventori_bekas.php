@@ -71,7 +71,7 @@
                       <div class="card-header">
                         <h3 class="card-title">Data Barang</h3>
                         <div class="card-tools">
-                          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalFormPO"><i class="fas fa-plus"></i> Tambah PO</button>
+                          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalFormPO"><i class="fas fa-plus"></i> Tambah Barang Bekas</button>
                         </div>
                       </div>
                       <div class="card-body table-responsive">
@@ -79,8 +79,7 @@
                           <thead>
                             <tr>
                               <th>No</th>
-                              <th>Tanggal PO</th>
-                              <th>No PO</th>
+                              <th>Tanggal</th>
                               <th>Nama Barang</th>
                               <th>Qty</th>
                               <th>Sumber No Pintu</th>
@@ -91,26 +90,22 @@
                             <tr>
                               <td>1</td>
                               <td>2025-06-10</td>
-                              <td>KMJP-DT/MS/0625-0001</td>
                               <td>Kampas Kopling</td>
                               <td>2</td>
                               <td>601</td>
                               <td>
                                 <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
-                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
                                 <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
                               </td>
                             </tr>
                             <tr>
                               <td>2</td>
                               <td>2025-06-10</td>
-                              <td>KMJP-DT/MS/0625-0001</td>
                               <td>Baut nomor 20</td>
                               <td>2</td>
                               <td>503</td>
                               <td>
                                 <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
-                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
                                 <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
                               </td>
                             </tr>
@@ -135,14 +130,8 @@
 
                         <!-- Header Form -->
                         <table class="table">
-                          <tr><td>Nama</td><td><input type="text" name="nama" class="form-control"></td>
-                              <td>Vendor</td><td><input type="text" name="vendor" class="form-control"></td></tr>
-                          <tr><td>Jabatan</td><td><input type="text" name="jabatan" class="form-control"></td>
-                              <td>Nama PIC</td><td><input type="text" name="pic" class="form-control"></td></tr>
-                          <tr><td>Divisi</td><td><input type="text" name="divisi" class="form-control"></td>
-                              <td>No Telp</td><td><input type="text" name="telp" class="form-control"></td></tr>
-                          <tr><td>Tanggal</td><td><input type="date" name="tanggal" class="form-control"></td>
-                              <td>No PO</td><td><input type="text" name="no_po" class="form-control"></td></tr>
+                          <tr><td>No Pintu</td><td><input type="text" name="nama" class="form-control"></td></tr>
+                          <tr><td>Qty</td><td><input type="text" name="jabatan" class="form-control"></td></tr>
                         </table>
 
                         <!-- Tabel Barang -->

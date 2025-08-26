@@ -180,6 +180,21 @@ class Fppfunction {
         $result = $tgl."/".$Bulan[(int)$bulan-1]."/".$tahun." - ".$waktu;
         return $result;
     }
+
+    function tglangkajam2_ind($date) { 
+        // array hari bulan tahun jam
+        $Bulan = array("01","02","03","04","05","06",
+                       "07","08","09","10","11","12");
+        
+        // pemisahan tahun, bulan, hari, dan waktu
+        $tahun = substr($date,2,2);
+        $bulan = substr($date,5,2);
+        $tgl = substr($date,8,2);
+        $waktu = substr($date,11,5);
+        $hari = date("w",strtotime($date));
+        $result = $tgl."-".$Bulan[(int)$bulan-1]."-".$tahun."  ".$waktu;
+        return $result;
+    }
 	
 	function remove_first_paragraph($desc='') {
 		$new_desc = $desc;
