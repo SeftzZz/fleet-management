@@ -48,7 +48,7 @@
                                 <td><?php echo $row->nama ?></td>
                                 <td><?php echo $row->status ?></td>
                                 <td>
-                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalDetailPO"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalDetailPO<?php echo $row->id ?>"><i class="fas fa-eye"></i></button>
                                     <?php if ($row->status != "Selesai") { ?>
                                         <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#mdl_delPengajuan<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>  
                                     <?php } ?>
@@ -122,48 +122,64 @@
                 </div>
               </div>
 
-              <!-- Modal Detail PO -->
-              <div class="modal fade" id="modalDetailPO" tabindex="-1" role="dialog" aria-labelledby="modalDetailPOLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl" role="document">
-                  <div class="modal-content">
-                    <form id="formPO">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Detail Pengajuan Pembelian Barang</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
-                      </div>
-                      <div class="modal-body">
-                        <!-- Tabel Barang -->
-                        <?php foreach ($pengajuan_detail as $pengajuan_id => $details): ?>
-                          <h5>ID Pengajuan: <?php echo $pengajuan_id; ?></h5>
-                          <table class="table table-bordered table-striped">
-                            <thead>
-                              <tr>
-                                <th>No</th>
-                                <th>Nama Barang</th>
-                                <th>Qty</th>
-                                <th>No PO</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <?php $no = 1; foreach ($details as $row): ?>
-                                <tr>
-                                  <td><?php echo $no++; ?></td>
-                                  <td><?php echo $row->sparepart; ?></td>
-                                  <td><?php echo $row->qty; ?></td>
-                                  <td><?php echo !empty($row->no_po) ? $row->no_po : 'Belum tersedia'; ?></td>
-                                </tr>
-                              <?php endforeach; ?>
-                            </tbody>
-                          </table>
-                        <?php endforeach; ?>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
+                <!-- Modal Detail PO -->
+                <?php foreach ($pengajuan as $row) { ?>
+                    <div class="modal fade" id="modalDetailPO<?php echo $row->id ?>" tabindex="-1" role="dialog" aria-labelledby="modalDetailPOLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <form id="formPO">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Detail Pengajuan Barang</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Tabel Barang -->
+                                        <h5>ID Pengajuan: <?php echo $row->id; ?></h5>
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama Barang</th>
+                                                    <th>Qty</th>
+                                                    <th>No PO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                    // Inisialisasi array untuk mencegah undefined variable
+                                                    $details = [];
+
+                                                    // Query data detail
+                                                    $this->db->select('*');
+                                                    $this->db->from('form_pengajuan_detail'); 
+                                                    $this->db->where('pengajuan_id', $row->id);
+                                                    $query = $this->db->get();
+
+                                                    if ($query->num_rows() > 0) {
+                                                        $details = $query->result();
+                                                    }
+                                                ?>
+
+                                                <?php $no = 1; foreach ($details as $row) { ?>
+                                                <tr>
+                                                    <td><?php echo $no++; ?></td>
+                                                    <td><?php echo $row->sparepart; ?></td>
+                                                    <td><?php echo $row->qty; ?></td>
+                                                    <td><?php echo !empty($row->no_po) ? $row->no_po : 'Belum tersedia'; ?></td>
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+                  
 
               <?php foreach ($pengajuan as $row) { ?>
                 <div class="modal fade" id="mdl_delPengajuan<?php echo $row->id ?>">
