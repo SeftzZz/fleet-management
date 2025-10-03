@@ -67,7 +67,7 @@
                         <!-- Tabel Barang -->
                         <table class="table table-bordered" id="barangPurchasingTable">
                           <thead class="thead-light">
-                            <tr><th>No</th><th>Nama Barang</th><th width="10%">Qty</th><th>Vendor</th><th>Pilih Vendor (Jika ingin ganti)</th><th>Harga</th><th>Aksi</th></tr>
+                            <tr><th>No</th><th>Nama Barang</th><th width="10%">Qty</th><th>Vendor</th><th>Pilih Vendor</th><th>Harga</th><th>Aksi</th></tr>
                           </thead>
                           <tbody>
                           </tbody>

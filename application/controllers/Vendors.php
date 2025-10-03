@@ -158,6 +158,14 @@ class Vendors extends CI_Controller {
             );                              
             $this->Vendor_model->update($id,$dataVendor);
 
+            // update tabel vendor_items  
+            $dataVendorItem = array(
+                'is_delete'       => 1,
+                'status'          => 'Non Aktif',
+                'updated_at'      => date('Y-m-d H:i:s')
+            );               
+            $this->Vendor_model->updateItemByIdVendor($id,$dataVendorItem);
+
             // insert tabel log  
             $this->db->select('name'); 
             $this->db->from('vendors'); 

@@ -47,7 +47,9 @@
 
                                                     <a href="<?php echo base_url('vendors/items/'.$row->id.'/') ?>" class="btn btn-sm btn-outline-success"><i class="fas fa-list"></i></a>
 
-                                                    <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delVendor<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
+                                                    <?php if ($row->no_po == '') { ?>
+                                                        <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#mdl_delVendor<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
                                         <?php } ?>
