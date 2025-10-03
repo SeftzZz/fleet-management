@@ -8,7 +8,7 @@ class Inventori_model extends CI_Model {
 
     public function get_by_vehicle($no_pintu = null) {
         // Ambil semua data inventori dasar
-        $this->db->select('i.id, i.name, i.qty as inventory_qty, iv.qty as vehicle_qty, iv.kondisi, iv.no_pintu');
+        $this->db->select('i.id, i.sparepart, i.qty as inventory_qty, iv.qty as vehicle_qty, iv.kondisi, iv.no_pintu');
         $this->db->from('inventori i');
         $this->db->join('inventori_vehicles iv', 'iv.inventori_id = i.id AND (iv.no_pintu = "'.($no_pintu ?? '').'")', 'left');
         
@@ -20,7 +20,7 @@ class Inventori_model extends CI_Model {
         foreach ($result as $row) {
             $formatted[] = [
                 'id' => $row['id'],
-                'name' => $row['name'],
+                'sparepart' => $row['sparepart'],
                 'inventory_qty' => $row['inventory_qty'], // Qty dari tabel inventori
                 'vehicle_qty' => $row['vehicle_qty'] ?? 0, // Qty dari inventori_vehicles (default 0 jika null)
                 'kondisi' => $row['kondisi'] ?? '',

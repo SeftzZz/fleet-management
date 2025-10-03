@@ -147,7 +147,7 @@
                                         </table>
                                     </div>
                                     <div class="tab-pane fade" id="statistik" role="tabpanel" aria-labelledby="statistik_tab">
-                                        <form id="form1" name="form1" action="<?php echo site_url('vehicles/vehiclesdocumentadd/')?>" method="post" enctype="multipart/form-data">
+                                        <form id="form2" name="form2" action="<?php echo site_url('vehicles/vehiclesdocumentadd/')?>" method="post" enctype="multipart/form-data">
                                             <div class="row g-3">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -223,7 +223,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="form1" name="form1" action="<?php echo site_url('vehicles/vehiclesadd')?>" method="post" enctype="multipart/form-data">
+                                    <form id="form3" name="form3" action="<?php echo site_url('vehicles/vehiclesadd')?>" method="post" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
