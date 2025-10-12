@@ -1031,7 +1031,7 @@
                         columnDefs: [
                             { targets: [1,2,3,4], orderable: false }
                         ],
-                        order: [[0, 'desc']]
+                        order: [[5, 'desc']]
                     })
                     .buttons().container().appendTo('#tbl_manajemenwallet_transactions_wrapper .col-md-6:eq(0)');
 
@@ -1714,6 +1714,129 @@
                     order: [[4, 'desc']]
                 })
                 .buttons().container().appendTo('#tbl_inventoryBaruDtl_wrapper .col-md-6:eq(0)');
+            </script>
+        <?php } ?>
+
+        <?php if ($nopage == 1400) { ?>
+            <script>
+                var tableVendor;
+                var filterQty = ''; // default tanpa filter
+                $(document).ready(function() {
+                    tableVendor = $('#tbl_vendor').DataTable({
+                        "processing": true,
+                        "serverSide": true,
+                        "ajax": {
+                            "url": "<?php echo site_url('vendors/ajax_listvendor')?>",
+                            "type": "POST",
+                            "data": function ( d ) {
+                                d.nmVendor = $('#nmVendor').val();
+                                d.filter_qty = filterQty;
+                            }
+                        },
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,"dom": "Bfrtip",
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true,
+                                exportOptions: {
+                                    columns: [0, 1, 2] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [3], orderable: false}
+                        ],
+                        "order": [[0, 'asc']]
+                    });
+                    
+                    $('#btnFilter').click(function(){
+                        tableVendor.ajax.reload();
+                    });
+                    $('#btnReset').click(function(){
+                        $('#nmVendor').val('');
+                        filterQty = '';
+                        tableVendor.ajax.reload();
+                    });
+                    $('#btnSave').click(function() {
+                        var form = $('#form2')[0];           // Ambil elemen DOM form
+                        var formData = new FormData(form);   // Buat FormData dari form
+                        $.ajax({
+                            url: "<?php echo site_url('vendors/ajax_update')?>",
+                            type: "POST",
+                            data: formData,
+                            dataType: "JSON",
+                            processData: false, // Wajib false untuk FormData
+                            contentType: false, // Wajib false untuk FormData
+                            success: function(data) {
+                                $('#mdl_editVendor').modal('hide');
+                                window.location.href = "<?php echo site_url('vendors'); ?>";
+                            }
+                        });
+                    });
+
+                    $('#btnDel').click(function() {
+                        var form = $('#form3')[0];           // Ambil elemen DOM form
+                        var formData = new FormData(form);   // Buat FormData dari form
+                        $.ajax({
+                            url: "<?php echo site_url('vendors/ajax_delete')?>",
+                            type: "POST",
+                            data: formData,
+                            dataType: "JSON",
+                            processData: false, // Wajib false untuk FormData
+                            contentType: false, // Wajib false untuk FormData
+                            success: function(data) {
+                                $('#mdl_delVendor').modal('hide');
+                                window.location.href = "<?php echo site_url('vendors'); ?>";
+                            }
+                        });
+                    });
+                });
+
+                function edit_vendor(id) {
+                    $.ajax({
+                        url: "<?php echo site_url('vendors/ajax_edit')?>/" + id,
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function(data) {
+                            $('[name="id"]').val(data.id);
+                            $('[name="nmVendor"]').val(data.name);
+                            // Cek kondisi no_po
+                            if (data.no_po === null || data.no_po === '') {
+                                // Mode editable
+                                $('#kode_editable').show()
+                                    .find('input[type="text"]').val(data.kode).attr('name', 'kodeVendor'); // aktifkan name
+                                $('#kode_readonly').hide()
+                                    .find('input[type="hidden"]').removeAttr('name'); // nonaktifkan name
+                            } else {
+                                // Mode readonly
+                                $('#kode_editable').hide()
+                                    .find('input[type="text"]').removeAttr('name'); // nonaktifkan name
+                                $('#kode_readonly').show();
+                                $('#kode_readonly input[type="text"]').val(data.kode);
+                                $('#kode_readonly input[type="hidden"]').val(data.kode).attr('name', 'kodeVendor'); // aktifkan name
+                            }
+                            $('[name="picVendor"]').val(data.pic);
+                            $('[name="noTelpVendor"]').val(data.phone);
+                            $('[name="statusVendor"]').val(data.status);
+                            $('[name="alamatVendor"]').val(data.address);
+                            $('#mdl_editVendor').modal('show');
+                        }
+                    });
+                }
+
+                function delete_vendor(id) {
+                    $.ajax({
+                        url: "<?php echo site_url('vendors/ajax_del')?>/" + id,
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function(data) {
+                            $('[name="id"]').val(data.id);
+                            $('#mdl_delVendor').modal('show');
+                        }
+                    });
+                }
             </script>
         <?php } ?>
 

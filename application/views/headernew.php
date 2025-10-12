@@ -17,7 +17,7 @@
         <!-- iCheck -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
         
-        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1072||$nopage==1081||$nopage==1091||$nopage==1100||$nopage==1101||$nopage==1102||$nopage==1103||$nopage==1200||$nopage==1300||$nopage==1420) { ?>
+        <?php if ($nopage==4||$nopage==1001||$nopage==1011||$nopage==1021||$nopage==1031||$nopage==1041||$nopage==1051||$nopage==1061||$nopage==1071||$nopage==1072||$nopage==1081||$nopage==1091||$nopage==1100||$nopage==1101||$nopage==1102||$nopage==1103||$nopage==1200||$nopage==1300||$nopage==1400||$nopage==1420) { ?>
         <!-- Select2 -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/newstyle/plugins/select2/css/select2.min.css">
         

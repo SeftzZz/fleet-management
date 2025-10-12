@@ -39,6 +39,41 @@ class Vendors extends CI_Controller {
         $this->load->view('footernew');
     }
 
+    public function ajax_listvendor() {
+        $list = $this->Vendor_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'] ?? 0;
+        foreach ($list as $vendor) {
+            $no++;
+            $row = array();
+            $row[] = $vendor->name;
+            $row[] = $vendor->status;
+            $row[] = $vendor->kode;
+            if ($vendor->no_po == '') {
+                $row[] = "
+                    <button type='button' class='btn btn-sm btn-outline-primary' onclick='edit_vendor(".$vendor->id.")'><i class='fas fa-pencil-alt'></i></button>
+                    <a href='vendors/items/".$vendor->id."' class='btn btn-sm btn-outline-success'><i class='fas fa-list'></i></a>
+                    <button type='button' class='btn btn-sm btn-outline-danger' onclick='delete_vendor(".$vendor->id.")'><i class='fas fa-trash'></i></button>
+                ";
+            } else {
+                $row[] = "
+                    <button type='button' class='btn btn-sm btn-outline-primary' onclick='edit_vendor(".$vendor->id.")'><i class='fas fa-pencil-alt'></i></button>
+                    <a href='vendors/items/".$vendor->id."' class='btn btn-sm btn-outline-success'><i class='fas fa-list'></i></a>
+                ";
+            }
+            
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => intval($_POST['draw'] ?? 1),
+            "recordsTotal" => $this->Vendor_model->count_all(),
+            "recordsFiltered" => $this->Vendor_model->count_filtered(),
+            "data" => $data,
+        );
+        echo json_encode($output);
+    }
+
     public function vendoradd() {
         if ($post = $this->input->post('submit')) {
             $this->form_validation->set_rules('nmVendor','Nama Vendor','required');
@@ -84,68 +119,86 @@ class Vendors extends CI_Controller {
         } 
     }
 
-    public function vendoredit($id) {
-        if ($post = $this->input->post('submit')) {
-            $this->form_validation->set_rules('nmVendor','Nama Proyek','required');
-            $this->form_validation->set_rules('kodeVendor','Kode Vendor','required');
-            $this->form_validation->set_rules('picVendor','PIC Vendor','');
-            $this->form_validation->set_rules('noTelpVendor','Phone Vendor','');
-            $this->form_validation->set_rules('statusVendor','Status Proyek','required');
-            $this->form_validation->set_rules('alamatVendor','Alamat Proyek','');
+    public function ajax_edit($id) {
+        $data = $this->Vendor_model->get_by_id($id);
+        echo json_encode($data);
+    }
 
-            if ($this->form_validation->run()==FALSE) {     
-                $data = [
-                    "title" => "Manajemen Proyek | Fleet Management",
-                    "nopage" => 1400,
-                ];
+    public function ajax_update() {
+        $data = array(
+            'name'              => $this->input->post('nmVendor'),
+            'kode'              => $this->input->post('kodeVendor'),
+            'pic'               => $this->input->post('picVendor'),
+            'phone'             => $this->input->post('noTelpVendor'),
+            'address'           => $this->input->post('alamatVendor'),
+            'status'            => $this->input->post('statusVendor'),
+            'updated_at'        => date('Y-m-d H:i:s')
+        );
+        $this->Vendor_model->update2(array('id' => $this->input->post('id')), $data);
 
-                $this->session->set_flashdata('pesanerror','Data gagal disimpan, ada form yang belum diisi'); 
-                $data['vendors'] = $this->Vendor_model->getAllVendor();
-        
-                $this->load->view('headernew', $data);
-                $this->load->view('vendors', $data);
-                $this->load->view('footernew');
-            } else {
-                // update tabel vendor  
-                $dataVendor = array(
-                    'name'              => $this->input->post('nmVendor'),
-                    'kode'              => $this->input->post('kodeVendor'),
-                    'pic'               => $this->input->post('picVendor'),
-                    'phone'             => $this->input->post('noTelpVendor'),
-                    'address'           => $this->input->post('alamatVendor'),
-                    'status'            => $this->input->post('statusVendor'),
-                    'updated_at'        => date('Y-m-d H:i:s')
-                );                              
-                $this->Vendor_model->update($id,$dataVendor);
-
-                // update tabel vendor_items  
-                $dataVendorItem = array(
-                    'status'            => $this->input->post('statusVendor'),
-                    'updated_at'        => date('Y-m-d H:i:s')
-                );                              
-                $this->Vendor_model->updateItemByIdVendor($id,$dataVendorItem);
-
-                // insert tabel log  
-                $this->db->select('name'); 
-                $this->db->from('vendors'); 
-                $this->db->where('id', $id);
-                $query = $this->db->get();
-                if ($query->num_rows() > 0) {
-                    $vendor = $query->row();
-                } 
-                $query->free_result();
-
-                $dataLog = array(
-                    'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
-                    'aktifitas'     => 'Edit vendor dengan nama '.$vendor->name.', vendor_id '.$id,
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
-                );                              
-                $this->Log_model->insert($dataLog);
-
-                redirect('/vendors');
-            }
+        // insert tabel log  
+        $this->db->select('name'); 
+        $this->db->from('vendors'); 
+        $this->db->where('id', $this->input->post('id'));
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $vendor = $query->row();
         } 
+        $query->free_result();
+
+        $dataLog = array(
+            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+            'aktifitas'     => 'Edit vendor dengan nama '.$vendor->name.', vendor_id '.$this->input->post('id'),
+            'created_at'    => date('Y-m-d H:i:s'),
+            'updated_at'    => date('Y-m-d H:i:s')
+        );                              
+        $this->Log_model->insert($dataLog);
+
+        $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function ajax_del($id) {
+        $data = $this->Vendor_model->get_by_id($id);
+        echo json_encode($data);
+    }
+
+    public function ajax_delete() {
+        // update tabel vendor
+        $data = array(
+            'is_delete'         => 1,
+            'updated_at'        => date('Y-m-d H:i:s')
+        );
+        $this->Vendor_model->update2(array('id' => $this->input->post('id')), $data);
+
+        // update tabel vendor_items
+        $dataItems = array(
+            'is_delete'  => 1,
+            'updated_at' => date('Y-m-d H:i:s')
+        );
+        $this->db->where('vendor_id', $this->input->post('id'));
+        $this->db->update('vendor_items', $dataItems);
+
+        // insert tabel log  
+        $this->db->select('name'); 
+        $this->db->from('vendors'); 
+        $this->db->where('id', $this->input->post('id'));
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $vendor = $query->row();
+        } 
+        $query->free_result();
+
+        $dataLog = array(
+            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+            'aktifitas'     => 'Hapus vendor dengan nama '.$vendor->name.', vendor_id '.$this->input->post('id'),
+            'created_at'    => date('Y-m-d H:i:s'),
+            'updated_at'    => date('Y-m-d H:i:s')
+        );                              
+        $this->Log_model->insert($dataLog);
+
+        $this->session->set_flashdata('pesansukses','Data berhasil dihapus');
+        echo json_encode(array("status" => TRUE));
     }
 
     public function vendordel($id) {

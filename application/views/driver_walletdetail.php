@@ -99,20 +99,23 @@
                                                         $query->free_result();      
                                                 ?>
                                                     <tr>
-                                                        <?php if ($ritasi->tgl_ritasi=="00-00-0000") { ?>
-                                                            <td data-order="0000-00-00">
-                                                                <?php echo "00-00-0000"; ?>
-                                                            </td>
+                                                        <?php 
+                                                            $tgl_ritasi = trim($ritasi->tgl_ritasi);
+                                                            if (empty($tgl_ritasi) || $tgl_ritasi == '00-00-0000' || $tgl_ritasi == '0000-00-00') { ?>
+                                                                <td data-order="0000-00-00">-</td>
                                                         <?php } else { ?>
-                                                            <td data-order="<?php echo date('Y-m-d', strtotime($ritasi->tgl_ritasi)); ?>">
-                                                                <?php echo date('d/m/Y', strtotime($ritasi->tgl_ritasi)); ?>
-                                                            </td>
+                                                                <td data-order="<?= date('Y-m-d', strtotime($tgl_ritasi)); ?>">
+                                                                    <?php echo date('d/m/Y', strtotime($tgl_ritasi)); ?>
+                                                                </td>
                                                         <?php } ?>
+
                                                         <td><?php echo $row->tgl_klaim ?></td>
                                                         <td><?php echo $row->transaction_type ?></td>
                                                         <td><?php echo $this->fppfunction->rupiah_ind($row->amount) ?></td>
                                                         <td><?php echo $row->description ?></td>
-                                                        <td><?php echo $this->fppfunction->tglangkajam_ind($row->created_at) ?></td>
+                                                        <td data-order="<?= date('Y-m-d H:i:s', strtotime($row->created_at)); ?>">
+                                                            <?php echo $this->fppfunction->tglangkajam_ind($row->created_at) ?>
+                                                        </td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
