@@ -18,47 +18,70 @@
 
                 <!-- Kartu Statistik -->
                 <section class="content">
-                  <!-- Tabel Data -->
-                  <div class="card">
-                    <div class="card-header">
-                      <h3 class="card-title">Data Pengajuan Barang</h3>
-                      <div class="card-tools">
-                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalFormPO"><i class="fas fa-plus"></i> Tambah Pengajuan Barang</button>
-                      </div>
+                    <div class="container-fluid">
+                        <div class="card" style="z-index:99;">
+                            <div class="card-header">
+                                <h3 class="card-title">Filter Pengajuan Barang Inventori</h3>
+                                <div class="card-tools">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                  </button>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Tanggal Pengajuan</label>
+                                            <div class="input-group date" id="tglFilter" data-target-input="nearest">
+                                                <input type="text" name="tglPengajuan" id="tglPengajuan" value="<?php echo set_value('tglPengajuan')?>" class="form-control" maxlength="10" placeholder="DD-MM-YYYY" />
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text" data-target="#tglFilter" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <center>
+                                            <button id="btnReset" class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button id="btnFilter" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;Filter&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                        </center>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body table-responsive">
-                      <table id="tbl_inventory" class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                            <th>No</th>
-                            <th>Tanggal Pengajuan</th>
-                            <th>Nama</th>                            
-                            <th>Status Pengajuan</th>
-                            <th>Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <?php 
-                                $no = 1;
-                                foreach($pengajuan as $row) {
-                            ?>
-                            <tr>
-                                <td><?php echo $no++ ?></td>
-                                <td><?php echo $row->tanggal ?></td>
-                                <td><?php echo $row->nama ?></td>
-                                <td><?php echo $row->status ?></td>
-                                <td>
-                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalDetailPO<?php echo $row->id ?>"><i class="fas fa-eye"></i></button>
-                                    <?php if ($row->status != "Selesai") { ?>
-                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#mdl_delPengajuan<?php echo $row->id ?>"><i class="fas fa-trash"></i></button>  
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <?php } ?>
-                        </tbody>
-                      </table>
+
+                    <!-- Tabel Data -->
+                    <div class="card">
+                        <div class="card-header">
+                          <h3 class="card-title">Data Pengajuan Barang</h3>
+                          <div class="card-tools">
+                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalFormPO"><i class="fas fa-plus"></i> Tambah Pengajuan Barang</button>
+                          </div>
+                        </div>
+                        <div class="card-body table-responsive">
+                          <table id="tbl_pengajuan" class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Tanggal Pengajuan</th>
+                                <th>Nama</th>                            
+                                <th>Status Pengajuan</th>
+                                <th>Aksi</th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
+                        </div>
                     </div>
-                  </div>
                 </section>
               </div>
 

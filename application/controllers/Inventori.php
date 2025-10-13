@@ -74,8 +74,7 @@ class Inventori extends CI_Controller {
         $this->load->view('footernew');
     }
 
-    public function pengajuan()
-    {
+    public function pengajuan() {
         $data = [
             "title" => "Pengajuan | Fleet Management System",
             "nopage" => 1102,
@@ -90,6 +89,41 @@ class Inventori extends CI_Controller {
         $this->load->view('headernew', $data);
         $this->load->view('pengajuan', $data);
         $this->load->view('footernew');
+    }
+
+    public function ajax_listPengajuan() {
+        $list = $this->Inventori_model->get_datatablesPengajuan();
+        $data = array();
+        $no = $_POST['start'] ?? 0;
+        foreach ($list as $pengajuan) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $displayTanggal = date('d-m-Y', strtotime($pengajuan->tanggal));
+            $dataOrderTanggal = date('Y-m-d', strtotime($pengajuan->tanggal));
+            $row[] = "<span data-order='{$dataOrderTanggal}'>{$displayTanggal}</span>";
+            $row[] = $pengajuan->nama;
+            $row[] = $pengajuan->status;
+            if ($pengajuan->status != "Selesai") {
+                $row[] = "
+                    <button class='btn btn-sm btn-info' data-toggle='modal' data-target='#modalDetailPO".$pengajuan->id."'><i class='fas fa-eye'></i></button>
+                    <button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#mdl_delPengajuan".$pengajuan->id."'><i class='fas fa-trash'></i></button> 
+                ";
+            } else {
+                $row[] = "
+                    <button class='btn btn-sm btn-info' data-toggle='modal' data-target='#modalDetailPO".$pengajuan->id."'><i class='fas fa-eye'></i></button>
+                ";
+            }
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => intval($_POST['draw'] ?? 1),
+            "recordsTotal" => $this->Inventori_model->count_allPengajuan(),
+            "recordsFiltered" => $this->Inventori_model->count_filteredPengajuan(),
+            "data" => $data,
+        );
+        echo json_encode($output);
     }
 
     public function purchasing()

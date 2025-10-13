@@ -1688,6 +1688,54 @@
             </script>
         <?php } ?>
 
+        <?php if ($nopage == 1102) { ?>
+            <script>
+                var tablePengajuan;
+                $(document).ready(function() {
+                    tablePengajuan = $('#tbl_pengajuan').DataTable({
+                        "processing": true,
+                        "serverSide": true,
+                        "ajax": {
+                            "url": "<?php echo site_url('inventori/ajax_listPengajuan')?>",
+                            "type": "POST",
+                            "data": function ( d ) {
+                                d.tglPengajuan = $('#tglPengajuan').val();
+                            }
+                        },
+                        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,"dom": "Bfrtip",
+                        "buttons": [
+                            "excel", "pdf", 
+                            {
+                                extend: "print",
+                                footer: true, // memastikan <tfoot> ikut dicetak
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3] // kolom tertentu yang ikut di print
+                                }
+                            }, 
+                            "colvis"
+                        ],
+                        "columnDefs": [
+                            { targets: [0, 4], orderable: false}
+                        ],
+                        "order": [[1, 'desc']]
+                    });
+
+                    $('#btnFilter').click(function(){
+                        tablePengajuan.ajax.reload();
+                    });
+
+                    $('#btnReset').click(function(){
+                        $('#tglPengajuan').val('');
+                        tablePengajuan.ajax.reload();
+                    });
+                });
+
+                $('#tglFilter').datetimepicker({
+                    format: 'DD-MM-YYYY'
+                });
+            </script>
+        <?php } ?>
+
         <?php if ($nopage == 1103) { ?>
             <script>
                 $("#tbl_inventoryBaruDtl").DataTable({

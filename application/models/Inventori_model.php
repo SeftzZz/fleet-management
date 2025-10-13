@@ -5,6 +5,7 @@ class Inventori_model extends CI_Model {
 
     private $table = 'inventori';
     private $inventori_vehicles = 'inventori_vehicles';
+    private $tablePengajuan = 'form_pengajuan';
 
     public function get_by_vehicle($no_pintu = null) {
         // Ambil semua data inventori dasar
@@ -82,53 +83,6 @@ class Inventori_model extends CI_Model {
         $query->free_result();  
         return $data;  
     }
-
-    // public function generate_no_po($vendor_id)
-    // {
-    //     // Kode tetap
-    //     $prefix = 'KMJP';
-
-    //     // Ambil bulan-tahun sekarang (MMYY)
-    //     $dateCode = date('my'); // contoh: 0725
-
-    //     // Ambil data vendor berdasarkan ID
-    //     $vendor = $this->db->where('id', $vendor_id)->get('vendors')->row();
-
-    //     if (!$vendor) {
-    //         return null; // Vendor tidak ditemukan
-    //     }
-
-    //     // Ambil kode vendor
-    //     $vendorCode = strtoupper($vendor->kode);
-
-    //     // Format dasar: KMJP/MS/0725
-    //     $baseCode = $prefix . '/' . $vendorCode . '/' . $dateCode;
-
-    //     // Cari no_po terakhir yang cocok dengan baseCode untuk vendor ini
-    //     $this->db->like('no_po', $baseCode, 'after');
-    //     $this->db->where('kode', $vendorCode); // hanya untuk vendor ini
-    //     $this->db->order_by('no_po', 'DESC');
-    //     $this->db->limit(1);
-    //     $last = $this->db->get('vendors')->row();
-
-    //     if ($last && !empty($last->no_po)) {
-    //         $lastNumber = (int)substr($last->no_po, strrpos($last->no_po, '-') + 1);
-    //         $newNumber = $lastNumber + 1;
-    //     } else {
-    //         $newNumber = 1;
-    //     }
-
-    //     // Format angka 4 digit
-    //     $numberFormatted = str_pad($newNumber, 4, '0', STR_PAD_LEFT);
-
-    //     // Final kode PO
-    //     $finalCode = $baseCode . '-' . $numberFormatted;
-
-    //     // Optional: simpan ke kolom `no_po` vendor
-    //     // $this->db->where('id', $vendor_id)->update('vendors', ['no_po' => $finalCode]);
-
-    //     return $finalCode;
-    // }
 
     public function generate_no_po($vendor_id) {
         $prefix = 'KMJP';
@@ -217,6 +171,64 @@ class Inventori_model extends CI_Model {
             }
             return $this->db->insert($this->inventori_vehicles, $data);
         }
+    }
+
+    var $column_orderPengajuan = array(null, 'tanggal', 'nama', 'status', null);
+    var $column_searchPengajuan = array('tanggal','nama');
+    var $orderPengajuan = array('tanggal' => 'desc');
+
+    private function _get_datatables_queryPengajuan() {
+        $this->db->select('*');
+        $this->db->from('form_pengajuan');
+        $this->db->order_by('tanggal', 'desc');
+
+        if(!empty($_POST['tglPengajuan'])) {
+            $tglPengajuan = date('d-m-Y', strtotime($_POST['tglPengajuan']));
+            $this->db->like('tanggal', $tglPengajuan);
+        }
+
+        $i = 0;
+        foreach ($this->column_searchPengajuan as $item) {
+            if (!empty($_POST['search']['value'])) {
+                if ($i === 0) $this->db->group_start();
+                $this->db->like($item, $_POST['search']['value']);
+                if ($i === count($this->column_searchPengajuan) - 1) $this->db->group_end();
+                else $this->db->or_like($item, $_POST['search']['value']);
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) {
+            $this->db->order_by(
+                $this->column_orderPengajuan[$_POST['order']['0']['column']],
+                $_POST['order']['0']['dir']
+            );
+        } else {
+            $order = $this->orderPengajuan;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    public function get_datatablesPengajuan() {
+        $this->_get_datatables_queryPengajuan();
+        $length = $_POST['length'] ?? -1;
+        $start  = $_POST['start'] ?? 0;
+
+        if ($length != -1) {
+            $this->db->limit($length, $start);
+        }
+        return $this->db->get()->result();
+    }
+
+    public function count_filteredPengajuan() {
+        $this->_get_datatables_queryPengajuan();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_allPengajuan() {
+        $this->db->from($this->tablePengajuan);
+        return $this->db->count_all_results();
     }
 
     public function get_all_pengajuan() {
