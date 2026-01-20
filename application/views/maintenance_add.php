@@ -53,6 +53,7 @@
                   <option value="">Pilih...</option>
                   <option value="Service Berkala">Service Berkala</option>
                   <option value="Penggantian Sparepart">Penggantian Sparepart</option>
+                  <option value="Penggantian Ban">Penggantian Ban</option>
                 </select>
               </div>
             </div>
@@ -141,6 +142,11 @@
                   </td>
                   <td>
                     <select name="sparepart[]" class="form-control sparepart-select">
+                      <style>
+                          .select2-selection--single {
+                              width: 300px !important;
+                          }
+                      </style>
                       <option value="">Pilih barang</option>
                       <?php foreach ($inventori as $value) { ?>
                         <option value='<?php echo $value->sparepart; ?>'
@@ -159,13 +165,13 @@
                         <?php 
                             $pilihanposisi = array(
                               "R1 (kanan depan)",
-                              "R2 (kanan tengah luar)",
-                              "R3 (kanan tengah dalem)",
+                              "R2 (kanan belakang tengah luar)",
+                              "R3 (kanan belakang tengah dalem)",
                               "R4 (kanan belakang luar)",
                               "R5 (kanan belakang dalem)",
                               "L1 (kiri depan)",
-                              "L2 (kiri tengah luar)",
-                              "L3 (kiri tengah dalem)",
+                              "L2 (kiri belakang tengah luar)",
+                              "L3 (kiri belakang tengah dalem)",
                               "L4 (kiri belakang luar)",
                               "L5 (kiri belakang dalem)",
 

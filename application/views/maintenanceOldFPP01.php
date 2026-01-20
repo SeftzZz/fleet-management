@@ -18,7 +18,7 @@
 
                 <!-- Kartu Statistik -->
                 <section class="content">
-                  <!-- <div class="row">
+                  <div class="row">
                     <div class="col-lg-4 col-6">
                       <div class="small-box bg-info">
                         <div class="inner">
@@ -41,7 +41,7 @@
                         </div>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
 
                   <!-- Filter -->
                   <div class="card card-outline card-primary">

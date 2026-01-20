@@ -93,23 +93,31 @@ class Purchasing extends CI_Controller {
 
     public function simpan_purchasing()
     {
-        $pengajuan_id  = $this->input->post('pengajuan_id');
-        $vendor_ids    = $this->input->post('vendor_id');
-        $spareparts    = $this->input->post('sparepart');
-        $qtys          = $this->input->post('qty');
-        $hargas        = $this->input->post('harga');
-        $vendor_item_ids = $this->input->post('vendor_item_id');
-        $no_pos        = $this->input->post('no_po');
-        $form_pengajuan_detail_ids = $this->input->post('form_pengajuan_detail_id');
-        $is_bons       = $this->input->post('is_bon');
+        // echo '<pre>';
+        // var_dump($this->input->post());
+        // echo '</pre>';
+        // exit;
 
-        // === Validasi dasar ===
-        if (empty($pengajuan_id) || empty($spareparts) || empty($vendor_ids)) {
+        $pengajuan_id               = $this->input->post('pengajuan_id');
+        $vendor_ids                 = $this->input->post('vendor_id');
+        $spareparts                 = $this->input->post('sparepart');
+        $qtys                       = $this->input->post('qty');
+        $hargas                     = $this->input->post('harga');
+        $vendor_item_ids            = $this->input->post('vendor_item_id');
+        $no_pos_full                = $this->input->post('no_po');
+        $form_pengajuan_detail_ids  = $this->input->post('form_pengajuan_detail_id');
+        $no_pos = array_values(array_filter($no_pos_full, function ($index) use ($form_pengajuan_detail_ids) {
+            return array_key_exists($index, $form_pengajuan_detail_ids);
+        }, ARRAY_FILTER_USE_KEY));
+        $is_bons                    = $this->input->post('is_bon');
+
+
+        if (!$vendor_ids || !$spareparts || !$qtys || !$pengajuan_id || !$hargas || !$no_pos) {
             $this->session->set_flashdata('error', 'Data tidak lengkap!');
             return redirect('inventori/purchasing');
         }
 
-        if (count($vendor_ids) !== count($spareparts) || count($qtys) !== count($spareparts)) {
+        if (count($vendor_ids) !== count($spareparts) || count($spareparts) !== count($qtys)) {
             $this->session->set_flashdata('error', 'Jumlah data tidak konsisten!');
             return redirect('inventori/purchasing');
         }
@@ -121,79 +129,62 @@ class Purchasing extends CI_Controller {
 
         if (empty($nama_po) || empty($jabatan_po) || empty($divisi_po) || empty($tanggal_po)) {
             $this->session->set_flashdata('pesanerror', 'Nama, Jabatan, Divisi dan Tanggal wajib diisi!');
-            return redirect('purchasing/detail/' . $pengajuan_id);
+            return redirect('purchasing/detail/'.$pengajuan_id);
         }
 
-        // 🧠 Ambil nomor PO manual admin (pertama yang valid)
-        $no_po_admin = null;
-        foreach ($no_pos as $po) {
-            if (!empty($po) && !in_array($po, ['Sedang generate...', 'Gagal generate', 'Error'])) {
-                $no_po_admin = $po;
-                break;
-            }
-        }
-
-        // 💡 Jika admin isi manual satu nomor PO, pakai untuk semua baris (bahkan yang sudah punya auto-generate)
-        if ($no_po_admin) {
-            foreach ($no_pos as $i => $po) {
-                $no_pos[$i] = $no_po_admin;
-            }
-        }
-
-        // === Insert header form_purchasing ===
         $this->db->insert('form_purchasing', [
             'pengajuan_id' => $pengajuan_id,
-            'nama_po'      => $nama_po,
-            'jabatan_po'   => $jabatan_po,
-            'divisi_po'    => $divisi_po,
-            'tanggal_po'   => $tanggal_po,
-            'created_at'   => date('Y-m-d H:i:s')
+            'nama_po' => $this->input->post('nama_po'),
+            'jabatan_po' => $this->input->post('jabatan_po'),
+            'divisi_po' => $this->input->post('divisi_po'),
+            'tanggal_po' => $this->input->post('tanggal_po'),
+            'created_at' => date('Y-m-d H:i:s')
         ]);
 
-        $form_purchasing_id = $this->db->insert_id();
+        // insert tabel log
+        $dataLog = array(
+            'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+            'aktifitas'     => 'Tambah purchasing tanggal '.$this->input->post('tanggal_po').', nama '.$this->input->post('nama_po').', pengajuan_id '.$pengajuan_id,
+            'created_at'    => date('Y-m-d H:i:s'),
+            'updated_at'    => date('Y-m-d H:i:s')
+        );                              
+        $this->Log_model->insert($dataLog);
 
-        // === Log aktivitas ===
-        $this->Log_model->insert([
-            'nama_user'  => $this->session->userdata('user_firstname') . ' ' . $this->session->userdata('user_lastname'),
-            'aktifitas'  => "Tambah purchasing tanggal $tanggal_po, nama $nama_po, pengajuan_id $pengajuan_id",
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-
-        // === Simpan ke tabel inventori ===
+        // Simpan ke inventori
         foreach ($spareparts as $i => $sparepart) {
             $this->db->insert('inventori', [
-                'form_purchasing_id' => $form_purchasing_id,
-                'vendor_item_id'     => $vendor_item_ids[$i] ?? 0,
-                'sparepart'          => $sparepart,
-                'qty'                => $qtys[$i] ?? 0,
-                'kondisi'            => 'Baru',
-                'is_delete'          => 0,
+                'vendori_id'      => $vendor_ids[$i],
+                'vendor_item_id'  => $vendor_item_ids[$i] ?? 0,
+                'sparepart'       => $sparepart,
+                'kondisi'         => 'Baru',
+                'qty'             => $qtys[$i],
+                'is_delete'       => 0,
             ]);
         }
 
-        // === Update status form_pengajuan ===
-        $this->db->where('id', $pengajuan_id)->update('form_pengajuan', ['status' => 'Selesai']);
+        // Update form_pengajuan (status = Selesai)
+        $this->db->where('id', $pengajuan_id)->update('form_pengajuan', [
+            'status' => 'Selesai',
+        ]);
 
-        // === Update detail pengajuan per baris ===
         foreach ($form_pengajuan_detail_ids as $i => $detail_id) {
-            $vendor_id      = $vendor_ids[$i] ?? null;
-            $vendor_item_id = $vendor_item_ids[$i] ?? null;
-            $harga          = $hargas[$i] ?? 0;
-            $is_bon         = $is_bons[$i] ?? 0;
-            $no_po          = $no_pos[$i] ?? $no_po_admin; // ✅ pakai yang sama semua
+            $vendor_item_id = $vendor_item_ids[$i] ?? 0;
+            $harga          = $hargas[$i];
+            $no_po          = $no_pos[$i]; 
+            $vendor_id      = $vendor_ids[$i];
+            $is_bon         = $is_bons[$i];
 
             if ($detail_id) {
                 $this->db->where('id', $detail_id)->update('form_pengajuan_detail', [
-                    'vendor_item_id' => $vendor_item_id,
+                    'vendor_item_id' => $vendor_id,
                     'harga'          => $harga,
                     'is_bon'         => $is_bon,
-                    'no_po'          => $no_po,
+                    'no_po'          => $no_po
                 ]);
             }
 
-            // update vendor jika bukan BON dan nomor PO valid
-            if ($is_bon == 0 && !empty($no_po) && $vendor_id) {
+            // Update tabel vendors hanya jika BON tidak dicentang dan no_po tidak kosong
+            if ($is_bon == 0 && !empty($no_po)) {
                 $this->db->where('id', $vendor_id)->update('vendors', [
                     'no_po'      => $no_po,
                     'updated_at' => date('Y-m-d H:i:s')
@@ -201,7 +192,7 @@ class Purchasing extends CI_Controller {
             }
         }
 
-        $this->session->set_flashdata('pesansukses', 'Data berhasil disimpan');
+        $this->session->set_flashdata('pesansukses','Data berhasil disimpan');
         return redirect('inventori/purchasing');
     }
 

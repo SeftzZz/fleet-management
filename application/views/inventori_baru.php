@@ -21,11 +21,25 @@
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-lg-6 col-6">
+                            <div class="col-lg-4 col-4">
                                 <div class="small-box callout callout-info">
                                     <div class="inner">
-                                        <span>Total Barang</span>
+                                        <span>Total Items</span>
                                         <h3><?php echo $total_barang ?></h3>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <p class="small-box-footer2">
+                                        &nbsp;&nbsp;&nbsp;
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-4">
+                                <div class="small-box callout callout-info">
+                                    <div class="inner">
+                                        <span>Total Keseluruhan Barang</span>
+                                        <h3><?php echo $total_items_barang ?></h3>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-boxes"></i>
@@ -35,7 +49,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-6">
+                            <div class="col-lg-4 col-4">
                                 <div class="small-box callout callout-success" id="stokHabisBox" style="cursor:pointer;">
                                     <div class="inner">
                                         <span>Stok Habis</span>

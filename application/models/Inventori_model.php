@@ -461,6 +461,60 @@ class Inventori_model extends CI_Model {
         return $row ? $row->jml : 0;
     }
 
+    public function count_total_items_barang()
+    {
+        $this->db->select('SUM(qty) as total_qty');
+        $this->db->from('inventori');
+        $this->db->where('kondisi', 'Baru');
+        $this->db->where('is_delete', 0);
+
+        $row = $this->db->get()->row();
+        return $row ? (int) $row->total_qty : 0;
+    }
+
+    public function count_total_barang_by_id($inventori_id)
+    {
+        // Ambil sparepart berdasarkan ID
+        $this->db->select('sparepart');
+        $this->db->from('inventori');
+        $this->db->where('id', $inventori_id);
+        $inventori = $this->db->get()->row();
+
+        if (!$inventori) return 0;
+
+        // Hitung total qty untuk sparepart tersebut
+        $this->db->select('SUM(qty) as total_qty');
+        $this->db->from('inventori');
+        $this->db->where('sparepart', $inventori->sparepart);
+        $this->db->where('kondisi', 'Baru');
+        $this->db->where('is_delete', 0);
+        $row = $this->db->get()->row();
+
+        return $row ? (int)$row->total_qty : 0;
+    }
+
+    public function count_stok_habis_by_id($inventori_id)
+    {
+        // Dapatkan nama sparepart-nya dulu
+        $this->db->select('sparepart');
+        $this->db->from('inventori');
+        $this->db->where('id', $inventori_id);
+        $inventori = $this->db->get()->row();
+
+        if (!$inventori) return 0; // tidak ditemukan
+
+        // Hitung total stok sparepart tersebut
+        $this->db->select('SUM(qty) as total_qty');
+        $this->db->from('inventori');
+        $this->db->where('sparepart', $inventori->sparepart);
+        $this->db->where('kondisi', 'Baru');
+        $this->db->where('is_delete', 0);
+        $row = $this->db->get()->row();
+
+        // Jika stok 0, return 1 (habis), kalau tidak, 0
+        return ($row && (int)$row->total_qty === 0) ? 1 : 0;
+    }
+
     public function deletePengajuanDetail($id) {
         $this->db->where('pengajuan_id', $id);  
         $this->db->delete('form_pengajuan_detail');

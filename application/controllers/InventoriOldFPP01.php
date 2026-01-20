@@ -29,7 +29,6 @@ class Inventori extends CI_Controller {
 
         $data['stok_habis'] = $this->Inventori_model->count_stok_habis();
         $data['total_barang'] = $this->Inventori_model->count_total_barang();
-        $data['total_items_barang'] = $this->Inventori_model->count_total_items_barang();
 
         $this->load->view('headernew', $data);
         $this->load->view('inventori_baru');
@@ -55,8 +54,8 @@ class Inventori extends CI_Controller {
 
         $data['sparepart'] = $inventori->sparepart;
         $data['pemakaian'] = $this->Inventori_model->getAllBrgBySparepart($data['sparepart']);
-        $data['stok_habis'] = $this->Inventori_model->count_stok_habis_by_id($inventori_id);
-        $data['total_barang'] = $this->Inventori_model->count_total_barang_by_id($inventori_id);
+        $data['stok_habis'] = $this->Inventori_model->count_stok_habis();
+        $data['total_barang'] = $this->Inventori_model->count_total_barang();
 
         $this->load->view('headernew', $data);
         $this->load->view('inventori_barudetail');

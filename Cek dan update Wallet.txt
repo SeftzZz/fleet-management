@@ -1,0 +1,130 @@
+SELECT *
+FROM wallet_transactions
+WHERE wallet_id = ?
+  AND is_delete = 0
+  AND description NOT LIKE 'Uang Jalan DO -%'
+ORDER BY id ASC;
+
+SELECT SUM(amount) AS total_amount
+FROM wallet_transactions
+WHERE wallet_id = ?
+  AND is_delete = 0
+  AND description NOT LIKE 'Uang Jalan DO -%';
+
+SELECT
+    d.id AS driver_id,
+    d.name AS driver_name,
+    COALESCE(SUM(wt.amount), 0) AS total_transaction_amount,
+    w.balance
+FROM drivers d
+JOIN wallets w
+    ON w.driver_id = d.id
+    AND w.is_delete = 0
+LEFT JOIN wallet_transactions wt
+    ON wt.wallet_id = w.id
+    AND wt.is_delete = 0
+    AND wt.transaction_type = 'credit'
+    AND wt.description NOT LIKE 'Uang Jalan DO -%'
+GROUP BY
+    d.id,
+    d.name,
+    w.balance;
+
+### Cari data total walet yang tidak sama dengan balance
+SELECT
+    q.driver_id,
+    q.driver_name,
+    q.total_transaction_amount,
+    q.balance,
+    (q.balance - q.total_transaction_amount) AS selisih,
+    CASE
+        WHEN q.balance = q.total_transaction_amount THEN 'Jml Sama'
+        ELSE 'Jml Tdk Sama'
+    END AS keterangan
+FROM (
+    SELECT
+        d.id AS driver_id,
+        d.name AS driver_name,
+        COALESCE(
+            SUM(
+                CASE
+                    WHEN wt.transaction_type = 'credit' THEN wt.amount
+                    WHEN wt.transaction_type = 'debit'  THEN -wt.amount
+                    ELSE 0
+                END
+            ), 0
+        ) AS total_transaction_amount,
+        w.balance
+    FROM drivers d
+    JOIN wallets w
+        ON w.driver_id = d.id
+        AND w.is_delete = 0
+    LEFT JOIN wallet_transactions wt
+        ON wt.wallet_id = w.id
+        AND wt.is_delete = 0
+        AND wt.description NOT LIKE 'Uang Jalan DO -%'
+    GROUP BY
+        d.id,
+        d.name,
+        w.balance
+) q;
+
+
+### Preview data yang akan di-update ###
+SELECT
+    w.id AS wallet_id,
+    w.balance AS balance_sekarang,
+    t.total_transaction_amount AS balance_seharusnya,
+    (w.balance - t.total_transaction_amount) AS selisih
+FROM wallets w
+JOIN (
+    SELECT
+        w2.id AS wallet_id,
+        COALESCE(
+            SUM(
+                CASE
+                    WHEN wt.transaction_type = 'credit' THEN wt.amount
+                    WHEN wt.transaction_type = 'debit'  THEN -wt.amount
+                END
+            ), 0
+        ) AS total_transaction_amount
+    FROM wallets w2
+    LEFT JOIN wallet_transactions wt
+        ON wt.wallet_id = w2.id
+        AND wt.is_delete = 0
+        AND wt.description NOT LIKE 'Uang Jalan DO -%'
+    WHERE w2.is_delete = 0
+    GROUP BY w2.id
+) t ON t.wallet_id = w.id
+WHERE ROUND(w.balance, 2) <> ROUND(t.total_transaction_amount, 2);
+
+
+### UPDATE otomatis wallets.balance agar disamakan dengan hasil transaksi (credit − debit) hanya untuk wallet yang TIDAK sama ###
+UPDATE wallets w
+JOIN (
+    SELECT
+        w2.id AS wallet_id,
+        COALESCE(
+            SUM(
+                CASE
+                    WHEN wt.transaction_type = 'credit' THEN wt.amount
+                    WHEN wt.transaction_type = 'debit'  THEN -wt.amount
+                    ELSE 0
+                END
+            ), 0
+        ) AS total_transaction_amount
+    FROM wallets w2
+    LEFT JOIN wallet_transactions wt
+        ON wt.wallet_id = w2.id
+        AND wt.is_delete = 0
+        AND wt.description NOT LIKE 'Uang Jalan DO -%'
+    WHERE w2.is_delete = 0
+    GROUP BY w2.id
+) t ON t.wallet_id = w.id
+SET w.balance = t.total_transaction_amount
+WHERE ROUND(w.balance, 2) <> ROUND(t.total_transaction_amount, 2);
+
+
+
+
+

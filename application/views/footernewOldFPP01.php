@@ -215,19 +215,11 @@
 
             <!-- Purchasing -->
             <script>
-                  const vendorList = <?= json_encode($vendors) ?>;
-                  const vendorItems = <?= json_encode($vendor_items) ?>;
-                  const vendorItemsMap = <?= json_encode($vendor_items) ?>;
+                const vendorList = <?= json_encode($vendors) ?>;
+                const vendorItems = <?= json_encode($vendor_items) ?>;
+                const vendorItemsMap = <?= json_encode($vendor_items) ?>;
 
-                  // 🔐 Tandai kolom no_po[] jika pernah diisi manual oleh admin
-                  document.addEventListener('input', (e) => {
-                    if (e.target && e.target.name === 'no_po[]') {
-                      e.target.dataset.manual = "1";
-                      e.target.style.backgroundColor = "#fff3cd"; // opsional: beri warna kuning muda
-                    }
-                  });
-
-                  function addRowPurchasing(prefill = null) {
+                function addRowPurchasing(prefill = null) {
                     const table = document.getElementById("barangPurchasingTable").getElementsByTagName('tbody')[0];
                     const rowCount = table.rows.length;
                     const newRow = table.insertRow();
@@ -235,27 +227,32 @@
                     const pengajuanDetailIdInput = document.createElement('input');
                     pengajuanDetailIdInput.type = 'hidden';
                     pengajuanDetailIdInput.name = 'form_pengajuan_detail_id[]';
-                    pengajuanDetailIdInput.value = prefill?.form_pengajuan_detail_id || '';
+                    pengajuanDetailIdInput.value = prefill.form_pengajuan_detail_id || '';
 
+                    // === Input sparepart (readonly) ===
                     const sparepartInput = document.createElement('input');
                     sparepartInput.type = 'text';
                     sparepartInput.name = 'sparepart[]';
                     sparepartInput.className = 'form-control';
                     sparepartInput.readOnly = true;
 
+                    // === Input qty ===
                     const qtyInput = document.createElement('input');
                     qtyInput.type = 'number';
                     qtyInput.name = 'qty[]';
                     qtyInput.className = 'form-control';
                     qtyInput.min = 1;
 
+                    // === Input vendor (id + nama) ===
                     const vendorIdInput = document.createElement('input');
                     vendorIdInput.type = 'hidden';
                     vendorIdInput.name = 'vendor_id[]';
+                    vendorIdInput.className = 'form-control';
 
                     const vendorItemInput = document.createElement('input');
                     vendorItemInput.type = 'hidden';
                     vendorItemInput.name = 'vendor_item_id[]';
+                    vendorItemInput.className = 'vendor-item-id';
 
                     const noPoInput = document.createElement('input');
                     noPoInput.type = 'hidden';
@@ -268,65 +265,73 @@
                     vendorInput.readOnly = true;
                     vendorInput.placeholder = 'Pilih vendor';
 
+                    // === Tombol Pilih Vendor (pakai modal) ===
                     const pilihVendorBtn = document.createElement('button');
                     pilihVendorBtn.type = 'button';
                     pilihVendorBtn.className = 'btn btn-sm btn-primary btn-block btn-pilih-vendor';
                     pilihVendorBtn.innerText = 'Pilih Vendor';
                     pilihVendorBtn.onclick = function () {
-                      const rowIndex = newRow.rowIndex - 1;
-                      const row = table.rows[rowIndex];
-                      const sparepart = row.querySelector('input[name="sparepart[]"]').value;
+                        const rowIndex = newRow.rowIndex - 1;
+                        const row = table.rows[rowIndex];
+                        const sparepart = row.querySelector('input[name="sparepart[]"]').value;
 
-                      if (!sparepart) {
-                        alert('Sparepart belum diisi!');
-                        return;
-                      }
+                        if (!sparepart) {
+                            alert('Sparepart belum diisi!');
+                            return;
+                        }
 
-                      const allowedVendors = vendorItemsMap
-                        .filter(item => item.sparepart.trim().toLowerCase() === sparepart.trim().toLowerCase())
-                        .sort((a, b) => a.harga - b.harga);
+                        const sparepartNormalized = sparepart.trim().toLowerCase();
 
-                      const vendorTableBody = document.querySelector('#vendorModalTableBody');
-                      vendorTableBody.innerHTML = '';
+                        const allowedVendors = vendorItemsMap
+                            .filter(item => item.sparepart.trim().toLowerCase() === sparepartNormalized)
+                            .sort((a, b) => a.harga - b.harga);
 
-                      allowedVendors.forEach(item => {
-                        const row = document.createElement('tr');
-                        row.classList.add('vendor-row');
-                        row.innerHTML = `
-                          <td>${getVendorNameById(item.vendor_id)}</td>
-                          <td class="harga-col">Rp ${parseInt(item.harga).toLocaleString('id-ID')}</td>
-                          <td>
-                            <button class="btn btn-primary btn-sm"
-                              onclick="pilihVendorDariModal('${item.vendor_id}', '${getVendorNameById(item.vendor_id)}', ${item.harga}, ${rowIndex}, ${item.id})">Pilih</button>
-                          </td>
-                        `;
-                        vendorTableBody.appendChild(row);
-                      });
+                        const vendorTableBody = document.querySelector('#vendorModalTableBody');
+                        vendorTableBody.innerHTML = '';
 
-                      currentVendorRowIndex = rowIndex;
-                      $('#vendorModal').modal('show');
+                        allowedVendors.forEach(item => {
+                            const row = document.createElement('tr');
+                            row.classList.add('vendor-row');
+                            row.setAttribute('data-vendor-id', item.vendor_id);
+                            row.innerHTML = `
+                                <td>${getVendorNameById(item.vendor_id)}</td>
+                                <td class="harga-col">Rp ${parseInt(item.harga).toLocaleString('id-ID')}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm"
+                                        onclick="pilihVendorDariModal('${item.vendor_id}', '${getVendorNameById(item.vendor_id)}', ${item.harga}, ${rowIndex}, ${item.id})">Pilih</button>
+                                </td>
+                            `;
+                            vendorTableBody.appendChild(row);
+                        });
+
+                        currentVendorRowIndex = rowIndex;
+                        $('#vendorModal').modal('show');
                     };
 
+                    // === Harga (hidden + display) ===
                     const hargaHidden = document.createElement('input');
                     hargaHidden.type = 'hidden';
                     hargaHidden.name = 'harga[]';
+                    hargaHidden.className = 'form-control harga-hidden';
+
                     const hargaDisplay = document.createElement('input');
                     hargaDisplay.type = 'text';
                     hargaDisplay.className = 'form-control harga-display';
                     hargaDisplay.readOnly = true;
 
+                    // === Tombol hapus baris ===
                     const hapusBtn = document.createElement('button');
                     hapusBtn.type = 'button';
                     hapusBtn.className = 'btn btn-danger btn-sm btn-hapus';
                     hapusBtn.innerText = 'Hapus';
-                    hapusBtn.onclick = function () { removeRow(hapusBtn); };
+                    hapusBtn.onclick = function () {
+                        removeRow(hapusBtn);
+                    };
 
-                    newRow.innerHTML = `
-                      <td class="text-center">${rowCount + 1}</td>
-                      <td></td><td></td><td id="qtyPengajuan"></td>
-                      <td id="pilihVendor"></td><td></td><td id="hapusPO"></td>
-                    `;
+                    // === Inisialisasi baris kosong ===
+                    newRow.innerHTML = `<td class="text-center">${rowCount + 1}</td><td></td><td></td><td id="qtyPengajuan"></td><td id="pilihVendor"></td><td></td><td id="hapusPO"></td>`;
 
+                    // === Masukkan komponen ke kolom ===
                     newRow.cells[1].appendChild(pengajuanDetailIdInput);
                     newRow.cells[1].appendChild(sparepartInput);
                     newRow.cells[2].appendChild(qtyInput);
@@ -339,32 +344,30 @@
                     newRow.cells[5].appendChild(hargaDisplay);
                     newRow.cells[6].appendChild(hapusBtn);
 
+                    // === Prefill jika ada ===
                     if (prefill) {
-                      sparepartInput.value = prefill.sparepart;
-                      qtyInput.value = prefill.qty || 1;
-                      vendorIdInput.value = prefill.vendor_id;
-                      vendorInput.value = getVendorNameById(prefill.vendor_id);
-                      hargaHidden.value = prefill.harga;
-                      hargaDisplay.value = formatRupiah(prefill.harga);
-                      vendorItemInput.value = prefill.vendor_item_id || '';
+                        sparepartInput.value = prefill.sparepart;
+                        qtyInput.value = prefill.qty || 1;
+                        vendorIdInput.value = prefill.vendor_id;
+                        vendorInput.value = getVendorNameById(prefill.vendor_id);
+                        hargaHidden.value = prefill.harga;
+                        hargaDisplay.value = formatRupiah(prefill.harga);
+                        vendorItemInput.value = prefill.vendor_item_id || ''; // ⬅️ tambahkan ini
                     }
 
                     qtyInput.addEventListener('input', calculateGrandTotal);
                     calculateGrandTotal();
-                  }
+                }
 
-                  function pilihVendorDariModal(vendorId, vendorName, harga, rowIndex, vendorItemId = null) {
-                    const vendorTable = document.querySelector('#vendorInventoriTable tbody');
-                    const table = document.querySelector('#barangPurchasingTable tbody');
-                    const row = table.rows[rowIndex];
-                    const noPoInput = row.querySelector('input[name="no_po[]"]');
-
-                    // Jika belum ada vendor di tabel vendorInventoriTable
-                    let vendorRow = Array.from(vendorTable.querySelectorAll('select[name="vendor[]"]'))
+                function pilihVendorDariModal(vendorId, vendorName, harga, rowIndex, vendorItemId = null) {
+                    // Cek apakah vendor sudah ada di tabel vendorInventoriTable
+                    const existingRow = Array.from(document.querySelectorAll('#vendorInventoriTable tbody select[name="vendor[]"]'))
                       .find(select => select.value === vendorId);
 
-                    if (!vendorRow) {
+                    if (!existingRow) {
+                      const vendorTable = document.querySelector('#vendorInventoriTable tbody');
                       const newRow = vendorTable.insertRow();
+
                       const select = document.createElement('select');
                       select.name = 'vendor[]';
                       select.classList.add('form-control', 'select-rute');
@@ -386,56 +389,56 @@
                       const is_bonHidden = document.createElement('input');
                       is_bonHidden.type = 'hidden';
                       is_bonHidden.name = 'is_bon[]';
-                      is_bonHidden.value = 0;
+                      is_bonHidden.value = 0; // default 0
 
                       const is_bonInput = document.createElement('input');
                       is_bonInput.type = 'checkbox';
                       is_bonInput.classList.add('form-control');
-                      is_bonInput.value = 1;
+                      is_bonInput.value = 1; // nilai saat dicentang
                       is_bonInput.onchange = function () {
                         if (this.checked) {
-                          is_bonHidden.value = 1;
-                          noPoInput.readOnly = true;
+                            is_bonHidden.value = 1;
                         } else {
-                          is_bonHidden.value = 0;
-                          noPoInput.readOnly = false;
+                            is_bonHidden.value = 0;
                         }
                       };
 
-                      const noPoField = document.createElement('input');
-                      noPoField.name = 'no_po[]';
-                      noPoField.classList.add('form-control', 'no-po-field');
-                      noPoField.readOnly = false;
+                      const noPoInput = document.createElement('input');
+                      noPoInput.name = 'no_po[]';
+                      noPoInput.classList.add('form-control', 'no-po-field');
+                      noPoInput.readOnly = true;
+                      noPoInput.placeholder = 'Sedang generate...';
 
-                      const rowIndexVendor = vendorTable.rows.length;
-                      newRow.innerHTML = `<td class="text-center">${rowIndexVendor + 1}</td><td></td><td></td><td></td>`;
+                      const rowIndex = vendorTable.rows.length;
+
+                      newRow.innerHTML = `<td class="text-center">${rowIndex + 0}</td><td></td><td></td><td></td>`;
                       newRow.cells[1].appendChild(select);
                       newRow.cells[2].appendChild(is_bonHidden);
                       newRow.cells[2].appendChild(is_bonInput);
-                      newRow.cells[3].appendChild(noPoField);
+                      newRow.cells[3].appendChild(noPoInput);
 
+                      // Set value dan generate no_po
                       $(select).val(vendorId).trigger('change');
-
-                      // ⛔ generate nomor PO hanya kalau belum manual diisi
-                      if (!noPoField.dataset.manual) {
-                        fetch(`/inventori/generate_po_ajax?vendor_id=${vendorId}`)
-                          .then(r => r.json())
-                          .then(d => {
-                            if (!noPoField.readOnly && !noPoField.dataset.manual)
-                              noPoField.value = d.no_po || 'Gagal generate';
-                          })
-                          .catch(() => {
-                            if (!noPoField.readOnly) noPoField.value = 'Error';
-                          });
-                      }
+                      fetch(`/inventori/generate_po_ajax?vendor_id='${vendorId}'`)
+                        .then(response => response.json())
+                        .then(data => {
+                          noPoInput.value = data.no_po || 'Gagal generate';
+                        })
+                        .catch(() => {
+                          noPoInput.value = 'Error';
+                        });
                     }
 
-                    // Update data vendor ke baris barang
+
+                    const table = document.querySelector('#barangPurchasingTable tbody');
+                    const row = table.rows[rowIndex];
+
                     const vendorIdInput = row.querySelector('input[name="vendor_id[]"]');
                     const vendorItemInput = row.querySelector('input[name="vendor_item_id[]"]');
                     const vendorNameInput = row.querySelector('.vendor-name');
                     const hargaHiddenInput = row.querySelector('input[name="harga[]"]');
                     const hargaDisplayInput = row.querySelector('.harga-display');
+                    const noPoInput = row.querySelector('input[name="no_po[]"]');
 
                     if (vendorIdInput) vendorIdInput.value = vendorId;
                     if (vendorNameInput) vendorNameInput.value = vendorName;
@@ -443,130 +446,193 @@
                     if (hargaDisplayInput) hargaDisplayInput.value = formatRupiah(harga);
                     if (vendorItemInput) vendorItemInput.value = vendorItemId ?? '';
 
-                    // ⛔ nomor PO jangan di-generate ulang jika sudah manual
-                    if (noPoInput && !noPoInput.dataset.manual) {
-                      fetch(`/inventori/generate_po_ajax?vendor_id=${vendorId}`)
-                        .then(r => r.json())
-                        .then(d => {
-                          if (!noPoInput.readOnly)
-                            noPoInput.value = d.no_po || 'Gagal generate';
-                        })
-                        .catch(() => {
-                          if (!noPoInput.readOnly) noPoInput.value = 'Error';
-                        });
+                    // Update juga no_po di hidden input
+                    if (noPoInput) {
+                        noPoInput.value = 'Sedang generate...';
+
+                        fetch(`/inventori/generate_po_ajax?vendor_id=${vendorId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const po = data.no_po || 'Gagal generate';
+                                noPoInput.value = po;
+
+                                // ✅ Update juga tampilan di vendorInventoriTable
+                                const vendorTable = document.querySelector('#vendorInventoriTable tbody');
+                                if (vendorTable) {
+                                    const rowVendor = vendorTable.rows[rowIndex];
+                                    if (rowVendor) {
+                                        const select = rowVendor.querySelector('select[name="vendor[]"]');
+                                        const is_bonDisplay = rowVendor.querySelector('input[name="is_bon[]"]');
+                                        const noPoDisplay = rowVendor.querySelector('input[name="no_po[]"]');
+
+                                        if (select) {
+                                            $(select).val(vendorId).trigger('change');
+                                        }
+
+                                        if (noPoDisplay) {
+                                            noPoDisplay.value = po;
+                                        }
+
+                                        if (is_bonDisplay) {
+                                            is_bonDisplay.value = '';
+                                        }
+                                    }
+                                    calculateGrandTotal();
+                                }
+                            })
+                            .catch(() => {
+                                if (noPoInput) noPoInput.value = 'Error';
+                            });
                     }
 
                     $('#vendorModal').modal('hide');
-                  }
+                }
 
-                  function renderVendorFromPengajuan(barangData) {
+                function calculateGrandTotal() {
+                    let total = 0;
+
+                    // Loop semua baris barang
+                    $('#barangPurchasingTable tbody tr').each(function () {
+                        const qty = parseFloat($(this).find('input[name="qty[]"]').val()) || 0;
+                        const harga = parseFloat($(this).find('input[name="harga[]"]').val()) || 0;
+                        total += qty * harga;
+                    });
+
+                    // Update tampilan Grand Total
+                    $('#grandTotal1').text(formatRupiah(total));
+                    $('#grandTotal2').text(formatRupiah(total));
+                }
+
+                function renderVendorFromPengajuan(barangData) {
+                    console.log("barangData", barangData);
                     if (!Array.isArray(barangData)) return;
+
                     const vendorIds = [...new Set(barangData.map(item => item.vendor_id).filter(id => !!id))];
+
                     const vendorTable = document.querySelector('#vendorInventoriTable tbody');
                     vendorTable.innerHTML = '';
 
                     fetch('<?= base_url('inventori/get_vendors_json') ?>')
-                      .then(r => r.json())
-                      .then(vendorList => {
-                        vendorIds.forEach((vendorId, index) => {
-                          const row = vendorTable.insertRow();
-                          const select = document.createElement('select');
-                          select.name = 'vendor[]';
-                          select.classList.add('form-control', 'select-rute');
-                          select.disabled = true;
+                        .then(response => response.json())
+                        .then(vendorList => {
+                            vendorIds.forEach((vendorId, index) => {
+                                const row = vendorTable.insertRow();
 
-                          const def = document.createElement('option');
-                          def.value = '';
-                          def.textContent = 'Pilih vendor';
-                          select.appendChild(def);
+                                const select = document.createElement('select');
+                                select.name = 'vendor[]';
+                                select.classList.add('form-control', 'select-rute');
+                                select.disabled = true;
 
-                          vendorList.forEach(v => {
-                            const opt = document.createElement('option');
-                            opt.value = v.id;
-                            opt.textContent = v.name;
-                            opt.dataset.kode = v.kode;
-                            select.appendChild(opt);
-                          });
+                                const defaultOption = document.createElement('option');
+                                defaultOption.value = '';
+                                defaultOption.textContent = 'Pilih vendor';
+                                select.appendChild(defaultOption);
 
-                          const is_bonHidden = document.createElement('input');
-                          is_bonHidden.type = 'hidden';
-                          is_bonHidden.name = 'is_bon[]';
-                          is_bonHidden.value = 0;
+                                vendorList.forEach(v => {
+                                    const option = document.createElement('option');
+                                    option.value = v.id;
+                                    option.textContent = v.name;
+                                    option.dataset.kode = v.kode;
+                                    select.appendChild(option);
+                                });
 
-                          const is_bonInput = document.createElement('input');
-                          is_bonInput.type = 'checkbox';
-                          is_bonInput.classList.add('form-control');
-                          is_bonInput.value = 1;
+                                const is_bonHidden = document.createElement('input');
+                                is_bonHidden.type = 'hidden';
+                                is_bonHidden.name = 'is_bon[]';
+                                is_bonHidden.value = 0;
 
-                          const noPoInput = document.createElement('input');
-                          noPoInput.name = 'no_po[]';
-                          noPoInput.classList.add('form-control', 'no-po-field');
-                          noPoInput.readOnly = false;
+                                const is_bonInput = document.createElement('input');
+                                is_bonInput.type = 'checkbox';
+                                is_bonInput.classList.add('form-control');
+                                is_bonInput.value = 1;
+                                is_bonInput.onchange = function () {
+                                    if (this.checked) {
+                                        is_bonHidden.value = 1;
+                                        noPoInput.readOnly = true;   // supaya tidak bisa diisi manual
+                                    } else {
+                                        is_bonHidden.value = 0;
+                                        noPoInput.value = 'Sedang generate...'; // generate ulang
+                                        noPoInput.readOnly = false;
 
-                          is_bonInput.onchange = function () {
-                            if (this.checked) {
-                              is_bonHidden.value = 1;
-                              noPoInput.readOnly = true;
-                            } else {
-                              is_bonHidden.value = 0;
-                              noPoInput.readOnly = false;
-                            }
-                          };
+                                        // generate ulang nomor PO via ajax
+                                        fetch(`/inventori/generate_po_ajax?vendor_id='${vendorId}'`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            noPoInput.value = data.no_po || 'Gagal generate';
+                                        })
+                                        .catch(() => {
+                                            noPoInput.value = 'Error';
+                                        });
+                                    }
+                                };
 
-                          row.innerHTML = `<td class="text-center">${index + 1}</td><td></td><td></td><td></td>`;
-                          row.cells[1].appendChild(select);
-                          row.cells[2].appendChild(is_bonHidden);
-                          row.cells[2].appendChild(is_bonInput);
-                          row.cells[3].appendChild(noPoInput);
+                                const noPoInput = document.createElement('input');
+                                noPoInput.name = 'no_po[]';
+                                noPoInput.classList.add('form-control', 'no-po-field');
+                                noPoInput.readOnly = false; // bisa diedit manual
 
-                          $(select).val(vendorId).trigger('change');
+                                row.innerHTML = `
+                                    <td class="text-center">${index + 1}</td>
+                                    <td></td><td></td><td></td>
+                                `;
 
-                          // auto-generate hanya jika belum manual
-                          if (vendorId && !noPoInput.dataset.manual) {
-                            fetch(`<?= base_url('inventori/generate_po_ajax?vendor_id=') ?>${vendorId}`)
-                              .then(r => r.json())
-                              .then(d => {
-                                if (!noPoInput.readOnly && !noPoInput.dataset.manual)
-                                  noPoInput.value = d.no_po || 'Gagal generate';
-                              })
-                              .catch(() => {
-                                if (!noPoInput.readOnly) noPoInput.value = 'Error';
-                              });
-                          }
+                                row.cells[1].appendChild(select);
+                                row.cells[2].appendChild(is_bonHidden);
+                                row.cells[2].appendChild(is_bonInput);
+                                row.cells[3].appendChild(noPoInput);
+
+                                // Set vendor & trigger select2
+                                $(select).val(vendorId).trigger('change');
+
+                                // Generate PO langsung saat vendor tampil
+                                if (vendorId) {
+                                    fetch(`<?= base_url('inventori/generate_po_ajax?vendor_id=') ?>${vendorId}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            noPoInput.value = data.no_po || 'Gagal generate';
+                                        })
+                                        .catch(() => {
+                                            noPoInput.value = 'Error';
+                                        });
+                                } else {
+                                    noPoInput.value = '';
+                                }
+                            });
+                        })
+                        .catch(err => {
+                            console.error('Gagal ambil vendor:', err);
                         });
-                      });
-                  }
+                }
 
-                  function calculateGrandTotal() {
-                    let total = 0;
-                    $('#barangPurchasingTable tbody tr').each(function () {
-                      const qty = parseFloat($(this).find('input[name="qty[]"]').val()) || 0;
-                      const harga = parseFloat($(this).find('input[name="harga[]"]').val()) || 0;
-                      total += qty * harga;
-                    });
-                    $('#grandTotal1').text(formatRupiah(total));
-                    $('#grandTotal2').text(formatRupiah(total));
-                  }
+                function removeRowPurchasing(button) {
+                  const row = button.closest('tr');
+                  row.remove();
+                  updateRowNumbers();
+                }
 
-                  function removeRowPurchasing(button) {
-                    const row = button.closest('tr');
-                    row.remove();
-                    updateRowNumbers();
-                  }
+                function getVendorNameById(vendorId) {
+                  const vendor = vendorList.find(v => String(v.id) === String(vendorId));
+                  return vendor ? vendor.name : 'Unknown Vendor';
+                }
 
-                  function getVendorNameById(vendorId) {
-                    const vendor = vendorList.find(v => String(v.id) === String(vendorId));
-                    return vendor ? vendor.name : 'Unknown Vendor';
-                  }
+                function formatRupiah(angka) {
+                  const num = parseFloat(angka);
+                  if (isNaN(num)) return '';
+                  return 'Rp ' + num.toLocaleString('id-ID');
+                }
 
-                  function formatRupiah(angka) {
-                    const num = parseFloat(angka);
-                    if (isNaN(num)) return '';
-                    return 'Rp ' + num.toLocaleString('id-ID');
-                  }
+                function updateRowFromSelect(selectEl) {
+                  const selected = selectEl.options[selectEl.selectedIndex];
+                  const vendorId = selected.getAttribute('data-vendor') || '';
+                  const harga = selected.getAttribute('data-harga') || '';
 
+                  const row = selectEl.closest('tr');
+                  const vendorIdInput = row.querySelector('input[name="vendor_id[]"]');
+                  const vendorNameInput = row.querySelector('.vendor-name');
+                  const hargaHiddenInput = row.querySelector('input[name="harga[]"]');
+                  const hargaDisplayInput = row.querySelector('.harga-display');
+                }
             </script>
-
             <script>
                 const pengajuanBarangData = <?php echo $pengajuan_barang ?>;
                 console.log('[DEBUG] Data pengajuan_barang:', pengajuanBarangData);

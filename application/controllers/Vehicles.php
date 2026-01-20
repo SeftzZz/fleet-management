@@ -134,8 +134,8 @@ class Vehicles extends CI_Controller {
             $this->form_validation->set_rules('no_pintu','Nama','required');
             $this->form_validation->set_rules('type','No. SIM','required');
             $this->form_validation->set_rules('warna','No. HP','required');
-            $this->form_validation->set_rules('no_chasis','No. Chasis','required');
-            $this->form_validation->set_rules('no_mesin','No. Mesin','required');
+            $this->form_validation->set_rules('no_chasis','No. Chasis','');
+            $this->form_validation->set_rules('no_mesin','No. Mesin','');
             $this->form_validation->set_rules('status','Status','required');
 
             if ($this->form_validation->run()==FALSE) {     

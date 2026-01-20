@@ -82,7 +82,7 @@ class Vehicle_model extends CI_Model {
         $this->db->from('vehicles'); 
         $this->db->where('is_delete', 0);
         if ($carinopol) {
-            $this->db->like('no_pol', $carinopol);
+            $this->db->where('no_pol', $carinopol);
         }
         if ($carinopintu) {
             $this->db->where('no_pintu', $carinopintu);

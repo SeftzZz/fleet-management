@@ -41,7 +41,7 @@
                       </div>
                       <div class="card-body table-responsive">
                         <div class="row">
-                          <div class="col-md-12">
+                          <div class="col-md-6">
                             <!-- Header Form -->
                             <table class="table">
                               <tr><td>Nama</td><td><input type="text" readonly name="nama" class="form-control" value="<?php echo $pengajuan->nama_po ?>"></td>
@@ -57,7 +57,8 @@
                               </td>
                             </table>
                           </div>
-                          <!-- <div class="col-md-6">
+                          <div class="col-md-6">
+                            <!-- Tabel vendor -->
                             <table class="table table-bordered" id="vendorInventoriTable">
                               <thead class="thead-light">
                                 <tr>
@@ -70,7 +71,7 @@
                               <tbody>
                               </tbody>
                             </table>
-                          </div> -->
+                          </div>
                         </div>
                         <div class="text-right mb-3">
                           <strong>Grand Total:</strong> <strong id="grandTotal1">Rp 0</strong>

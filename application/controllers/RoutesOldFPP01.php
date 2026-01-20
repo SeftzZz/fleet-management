@@ -661,90 +661,58 @@ class Routes extends CI_Controller {
         }
     }
 
-    public function ritasidel($id)
-    {
-        if (!$this->input->post('submit')) {
-            redirect('/routes');
-        }
+    public function ritasidel($id) {
+        if ($post = $this->input->post('submit')) {
+            // update tabel ritasi  
+            $dataRitasi = array(
+                'is_delete'     => $this->input->post('del'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Route_model->updateRitasi($id, $dataRitasi);
 
-        $isDelete = (int) $this->input->post('del');
+            // update wallet_transactions (hapus)
+            $dataWalletTransaction = array(
+                'is_delete'     => $this->input->post('del'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Wallet_model->update_by_ritasi_id($id, $dataWalletTransaction);
 
-        // Ambil data ritasi + wallet sebelum dihapus
-        $this->db->select('r.id, r.driver_id, r.tgl_ritasi, d.name, w.id AS wallet_id');
-        $this->db->from('ritasi r');
-        $this->db->join('drivers d', 'd.id = r.driver_id');
-        $this->db->join('wallets w', 'w.driver_id = r.driver_id');
-        $this->db->where('r.id', $id);
-        $ritasi = $this->db->get()->row();
+            // update balance wallet SESUDAH transaksi dihapus
+            $this->db->query("
+                UPDATE wallets w
+                LEFT JOIN (
+                    SELECT 
+                        wallet_id,
+                        SUM(CASE WHEN transaction_type = 'credit' AND is_delete = 0 THEN amount ELSE 0 END) AS total_credit
+                    FROM wallet_transactions
+                    GROUP BY wallet_id
+                ) t ON t.wallet_id = w.id
+                SET 
+                    w.balance = COALESCE(t.total_credit, 0)                    
+            ");
 
-        if (!$ritasi) {
-            $this->session->set_flashdata('pesangagal', 'Data ritasi tidak ditemukan');
-            redirect('/routes');
-        }
+            // insert tabel log  
+            $this->db->select('ritasi.driver_id, ritasi.tgl_ritasi, drivers.name'); 
+            $this->db->from('ritasi'); 
+            $this->db->join('drivers', 'drivers.id=ritasi.driver_id'); 
+            $this->db->where('ritasi.id', $id);
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                $ritasi = $query->row();
+            } 
+            $query->free_result();
 
-        // ===============================
-        // TRANSACTION START
-        // ===============================
-        $this->db->trans_begin();
+            $dataLog = array(
+                'nama_user'     => $this->session->userdata('user_firstname').' '.$this->session->userdata('user_lastname'),
+                'aktifitas'     => 'Hapus ritasi tanggal '.$ritasi->tgl_ritasi.', supir '.$ritasi->name.', ritasi_id '.$id,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s')
+            );                              
+            $this->Log_model->insert($dataLog);
 
-        // Update ritasi
-        $this->Route_model->updateRitasi($id, [
-            'is_delete'  => $isDelete,
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-
-        // Update wallet_transactions berdasarkan ritasi
-        $this->Wallet_model->update_by_ritasi_id($id, [
-            'is_delete'  => $isDelete,
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-
-        // Recalculate wallet balance
-        $this->db->query("
-            UPDATE wallets w
-            JOIN (
-                SELECT
-                    wt.wallet_id,
-                    COALESCE(
-                        SUM(
-                            CASE
-                                WHEN wt.transaction_type = 'credit' THEN wt.amount
-                                WHEN wt.transaction_type = 'debit'  THEN -wt.amount
-                            END
-                        ), 0
-                    ) AS total_amount
-                FROM wallet_transactions wt
-                WHERE wt.is_delete = 0
-                  AND wt.wallet_id = ?
-                  AND wt.description NOT LIKE 'Uang Jalan DO -%'
-                GROUP BY wt.wallet_id
-            ) t ON t.wallet_id = w.id
-            SET w.balance = t.total_amount, w.updated_at = NOW()
-            WHERE w.id = ?
-              AND w.is_delete = 0
-        ", [$ritasi->wallet_id, $ritasi->wallet_id]);
-
-        // Insert log
-        $this->Log_model->insert([
-            'nama_user' => $this->session->userdata('user_firstname') . ' ' .
-                           $this->session->userdata('user_lastname'),
-            'aktifitas' => 'Hapus ritasi tanggal ' . $ritasi->tgl_ritasi .
-                           ', supir ' . $ritasi->name .
-                           ', ritasi_id ' . $id,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-
-        // Commit / Rollback
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $this->session->set_flashdata('pesangagal', 'Gagal menghapus data');
-        } else {
-            $this->db->trans_commit();
             $this->session->set_flashdata('pesansukses', 'Data berhasil dihapus');
-        }
-
-        redirect('/routes');
+            redirect('/routes');
+        } 
     }
 
     public function oldpage() {
